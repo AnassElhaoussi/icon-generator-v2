@@ -1,5 +1,4 @@
 import React from 'react'
-import { homePageImage } from '../assets'
 
 const Home = () => {
   return (
