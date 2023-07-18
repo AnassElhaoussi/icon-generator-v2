@@ -1,13 +1,13 @@
 import React, {createContext, useReducer, useContext} from 'react'
 import { UserReducer } from '../reducers/UserReducer'
-import { UserActionType, UserContextState } from '../types/Context'
+import { UserActionType, UserContextState, UserContextType } from '../types/Context'
 
 const initialState: UserContextState = {
-    user: JSON.parse(localStorage.getItem("user") as string)as object ,
+    user: JSON.parse(localStorage.getItem("user") as string) as object ,
     loading: false,
 }
 
-export const UserContext = createContext(initialState)
+export const UserContext = createContext<UserContextType | UserContextState>(initialState)
 
 export const UserContextProvider = ({children}: {children: React.ReactNode}) => {
     const [state, dispatch] = useReducer(UserReducer, initialState)

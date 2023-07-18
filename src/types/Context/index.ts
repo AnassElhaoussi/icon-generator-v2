@@ -14,3 +14,12 @@ export interface UserContextAction {
     type: UserActionType
     payload: object | null
 }
+
+export interface UserContextType {
+    user: object | null,
+    addUser: (user: object) => void,
+    logoutUser: () => void,
+    isLoading: () =>  void,
+    isNotLoading: () => void,
+    loading: boolean
+}
