@@ -1,4 +1,4 @@
-import React, {useState, useContext} from "react";
+import React, {useState, useContext, useEffect} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { logo } from "../assets";
 import {useGoogleLogin, googleLogout} from "@react-oauth/google"
@@ -7,15 +7,14 @@ import { UserContext } from "../Context/UserContextProvider";
 import { UserContextType } from "../types/Context";
 
 const SignIn = () => {
-  const [userData, setUserData] = useState<null | object>(null)
   const [error, setError] = useState<string | undefined>("")
   const {user, addUser, logoutUser, isLoading, isNotLoading, loading} = useContext(UserContext) as UserContextType
-  
+
   const navigate = useNavigate()
   const signIn = useGoogleLogin({
     onSuccess: (response: object) => {
       addUser(response)
-      navigate("/")
+      navigate('/')
     },
     onError: (error) => setError(error.error)
   })

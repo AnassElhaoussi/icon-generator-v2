@@ -1,9 +1,21 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { UserContext } from "../Context/UserContextProvider";
+import { googleLogout } from "@react-oauth/google";
+import { UserContextType } from "../types/Context";
+import { Link } from "react-router-dom";
 
 const Navigation = () => {
-  const [isNavActive, setIsNavActive] = useState(window.innerWidth > 1024 ? true : false);
+  const [isNavActive, setIsNavActive] = useState(
+    window.innerWidth > 1024 ? true : false
+  );
+  const { user, logoutUser } = useContext(UserContext) as UserContextType;
+
+  const signOut = () => {
+    googleLogout();
+    logoutUser();
+  };
 
   return (
     <nav className="relative flex lg:flex-row flex-col justify-between items-center text-gray-200 px-10 py-5 font-light ">
@@ -43,9 +55,20 @@ const Navigation = () => {
               Contact
             </a>
           </div>
-          <button className="px-5 py-2 bg-blue-700 rounded-lg hover:scale-110 transition-all">
-            Sign in
-          </button>
+          {user ? (
+            <button
+              className="px-5 py-2 bg-blue-700 rounded-lg hover:scale-110 transition-all"
+              onClick={signOut}
+            >
+              Sign out
+            </button>
+          ) : (
+            <Link to="/signin">
+              <button className="px-5 py-2 bg-blue-700 rounded-lg hover:scale-110 transition-all">
+                Sign in
+              </button>
+            </Link>
+          )}
         </div>
       )}
     </nav>

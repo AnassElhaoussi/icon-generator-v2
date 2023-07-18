@@ -9,6 +9,7 @@ export const UserReducer = (state: UserContextState, action: UserContextAction):
                 user: JSON.parse(localStorage.getItem("user") as string) as object
             }
         case "LOGOUT_USER":
+            localStorage.removeItem("user")
             return {
                 ...state,
                 user: null
