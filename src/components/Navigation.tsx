@@ -55,14 +55,7 @@ const Navigation = () => {
               Contact
             </a>
           </div>
-          {user ? (
-            <button
-              className="px-5 py-2 bg-blue-700 rounded-lg hover:scale-110 transition-all"
-              onClick={signOut}
-            >
-              Sign out
-            </button>
-          ) : (
+          {!user && (
             <Link to="/signin">
               <button className="px-5 py-2 bg-blue-700 rounded-lg hover:scale-110 transition-all">
                 Sign in

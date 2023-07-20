@@ -5,12 +5,12 @@ const ProtectedRoute = (props: {children: React.ReactNode, currentPath: string, 
     const navigate = useNavigate()
     useEffect(() => {
         if(props.currentPath === "/signin" 
-        && props.user !== null) {
+        && props.user) {
             navigate(props.redirectPath)
         }
         
         if(props.currentPath.startsWith("/dashboard") 
-        && props.user === null) {
+        && !props.user) {
             navigate(props.redirectPath)
         }
     }, [])

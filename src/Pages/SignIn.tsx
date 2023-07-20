@@ -14,7 +14,7 @@ const SignIn = () => {
   const signIn = useGoogleLogin({
     onSuccess: (response: object) => {
       addUser(response)
-      navigate('/')
+      navigate('/dashboard')
     },
     onError: (error) => setError(error.error)
   })

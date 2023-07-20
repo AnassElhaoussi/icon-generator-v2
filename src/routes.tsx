@@ -6,6 +6,7 @@ import { UserContextProvider } from "./Context/UserContextProvider";
 import ProtectedRoute from "./helpers/ProtectedRoute";
 import { UserContext } from "./Context/UserContextProvider";
 import Pricing from "./Pages/Pricing";
+import Dashboard from "./Pages/Dashboard";
 
 const AppRoutes = () => {
   const {user} = useContext(UserContext)
@@ -20,6 +21,11 @@ const AppRoutes = () => {
             </ProtectedRoute>
           } />
           <Route path="/pricing" element={<Pricing />} />
+          <Route path="/dashboard" element={
+            <ProtectedRoute currentPath="/dashboard" redirectPath="/signin" user={user as object}>
+              <Dashboard />
+            </ProtectedRoute>
+          } />
         </Routes>
       </BrowserRouter>
     </UserContextProvider>
