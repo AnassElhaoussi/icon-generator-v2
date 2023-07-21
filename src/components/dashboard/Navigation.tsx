@@ -9,6 +9,7 @@ const Navigation = () => {
   const navigate = useNavigate()
   const {user, logoutUser} = useContext(UserContext) as UserContextType
   const [profile, setProfile] = useState([])
+  console.log(user)
   useEffect(() => { 
     async function fetchData(){
         const response = await fetch(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
@@ -19,7 +20,6 @@ const Navigation = () => {
         })
         const data = await response.json()
         setProfile(data)
-        console.log(data)
     }
     fetchData()
   }, [])
@@ -33,9 +33,10 @@ const Navigation = () => {
     <nav className="relative flex items-center justify-between py-3 px-6">
       <h3 className="text-4xl font-light">IconAI</h3>
       <div className="flex">
-        {profile.name}
-        <h2>Credits</h2>
+        <button>Credits</button>
+        <img src={profile.picture} alt="" />
         <button onClick={signOut}>logout</button>
+
       </div>
     </nav>
   );
