@@ -5,6 +5,7 @@ import {useGoogleLogin, googleLogout} from "@react-oauth/google"
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContextProvider";
 import { UserContextType } from "../types/Context";
+import axios from "axios"
 
 const SignIn = () => {
   const [error, setError] = useState<string | undefined>("")
@@ -12,8 +13,12 @@ const SignIn = () => {
 
   const navigate = useNavigate()
   const signIn = useGoogleLogin({
-    onSuccess: (response: object) => {
+    onSuccess: async (response: object) => {
       addUser(response)
+      const res = await axios.post("http://localhost:8000/createuser", {
+        access_token: response.access_token
+      })
+      console.log(res)
       navigate('/dashboard')
     },
     onError: (error) => setError(error.error)
