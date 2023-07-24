@@ -1,13 +1,13 @@
 import { UserContextAction, UserContextState } from "../types/Context"
-
 export const UserReducer = (state: UserContextState, action: UserContextAction): UserContextState => {
     switch (action.type) {
-        case "ADD_USER":
+        case "ADD_USER": {
             localStorage.setItem("user", JSON.stringify(action.payload))
             return {
                 ...state,
                 user: JSON.parse(localStorage.getItem("user") as string) as object
             }
+        }
         case "LOGOUT_USER":
             localStorage.removeItem("user")
             return {

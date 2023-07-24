@@ -1,3 +1,5 @@
+import { AxiosResponse } from "axios"
+
 export enum UserActionType {
     ADD_USER = "ADD_USER",
     LOGOUT_USER = "LOGOUT_USER",
@@ -17,8 +19,8 @@ export interface UserContextAction {
 
 export interface UserContextType {
     user: object | null,
-    addUser: (user: object) => void,
-    logoutUser: () => void,
+    addUser: (user: object) => Promise<AxiosResponse>,
+    logoutUser: () => Promise<AxiosResponse>,
     isLoading: () =>  void,
     isNotLoading: () => void,
     loading: boolean
