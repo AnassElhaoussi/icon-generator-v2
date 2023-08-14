@@ -7,7 +7,7 @@ import axios from "axios"
 const Navigation = () => {
   const { user, logoutUser } = useContext(UserContext) as UserContextType;
   const logout = async () => {
-    const res = await logoutUser()
+    const res = await logoutUser(user)
     googleLogout()
     if(res.status === 200) {
       location.href = "/"

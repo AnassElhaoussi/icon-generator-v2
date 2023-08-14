@@ -20,7 +20,7 @@ export interface UserContextAction {
 export interface UserContextType {
     user: object | null,
     addUser: (user: object) => Promise<AxiosResponse>,
-    logoutUser: () => Promise<AxiosResponse>,
+    logoutUser: (user: object) => Promise<AxiosResponse>,
     isLoading: () =>  void,
     isNotLoading: () => void,
     loading: boolean

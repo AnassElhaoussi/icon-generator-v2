@@ -15,10 +15,16 @@ const SignIn = () => {
   const signIn = useGoogleLogin({
     onSuccess: async function(response: object): Promise {
       isLoading()
-      const res = await addUser(response)
+      try {
+        console.log("working here")
+        const res = await addUser(response)
+        if(res.status === 200) {
+          window.location.href = "/dashboard"
+        }
+      } catch(e) {
+        console.log("something went wrong")
+      }
       isNotLoading()
-      if(res.status === 200) 
-      navigate('/dashboard')
     },
     onError: (error) => setError(error.error)
   })
