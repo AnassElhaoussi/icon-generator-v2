@@ -7,27 +7,30 @@ import ProtectedRoute from "./helpers/ProtectedRoute";
 import { UserContext } from "./Context/UserContextProvider";
 import Pricing from "./Pages/Pricing";
 import Dashboard from "./Pages/Dashboard";
+import { ChakraProvider } from "@chakra-ui/react";
 
 const AppRoutes = () => {
   const {user} = useContext(UserContext)
   return (
     <UserContextProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/signin" element={
-            <ProtectedRoute currentPath="/signin" redirectPath="/" user={user as object}>
-              <SignIn />
-            </ProtectedRoute>
-          } />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/dashboard" element={
-            <ProtectedRoute currentPath="/dashboard" redirectPath="/signin" user={user as object}>
-              <Dashboard />
-            </ProtectedRoute>
-          } />
-        </Routes>
-      </BrowserRouter>
+      <ChakraProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<App />} />
+            <Route path="/signin" element={
+              <ProtectedRoute currentPath="/signin" redirectPath="/" user={user as object}>
+                <SignIn />
+              </ProtectedRoute>
+            } />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/dashboard" element={
+              <ProtectedRoute currentPath="/dashboard" redirectPath="/signin" user={user as object}>
+                <Dashboard />
+              </ProtectedRoute>
+            } />
+          </Routes>
+        </BrowserRouter>
+      </ChakraProvider>
     </UserContextProvider>
   );
 };

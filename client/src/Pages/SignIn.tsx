@@ -1,32 +1,40 @@
 import React, {useState, useContext, useEffect} from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { logo } from "../assets";
-import {useGoogleLogin, googleLogout} from "@react-oauth/google"
-import { useNavigate } from "react-router-dom";
+import {useGoogleLogin} from "@react-oauth/google"
 import { UserContext } from "../Context/UserContextProvider";
 import { UserContextType } from "../types/Context";
-import { CreateUser } from "../api";
+import { Spinner } from "@chakra-ui/react";
 
 const SignIn = () => {
-  const [error, setError] = useState<string | undefined>("")
+  const [error, setError] = useState<{
+    isError: boolean,
+    errorMessage: string
+  }>({
+    isError: false,
+    errorMessage: ""
+  })
   const {user, addUser, logoutUser, isLoading, isNotLoading, loading} = useContext(UserContext) as UserContextType
 
-  const navigate = useNavigate()
   const signIn = useGoogleLogin({
     onSuccess: async function(response: object): Promise {
       isLoading()
       try {
-        console.log("working here")
         const res = await addUser(response)
         if(res.status === 200) {
           window.location.href = "/dashboard"
         }
       } catch(e) {
-        console.log("something went wrong")
+        setError({
+          isError: true, 
+          errorMessage: "Something went wrong!"
+        })
       }
       isNotLoading()
     },
-    onError: (error) => setError(error.error)
+    onError: (error) => setError({
+      isError: true,
+      errorMessage: error.error as string
+    })
   })
   return (
     <section className="relative overflow-hidden font-poppins text-white bg-black flex flex-col items-center justify-center h-[110vh] ">
@@ -44,11 +52,13 @@ const SignIn = () => {
           </p>
         </div>
         <button 
-        className=" bg-blue-700 text-white font-light py-3 px-6 rounded-lg hover:scale-110 transition-all"
+        className=" flex gap-x-3 bg-blue-700 items-center text-white font-light py-3 px-6 rounded-lg hover:scale-110 transition-all"
         onClick={() => signIn()}
         >
+          {loading && <Spinner size="md" />}
           Sign in with Google
         </button>
+        {error.isError && <small className="text-red-500 text-lg">{error.errorMessage}</small>}
       </div>
     </section>
   );

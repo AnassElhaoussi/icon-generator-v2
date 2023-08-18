@@ -4,7 +4,6 @@ import { UserContext } from "../Context/UserContextProvider"
 import { UserContextType } from "../types/Context"
 
 export async function getExactUser(userInfos: object | null): Promise<AxiosResponse> {
-    console.log(userInfos)
     return await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${userInfos.access_token}`, {
         headers: {
             Accept: "application/json",
