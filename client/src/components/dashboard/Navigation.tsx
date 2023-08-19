@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { UserContext } from "../../Context/UserContextProvider";
 import { UserContextType } from "../../types/Context";
 import { googleLogout } from "@react-oauth/google";
@@ -6,11 +6,15 @@ import { logo } from "../../assets";
 import { Link } from "react-router-dom";
 import { Avatar, Menu, MenuButton, MenuList, MenuItem, Button, Heading, Stack } from "@chakra-ui/react";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Navigation = () => {
   const { user, logoutUser } = useContext(UserContext) as UserContextType;
-  console.log(user)
+  const signOut = async () => {
+    const res = await logoutUser(user as object)
+    if(res.status === 200) {
+      location.href = "/"
+    }
+  }
   return (
     <nav className="flex items-center justify-between px-10 py-4">
       <Menu>
@@ -20,17 +24,21 @@ const Navigation = () => {
         </MenuButton>   
         <MenuList display="flex" flexDirection="column" gap="1rem" padding="2rem" backgroundColor="gray.900" border="none">
           <Stack textAlign="center">
-            <h2 className="text-4xl font-light">{user.name}</h2>
+            <h2 className="flex items-center gap-x-2 text-4xl font-light text-purple-300"><span className="text-2xl">👋</span>{user.name}</h2>
             <p className="text-sm font-light text-gray-500">{user.email}</p>
           </Stack>
-          <MenuItem backgroundColor="gray.800" borderRadius="lg">
-              Account Settings
+          <MenuItem backgroundColor="gray.800" borderRadius="lg" fontWeight="600">
+            Account Settings
           </MenuItem>
-          <Button colorScheme="purple" textColor="white">
+          <MenuItem backgroundColor="gray.800" borderRadius="lg" fontWeight="600">
+            Your Activity
+          </MenuItem>
+          <Button colorScheme="purple" textColor="white" onClick={signOut}>
             Sign Out
           </Button>
         </MenuList>
-      </Menu>      
+      </Menu>
+      <ul className="font-semibold"><span className="text-purple-400 text-lg">0</span> Credits Left</ul>
     </nav>
   );
 };

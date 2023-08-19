@@ -35,7 +35,6 @@ export const UserContextProvider = ({
     return loginResponse;
   };
   const logoutUser = async (user: object) => {
-    console.log(user.email, user.id)
     const logoutResponse = await deleteUser(user.id, user.email);
     if(logoutResponse.status === 200) {
       dispatch({ type: UserActionType.LOGOUT_USER, payload: null });

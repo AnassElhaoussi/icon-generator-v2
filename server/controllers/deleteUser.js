@@ -15,6 +15,9 @@ export const deleteUser = async(req, res) => {
             message: "user deleted"
         })
     } catch (e) {
-        console.log(e)
+        res.send({
+            response: "error",
+            error: e
+        })
     }
 }
