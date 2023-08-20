@@ -1,11 +1,11 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import { logo } from "../assets";
 import { UserContext } from "../Context/UserContextProvider";
-import { UserContextType } from "../types/Context";
+import { UserContextType } from "../types/Context/signin";
 import { Link } from "react-router-dom";
 
 const Pricing = () => {
-    const {user} = useContext(UserContext) as UserContextType 
+  const { user } = useContext(UserContext) as UserContextType;
   return (
     <main className=" bg-black text-center text-white font-poppins flex flex-col items-center py-32 px-8">
       <img src={logo} alt="" className="absolute  w-52 -top-10" />
@@ -24,32 +24,48 @@ const Pricing = () => {
         <div className="flex justify-center items-stretch gap-4 lg:flex-nowrap flex-wrap w-full px-10">
           <div className="flex flex-col gap-y-6 bg-gray-900 h-[17rem] items-center justify-around p-8 rounded-2xl shadow-lg  md:w-[20rem] w-full ">
             <div className="space-y-2">
-                <h3 className="text-5xl font-bold text-blue-700">Free</h3>
-                <p className="text-sm font-light">Enjoy our free plan by using 10 credits.</p>
+              <h3 className="text-5xl font-bold text-blue-700">Free</h3>
+              <p className="text-sm font-light">
+                Enjoy our free plan by using 10 credits.
+              </p>
             </div>
             {user !== null ? (
-                <Link to="/dashboard">
-                    <button className="py-3 px-8 bg-blue-700 hover:scale-105 rounded-md font-light whitespace-nowrap transition-all">Go to dashboard </button>
-                </Link>
+              <Link to="/dashboard">
+                <button className="py-3 px-8 bg-blue-700 hover:scale-105 rounded-md font-light whitespace-nowrap transition-all">
+                  Go to dashboard{" "}
+                </button>
+              </Link>
             ) : (
-                <Link to="/signin">
-                    <button className="py-3 px-8 bg-blue-700 hover:scale-105 rounded-md font-light whitespace-nowrap transition-all">Sign in</button>
-                </Link>
+              <Link to="/signin">
+                <button className="py-3 px-8 bg-blue-700 hover:scale-105 rounded-md font-light whitespace-nowrap transition-all">
+                  Sign in
+                </button>
+              </Link>
             )}
           </div>
           <div className="flex flex-col gap-y-6 bg-gray-900 h-[17rem] items-center justify-around p-8 rounded-2xl shadow-lg  md:w-[20rem] w-full">
             <div className="space-y-2">
-                <h3 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-purple-700">Basic</h3>
-                <p className="text-sm font-light">Buy 50 credits with 9$</p>
+              <h3 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-purple-700">
+                Basic
+              </h3>
+              <p className="text-sm font-light">Buy 50 credits with 9$</p>
             </div>
-            <button className="py-3 px-5 bg-gradient-to-r hover:scale-105 from-blue-700 to-purple-700 rounded-md font-light transition-all">Buy in 10$</button>
+            <button className="py-3 px-5 bg-gradient-to-r hover:scale-105 from-blue-700 to-purple-700 rounded-md font-light transition-all">
+              Buy in 10$
+            </button>
           </div>
           <div className="flex flex-col gap-y-6 bg-gray-900 h-[17rem] items-center justify-around p-8 rounded-2xl shadow-lg  md:w-[20rem] w-full">
             <div className="space-y-2">
-                <h3 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-purple-700">Premium</h3>
-                <p className="text-sm font-light">Enjoy our premium plan by buying 200 credits in only 20$</p>
+              <h3 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-purple-700">
+                Premium
+              </h3>
+              <p className="text-sm font-light">
+                Enjoy our premium plan by buying 200 credits in only 20$
+              </p>
             </div>
-            <button className="py-3 px-5 bg-gradient-to-r hover:scale-105 from-blue-700 to-purple-700 rounded-md font-light transition-all">Buy in 20$</button>
+            <button className="py-3 px-5 bg-gradient-to-r hover:scale-105 from-blue-700 to-purple-700 rounded-md font-light transition-all">
+              Buy in 20$
+            </button>
           </div>
         </div>
       </div>

@@ -1,16 +1,19 @@
-import React from 'react'
-import { googleLogout } from '@react-oauth/google'
-import { UserContext } from '../Context/UserContextProvider'
-import { UserContextType } from '../types/Context'
-import { useNavigate } from 'react-router-dom'
-import Navigation from '../components/dashboard/Navigation'
+import React, { useContext } from "react";
+import { UserContextType } from "../types/Context/signin";
+import { useNavigate } from "react-router-dom";
+import Navigation from "../components/dashboard/Navigation";
+import { DarkThemeContext } from "../Context/DarkThemeContext";
+import { IColorModeState } from "../types/Context/darkmode";
 
 const Dashboard = () => {
-    return (
-        <main className="bg-black text-white font-body h-screen">
-            <Navigation />
-        </main>
-    )   
-}
+  const { isDarkMode } = useContext(DarkThemeContext) as IColorModeState;
+  return (
+    <main className={!isDarkMode ? "light" : ""}>
+      <main className="bg-black text-white font-body h-screen">
+        <Navigation />
+      </main>
+    </main>
+  );
+};
 
-export default Dashboard
+export default Dashboard;

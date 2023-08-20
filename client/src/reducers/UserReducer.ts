@@ -1,4 +1,4 @@
-import { UserContextAction, UserContextState } from "../types/Context"
+import { UserContextAction, UserContextState } from "../types/Context/signin"
 export const UserReducer = (state: UserContextState, action: UserContextAction): UserContextState => {
     switch (action.type) {
         case "ADD_USER": {

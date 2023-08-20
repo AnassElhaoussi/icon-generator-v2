@@ -1,41 +1,43 @@
-import React, {useState, useContext, useEffect} from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { logo } from "../assets";
-import {useGoogleLogin} from "@react-oauth/google"
+import { useGoogleLogin } from "@react-oauth/google";
 import { UserContext } from "../Context/UserContextProvider";
-import { UserContextType } from "../types/Context";
+import { UserContextType } from "../types/Context/signin";
 import { Spinner } from "@chakra-ui/react";
 
 const SignIn = () => {
   const [error, setError] = useState<{
-    isError: boolean,
-    errorMessage: string
+    isError: boolean;
+    errorMessage: string;
   }>({
     isError: false,
-    errorMessage: ""
-  })
-  const {user, addUser, logoutUser, isLoading, isNotLoading, loading} = useContext(UserContext) as UserContextType
+    errorMessage: "",
+  });
+  const { user, addUser, logoutUser, isLoading, isNotLoading, loading } =
+    useContext(UserContext) as UserContextType;
 
   const signIn = useGoogleLogin({
-    onSuccess: async function(response: object): Promise {
-      isLoading()
+    onSuccess: async function (response: object): Promise {
+      isLoading();
       try {
-        const res = await addUser(response)
-        if(res.status === 200) {
-          window.location.href = "/dashboard"
+        const res = await addUser(response);
+        if (res.status === 200) {
+          window.location.href = "/dashboard";
         }
-      } catch(e) {
+      } catch (e) {
         setError({
-          isError: true, 
-          errorMessage: "Something went wrong!"
-        })
+          isError: true,
+          errorMessage: "Something went wrong!",
+        });
       }
-      isNotLoading()
+      isNotLoading();
     },
-    onError: (error) => setError({
-      isError: true,
-      errorMessage: error.error as string
-    })
-  })
+    onError: (error) =>
+      setError({
+        isError: true,
+        errorMessage: error.error as string,
+      }),
+  });
   return (
     <section className="relative overflow-hidden font-poppins text-white bg-black flex flex-col items-center justify-center h-[110vh] ">
       <img src={logo} alt="" className="absolute w-64 -top-16" />
@@ -51,14 +53,16 @@ const SignIn = () => {
             Use 10 credits to generate 10 icons based on your needs!
           </p>
         </div>
-        <button 
-        className=" flex gap-x-3 bg-blue-700 items-center text-white font-light py-3 px-6 rounded-lg hover:scale-110 transition-all"
-        onClick={() => signIn()}
+        <button
+          className=" flex gap-x-3 bg-blue-700 items-center text-white font-light py-3 px-6 rounded-lg hover:scale-110 transition-all"
+          onClick={() => signIn()}
         >
           {loading && <Spinner size="md" />}
           Sign in with Google
         </button>
-        {error.isError && <small className="text-red-500 text-lg">{error.errorMessage}</small>}
+        {error.isError && (
+          <small className="text-red-500 text-lg">{error.errorMessage}</small>
+        )}
       </div>
     </section>
   );
