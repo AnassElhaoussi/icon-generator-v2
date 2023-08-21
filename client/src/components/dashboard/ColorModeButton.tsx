@@ -10,15 +10,11 @@ const ColorModeButton = () => {
     DarkThemeContext
   ) as IColorModeState;
   
+  const handleColorMode = () => setIsDarkMode((isDarkModePrev) => !isDarkModePrev)
 
-  const buttonStyle = {
-    [isDarkMode ? "right" : "left"]: "4px",
-  };
-
-  const handleColorMode = () => {
-    setIsDarkMode(!isDarkMode)
+  useEffect(() => {
     localStorage.setItem("dark-mode", JSON.stringify(isDarkMode))
-  }
+  }, [isDarkMode])
 
   return (
     <div
@@ -27,8 +23,10 @@ const ColorModeButton = () => {
     >
       <FontAwesomeIcon
         icon={faMoon}
-        style={buttonStyle}
-        className="absolute text-purple-900 bg-purple-600 w-[0.7rem] h-[0.7rem] p-2 rounded-full"
+        style={{
+          transform: isDarkMode ? "translate(-0.2rem)" : "translate(2.6rem)"
+        }}
+        className="text-purple-900 bg-purple-600 w-[0.7rem] h-[0.7rem] p-2 rounded-full transition-transform"
       />
     </div>
   );

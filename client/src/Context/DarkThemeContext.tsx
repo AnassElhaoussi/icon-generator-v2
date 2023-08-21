@@ -13,7 +13,7 @@ export const DarkThemeProvider = ({
     const storedDarkModeValue: string | null = localStorage.getItem("dark-mode")
     const initialDarkModeValue = storedDarkModeValue === null ? true : JSON.parse(storedDarkModeValue) as boolean;
     const [isDarkMode, setIsDarkMode] = useState<boolean>(initialDarkModeValue);
-
+  
   return (
     <DarkThemeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
       {children}
