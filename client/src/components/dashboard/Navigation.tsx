@@ -26,7 +26,7 @@ const Navigation = () => {
       location.href = "/";
     }
   };
-  console.log(user);
+
   return (
     <Flex
       backgroundColor="gray.900"
@@ -43,9 +43,9 @@ const Navigation = () => {
         <Divider orientation="vertical" borderColor="black" />
         <Menu>
           <MenuButton display="flex" alignItems="center" position="relative">
-            <Avatar src={user.picture} size="sm" mr={1} />
+            <Avatar src={user?.picture} size="sm" mr={1} />
             <span className="text-sm font-light text-gray-200">
-              @{user.given_name.toLowerCase()}
+              @{user?.given_name.toLowerCase()}
             </span>
           </MenuButton>
           <MenuList
@@ -58,9 +58,9 @@ const Navigation = () => {
           >
             <Stack textAlign="center">
               <h2 className="text-4xl font-light text-purple-300">
-                {user.name}
+                {user?.name}
               </h2>
-              <p className="text-sm font-light text-gray-500">{user.email}</p>
+              <p className="text-sm font-light text-gray-500">{user?.email}</p>
             </Stack>
             <MenuItem
               backgroundColor="gray.800"

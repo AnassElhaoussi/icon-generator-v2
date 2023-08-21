@@ -16,36 +16,36 @@ const AppRoutes = () => {
   const {user} = useContext(UserContext)
   return (
     <UserContextProvider>
-      <ChakraProvider>
-        <DarkThemeProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<App />} />
-              <Route path="/signin" element={
-                <ProtectedRoute currentPath="/signin" redirectPath="/" user={user as object}>
-                  <SignIn />
-                </ProtectedRoute>
-              } />
-              <Route path="/pricing" element={<Pricing />} />
-              <Route path="/dashboard" element={
-                <ProtectedRoute currentPath="/dashboard" redirectPath="/signin" user={user as object}>
-                  <Dashboard />
-                </ProtectedRoute>
-              } />
-              <Route path="/dashboard/account" element={
-                <ProtectedRoute currentPath="/dashboard/account" redirectPath="/signin" user={user as object}>    
-                  <Account />
-                </ProtectedRoute>
-              } />
-              <Route path="/dashboard/activity" element={
-                <ProtectedRoute currentPath="/dashboard/activity" redirectPath="/signin" user={user as object}>
-                  <Activity />
-                </ProtectedRoute>
-              } />
-            </Routes>
-          </BrowserRouter>
-        </DarkThemeProvider>
-      </ChakraProvider>
+      <DarkThemeProvider>
+        <ChakraProvider>
+            <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<App />} />
+                  <Route path="/signin" element={
+                    <ProtectedRoute currentPath="/signin" redirectPath="/" user={user as object}>
+                      <SignIn />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/pricing" element={<Pricing />} />
+                  <Route path="/dashboard" element={
+                    <ProtectedRoute currentPath="/dashboard" redirectPath="/signin" user={user as object}>
+                      <Dashboard />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/dashboard/account" element={
+                    <ProtectedRoute currentPath="/dashboard/account" redirectPath="/signin" user={user as object}>    
+                      <Account />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/dashboard/activity" element={
+                    <ProtectedRoute currentPath="/dashboard/activity" redirectPath="/signin" user={user as object}>
+                      <Activity />
+                    </ProtectedRoute>
+                  } />
+                </Routes>
+            </BrowserRouter>
+        </ChakraProvider>
+      </DarkThemeProvider>
     </UserContextProvider>
   );
 };
