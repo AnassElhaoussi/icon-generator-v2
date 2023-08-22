@@ -11,9 +11,8 @@ import {
   MenuList,
   MenuItem,
   Button,
-  Heading,
-  Stack,
   Flex,
+  Stack,
   Divider,
 } from "@chakra-ui/react";
 import ColorModeButton from "./ColorModeButton";
@@ -29,22 +28,23 @@ const Navigation = () => {
 
   return (
     <Flex
-      backgroundColor="gray.900"
       alignItems="center"
       justifyContent="space-between"
+      width="full"
       py="0.8rem"
       px="5rem"
+      textColor="whiteAlpha.800"
     >
       <h2 className="text-xl font-light">Dashboard</h2>
       <Stack direction="row" gap="2rem" h="2rem">
         <ul className="font-light text-md">
-          <span className="text-purple-400 text-lg">0</span> Credits Left
+          <span className="text-purple-400 text-lg">100</span> Credits Left
         </ul>
         <Divider orientation="vertical" borderColor="black" />
         <Menu>
           <MenuButton display="flex" alignItems="center" position="relative">
             <Avatar src={user?.picture} size="sm" mr={1} />
-            <span className="text-sm font-light text-gray-200">
+            <span className="text-sm font-light">
               @{user?.given_name.toLowerCase()}
             </span>
           </MenuButton>
@@ -53,7 +53,7 @@ const Navigation = () => {
             flexDirection="column"
             gap="1rem"
             padding="2rem"
-            backgroundColor="gray.900"
+            backgroundColor="black"
             border="none"
           >
             <Stack textAlign="center">
@@ -76,7 +76,7 @@ const Navigation = () => {
             >
               Your Activity
             </MenuItem>
-            <Button colorScheme="purple" textColor="white" onClick={signOut}>
+            <Button colorScheme="purple" onClick={signOut}>
               Sign Out
             </Button>
           </MenuList>
