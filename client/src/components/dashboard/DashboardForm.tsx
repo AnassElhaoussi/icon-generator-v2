@@ -11,16 +11,17 @@ import {
 import { Link } from "react-router-dom";
 import { defaultColors } from "../../constants";
 import { hexToRgb } from "../../helpers/hexToRgb";
+import DashboardColorPicker from "./ColorPicker";
 
 const DashboardForm = () => {
   const [colorInputType, setColorInputType] = useState<string>("default");
   const [chosenColor, setChosenColor] = useState<null | string>(null);
-  const [hoveredColor, setHoveredColor] = useState<null | string>(null)
+  const [hoveredColor, setHoveredColor] = useState<null | string>(null);
 
   const chooseColor = (colorName: string) => setChosenColor(colorName);
-  const onMouseEnter = (colorName: string) => setHoveredColor(colorName)
-  const onMouseLeave = () => setHoveredColor("")
-  
+  const onMouseEnter = (colorName: string) => setHoveredColor(colorName);
+  const onMouseLeave = () => setHoveredColor("");
+
   return (
     <VStack width="full" alignItems="start">
       <VStack
@@ -120,9 +121,12 @@ const DashboardForm = () => {
                       transform:
                         name === chosenColor ? "scale(1.2)" : "scale(1)",
                       borderBottomWidth: name === hoveredColor ? "7px" : "0px",
-                      borderColor: name === hoveredColor
-                        ? `rgb(${hexToRgb(color)?.r as number }, ${(hexToRgb(color)?.g as number) + 80}, ${(hexToRgb(color)?.b as number) + 80})`
-                        : "none",
+                      borderColor:
+                        name === hoveredColor
+                          ? `rgb(${hexToRgb(color)?.r as number}, ${
+                              (hexToRgb(color)?.g as number) + 80
+                            }, ${(hexToRgb(color)?.b as number) + 80})`
+                          : "none",
                     }}
                     onMouseEnter={() => onMouseEnter(name)}
                     onMouseLeave={onMouseLeave}
@@ -133,7 +137,10 @@ const DashboardForm = () => {
               ))}
             </Flex>
           ) : (
-            <div>hello</div>
+            <DashboardColorPicker
+              chosenColor={chosenColor}
+              setChosenColor={setChosenColor}
+            />
           )}
         </FormControl>
       </VStack>
