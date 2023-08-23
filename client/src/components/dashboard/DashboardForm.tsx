@@ -15,6 +15,8 @@ import { Link } from "react-router-dom";
 import { defaultColors } from "../../constants";
 import { hexToRgb } from "../../helpers/hexToRgb";
 import DashboardColorPicker from "./ColorPicker";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 const DashboardForm = () => {
   const [chosenColor, setChosenColor] = useState<string>("");
@@ -140,11 +142,14 @@ const DashboardForm = () => {
               ))}
             </Flex>
             {isCustomColor && (
-              <VStack>
-                <Heading>Custom Color Chosen</Heading>
+              <VStack alignItems="start" gap={4}>
+                <Flex alignItems="center" gap={3}>
+                  <FontAwesomeIcon icon={faCheck} className="text-green-500 text-2xl bg-black rounded-lg p-1" />
+                  <Heading fontFamily="Poppins, sans-serif" fontSize="lg" textColor="gray.200" fontWeight="light">Custom Color Chosen : </Heading>
+                </Flex>
                 <VStack>
-                  <div style={{backgroundColor: chosenColor}} className="w-14 h-14 rounded-xl"></div>
-                  <Text>{chosenColor}</Text>
+                  <div style={{backgroundColor: chosenColor}} className="w-14 h-14 rounded-xl shadow-[inset_0_-10px_16px_rgba(0,0,0,0.6)]"></div>
+                  <Text textColor={chosenColor}>{chosenColor}</Text>
                 </VStack>
               </VStack>
             )}
