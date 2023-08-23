@@ -7,6 +7,9 @@ import {
   FormHelperText,
   Flex,
   Divider,
+  Heading,
+  Text,
+  useDisclosure
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { defaultColors } from "../../constants";
@@ -14,13 +17,14 @@ import { hexToRgb } from "../../helpers/hexToRgb";
 import DashboardColorPicker from "./ColorPicker";
 
 const DashboardForm = () => {
-  const [colorInputType, setColorInputType] = useState<string>("default");
-  const [chosenColor, setChosenColor] = useState<null | string>(null);
+  const [chosenColor, setChosenColor] = useState<string>("");
   const [hoveredColor, setHoveredColor] = useState<null | string>(null);
+  const {onOpen, isOpen, onClose} = useDisclosure()
 
-  const chooseColor = (colorName: string) => setChosenColor(colorName);
+  const chooseColor = (hexColor: string) => setChosenColor(hexColor);
   const onMouseEnter = (colorName: string) => setHoveredColor(colorName);
   const onMouseLeave = () => setHoveredColor("");
+  const isCustomColor = defaultColors.every((colorObj) => chosenColor !== "" && chosenColor !== colorObj.color)
 
   return (
     <VStack width="full" alignItems="start">
@@ -98,28 +102,27 @@ const DashboardForm = () => {
             >
               <small
                 className="text-sm cursor-pointer"
-                onClick={() => setColorInputType("default")}
               >
                 default
               </small>
               <Divider orientation="vertical" />
               <small
                 className="text-sm cursor-pointer"
-                onClick={() => setColorInputType("customized")}
+                onClick={onOpen}
               >
                 customized
               </small>
             </Flex>
           </VStack>
-          {colorInputType === "default" ? (
+          
             <Flex gap="2rem">
               {defaultColors.map(({ name, color }, id) => (
-                <VStack key={id} onClick={() => chooseColor(name)}>
+                <VStack key={id} onClick={() => chooseColor(color)}>
                   <div
                     style={{
                       backgroundColor: color,
                       transform:
-                        name === chosenColor ? "scale(1.2)" : "scale(1)",
+                        color === chosenColor ? "scale(1.2)" : "scale(1)",
                       borderBottomWidth: name === hoveredColor ? "7px" : "0px",
                       borderColor:
                         name === hoveredColor
@@ -136,12 +139,23 @@ const DashboardForm = () => {
                 </VStack>
               ))}
             </Flex>
-          ) : (
+            {isCustomColor && (
+              <VStack>
+                <Heading>Custom Color Chosen</Heading>
+                <VStack>
+                  <div style={{backgroundColor: chosenColor}} className="w-14 h-14 rounded-xl"></div>
+                  <Text>{chosenColor}</Text>
+                </VStack>
+              </VStack>
+            )}
             <DashboardColorPicker
               chosenColor={chosenColor}
               setChosenColor={setChosenColor}
+              onOpen={onOpen}
+              isOpen={isOpen}
+              onClose={onClose}
             />
-          )}
+          
         </FormControl>
       </VStack>
     </VStack>
