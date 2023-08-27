@@ -7,9 +7,8 @@ import { Link } from "react-router-dom";
 const Pricing = () => {
   const { user } = useContext(UserContext) as UserContextType;
   return (
-    <main className=" bg-black text-center text-white font-poppins flex flex-col items-center py-32 px-8">
-      <img src={logo} alt="" className="absolute  w-52 -top-10" />
-      <div className="flex flex-col items-center gap-y-16 lg:w-[80%]">
+    <main className=" bg-black text-center text-white font-poppins flex flex-col items-center justify-center gap-10 pb-32 pt-10 px-8">
+        <img src={logo} alt="" className="w-40" />
         <div className="space-y-4">
           <div className="relative">
             <h1 className="relative z-10 md:text-8xl sm:text-7xl text-6xl md:font-black font-extrabold text-gray-200">
@@ -68,7 +67,6 @@ const Pricing = () => {
             </button>
           </div>
         </div>
-      </div>
     </main>
   );
 };

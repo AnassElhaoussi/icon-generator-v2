@@ -12,11 +12,12 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { defaultColors } from "../../constants";
+import { defaultColors } from "../../constants/colors";
 import { hexToRgb } from "../../helpers/hexToRgb";
 import DashboardColorPicker from "./ColorPicker";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import IconStyles from "./IconStyles";
 
 const DashboardForm = () => {
   const [chosenColor, setChosenColor] = useState<string>("");
@@ -39,16 +40,16 @@ const DashboardForm = () => {
       <VStack
         display="flex"
         alignItems="start"
-        marginX="4rem"
+        paddingLeft="4rem"
         borderRadius="1rem"
         gap="1.5rem"
-        width="60%"
+        width="100%"
       >
         <FormControl maxWidth="min-content">
           <FormLabel
-            fontSize="2xl"
+            fontSize="lg"
             width="max-content"
-            className="bg-gradient-to-r from-blue-700 to-purple-800 bg-clip-text text-transparent"
+            className="bg-gradient-to-r from-gray-400 to-white bg-clip-text text-transparent"
           >
             What's your icon object ?
           </FormLabel>
@@ -66,7 +67,7 @@ const DashboardForm = () => {
               focusBorderColor="blue.800"
               borderRadius="full"
               textColor="gray.400"
-              backgroundColor="gray.800"
+              backgroundColor="black"
               paddingLeft="2rem"
               value={iconObject as string}
               onChange={(e) => setIconObject(e.target.value)}
@@ -77,15 +78,15 @@ const DashboardForm = () => {
         </FormControl>
         <FormControl maxWidth="min-content">
           <FormLabel
-            fontSize="2xl"
+            fontSize="lg"
             width="max-content"
-            className="bg-gradient-to-r from-blue-700 to-purple-800 bg-clip-text text-transparent"
+            className="bg-gradient-to-r from-gray-400 to-white bg-clip-text text-transparent"
           >
             Describe the state of your icon object{" "}
             <span className="text-sm text-gray-700">*optional</span>
           </FormLabel>
           <Flex alignItems="center" gap={3}>
-            {isInputOnBlur2 && (iconObject?.trim().length as number) > 0 && (
+            {isInputOnBlur2 && (iconDescription?.trim().length as number) > 0 && (
                 <FontAwesomeIcon
                 icon={faCheck}
                 className="text-green-500 text-xl"
@@ -98,12 +99,12 @@ const DashboardForm = () => {
               borderRadius="full"
               fontWeight="light"
               textColor="gray.400"
-              backgroundColor="gray.800"
+              backgroundColor="black"
               paddingLeft="2rem"
               value={iconDescription as string}
               onChange={(e) => setIconDescription(e.target.value)}
-              onBlur={() => setIsInputOnBlur2(true)}
               onFocus={() => setIsInputOnBlur2(false)}
+              onBlur={() => setIsInputOnBlur2(true)}
             />
           </Flex>
           <FormHelperText>
@@ -114,9 +115,9 @@ const DashboardForm = () => {
         <FormControl display="flex" flexDirection="column" gap="2rem">
           <VStack alignItems="start">
             <FormLabel
-              fontSize="2xl"
+              fontSize="lg"
               width="max-content"
-              className="bg-gradient-to-r from-blue-700 to-purple-800 bg-clip-text text-transparent"
+              className="bg-gradient-to-r from-gray-400 to-white bg-clip-text text-transparent"
             >
               Choose the main color of your icon wisely{" "}
               <span className="text-gray-700 text-sm">*optional</span>
@@ -197,6 +198,7 @@ const DashboardForm = () => {
             onClose={onClose}
           />
         </FormControl>
+        <IconStyles />
       </VStack>
     </VStack>
   );
