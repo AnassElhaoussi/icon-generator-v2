@@ -18,6 +18,7 @@ import DashboardColorPicker from "./ColorPicker";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import IconStyles from "./IconStyles";
+import GenerateImage from "./GenerateImage";
 
 const DashboardForm = () => {
   const [chosenColor, setChosenColor] = useState<string>("");
@@ -199,6 +200,7 @@ const DashboardForm = () => {
           />
         </FormControl>
         <IconStyles />
+        <GenerateImage />
       </VStack>
     </VStack>
   );

@@ -2,6 +2,7 @@ import express from "express"
 import cors from "cors"
 import { createUser } from "./controllers/createUser.js"
 import { deleteUser } from "./controllers/deleteUser.js"
+require("dotenv").config()
 
 const app = express()
 app.use(cors())
