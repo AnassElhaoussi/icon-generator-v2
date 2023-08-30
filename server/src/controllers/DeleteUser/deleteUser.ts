@@ -2,10 +2,11 @@ import { prisma } from "../../util/prisma"
 import { Request, Response } from "express"
 import { IReqQuery } from "./IReqQuery"
 
-export const deleteUser = async (req: Request, res: Response) => {
+export default async function (req: Request, res: Response){
     const { id, email } = req.query
     try {
-        await prisma.user.delete({
+        // Deleting a user with a specifi email and id
+        const deletedUser = await prisma.user.delete({
             where: {
                 id,
                 email
@@ -13,12 +14,11 @@ export const deleteUser = async (req: Request, res: Response) => {
         })
         res.status(200).send({
             status: 200,
-            message: "User Deleted!"
+            message: `
+                Deleted User: ${deletedUser}
+            `
         })
     } catch (e) {
-        res.send({
-            response: "error",
-            error: e
-        })
+        res.status(e.code).send(e.message)
     }
 }

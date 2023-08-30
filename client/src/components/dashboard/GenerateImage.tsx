@@ -1,14 +1,14 @@
 import React, {useState} from "react"
 import { Stack } from "@chakra-ui/react"
 import { openai } from "../../helpers/openai_sdk"
+import axios from "axios"
 
 const GenerateImage = () => {
-
+    
     return (
         <Stack>
-            <button 
+            <button
             className="bg-gradient-to-r from-blue-900 to-blue-600 py-2 px-5 text-white font-light rounded-lg shadow-xl shadow-blue-900"
-            
             >Generate</button>
             
         </Stack>

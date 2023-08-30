@@ -1,7 +1,7 @@
 import express from "express"
 import cors from "cors"
-import {createUser} from "./src/controllers/CreateUser/createUser"
-import {deleteUser} from "./src/controllers/DeleteUser/deleteUser"
+import CreateUser from "./src/controllers/CreateUser/createUser"
+import DeleteUser from "./src/controllers/DeleteUser/deleteUser"
 import { GenerateImagesController } from "./src/controllers/GenerateImages/GenerateImagesController"
 
 const app = express()
@@ -11,9 +11,11 @@ const generateImagesController = new GenerateImagesController()
 app.use(cors())
 app.use(express.json())
 
-app.post("/api/createuser", createUser)
-app.delete("/api/deleteuser", deleteUser)
+// For creating and deleting users
+app.post("/api/createuser", CreateUser)
+app.delete("/api/deleteuser", DeleteUser)
 
+// For generating images and saving them on the db
 app.post("/api/generate", generateImagesController.handle)
 
 app.listen(PORT, () => {

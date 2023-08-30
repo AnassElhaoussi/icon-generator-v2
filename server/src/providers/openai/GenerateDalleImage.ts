@@ -11,13 +11,19 @@ export class GenerateDalleImage implements IGenerateDalleImage {
     }
 
     async generateImages(prompt: string, n: number) {
+        // Calling OpenAI Images API and generating images
         const result = await this.client.createImage({
             prompt,
             n,
-            size: "512x512"
+            size: "512x512",
+            response_format: "url"
+        }, {
+            // Ignores error messages of status below 500
+            validateStatus: function(status) {
+                return status < 500
+            }
         })
-        const imgUrl = result.data.data[0].url
-        
+        const imgUrl = result.data.data
         if(!imgUrl) throw new Error("Something went wrong!")
         return imgUrl
     }
