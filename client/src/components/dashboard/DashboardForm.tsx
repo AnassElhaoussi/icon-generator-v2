@@ -22,7 +22,7 @@ import GenerateImage from "./GenerateImage";
 import { IconStyleEnum } from "../../types/icon_styles";
 
 const DashboardForm = () => {
-  const [chosenColor, setChosenColor] = useState<string>("");
+  const [chosenColor, setChosenColor] = useState<null | string>(null);
   const [hoveredColor, setHoveredColor] = useState<null | string>(null);
   const [iconObject, setIconObject] = useState<null | string>(null);
   const [iconDescription, setIconDescription] = useState<null | string>(null);
@@ -187,10 +187,10 @@ const DashboardForm = () => {
               </Flex>
               <Flex alignItems="center" gap={3}>
                 <div
-                  style={{ backgroundColor: chosenColor }}
+                  style={{ backgroundColor: chosenColor as string }}
                   className="w-14 h-14 rounded-xl shadow-[inset_0_-10px_16px_rgba(0,0,0,0.6)]"
                 ></div>
-                <Text textColor={chosenColor}>{chosenColor}</Text>
+                <Text textColor={chosenColor as string}>{chosenColor}</Text>
               </Flex>
             </VStack>
           )}

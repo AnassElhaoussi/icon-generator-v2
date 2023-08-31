@@ -21,8 +21,8 @@ const DashboardColorPicker = ({
   isOpen,
   onClose,
 }: {
-  chosenColor: string;
-  setChosenColor: React.Dispatch<React.SetStateAction<string>>;
+  chosenColor: string | null;
+  setChosenColor: React.Dispatch<React.SetStateAction<string | null>>;
   onOpen: () => void;
   isOpen: boolean;
   onClose: () => void;
