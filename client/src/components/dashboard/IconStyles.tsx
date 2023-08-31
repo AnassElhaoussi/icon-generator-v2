@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { IconStyleEnum } from "../../types/icon_styles";
 import {
   FormControl,
   FormLabel,
@@ -11,12 +12,14 @@ import {
 } from "@chakra-ui/react";
 import { iconStyles } from "../../constants/iconstyles";
 import { DarkMode } from "@chakra-ui/react";
-import { easeIn } from "framer-motion";
+import { IconStyle } from "@fortawesome/fontawesome-svg-core";
 
-const IconStyles = () => {
-  const [chosenStyle, setChosenStyle] = useState<string>("");
+const IconStyles = ({chosenStyle, setChosenStyle}: {
+  chosenStyle: IconStyleEnum | null,
+  setChosenStyle: React.Dispatch<React.SetStateAction<IconStyleEnum | null>>
+}) => {
 
-  const chooseStyle = (name: string) => {
+  const chooseStyle = (name: IconStyleEnum) => {
     setChosenStyle(name);
   };
   return (
@@ -31,7 +34,7 @@ const IconStyles = () => {
         <Flex display="flex" flexWrap="wrap" rowGap="1rem" columnGap="2rem" alignItems="stretch">
           {iconStyles.map(({ name, description, imgUrl }) => (
             <Card
-              onClick={() => chooseStyle(name)}
+              onClick={() => chooseStyle(name as IconStyleEnum)}
               backgroundColor="#1A1A1A"
               dropShadow="dark-lg"
               cursor="pointer"

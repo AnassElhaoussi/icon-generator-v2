@@ -19,14 +19,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import IconStyles from "./IconStyles";
 import GenerateImage from "./GenerateImage";
+import { IconStyleEnum } from "../../types/icon_styles";
 
 const DashboardForm = () => {
   const [chosenColor, setChosenColor] = useState<string>("");
   const [hoveredColor, setHoveredColor] = useState<null | string>(null);
   const [iconObject, setIconObject] = useState<null | string>(null);
   const [iconDescription, setIconDescription] = useState<null | string>(null);
+  const [chosenStyle, setChosenStyle] = useState<IconStyleEnum | null>(null);
   const [isInputOnBlur1, setIsInputOnBlur1] = useState<boolean>(false);
-  const [isInputOnBlur2, setIsInputOnBlur2] = useState<boolean>(false)
+  const [isInputOnBlur2, setIsInputOnBlur2] = useState<boolean>(false);
   const { onOpen, isOpen, onClose } = useDisclosure();
 
   const chooseColor = (hexColor: string) => setChosenColor(hexColor);
@@ -57,9 +59,9 @@ const DashboardForm = () => {
           <Flex alignItems="center" gap={3}>
             {isInputOnBlur1 && (iconObject?.trim().length as number) > 0 && (
               <FontAwesomeIcon
-              icon={faCheck}
-              className="text-green-500 text-xl"
-            />
+                icon={faCheck}
+                className="text-green-500 text-xl"
+              />
             )}
             <Input
               placeholder="Example : Bird"
@@ -87,12 +89,13 @@ const DashboardForm = () => {
             <span className="text-sm text-gray-700">*optional</span>
           </FormLabel>
           <Flex alignItems="center" gap={3}>
-            {isInputOnBlur2 && (iconDescription?.trim().length as number) > 0 && (
+            {isInputOnBlur2 &&
+              (iconDescription?.trim().length as number) > 0 && (
                 <FontAwesomeIcon
-                icon={faCheck}
-                className="text-green-500 text-xl"
-              />
-            )}
+                  icon={faCheck}
+                  className="text-green-500 text-xl"
+                />
+              )}
             <Input
               placeholder="Example : Angry, Happy, Flying.."
               border="none"
@@ -199,8 +202,13 @@ const DashboardForm = () => {
             onClose={onClose}
           />
         </FormControl>
-        <IconStyles />
-        <GenerateImage />
+        <IconStyles chosenStyle={chosenStyle} setChosenStyle={setChosenStyle} />
+        <GenerateImage
+          chosenColor={chosenColor}
+          iconObject={iconObject}
+          iconDescription={iconDescription}
+          chosenStyle={chosenStyle}
+        />
       </VStack>
     </VStack>
   );

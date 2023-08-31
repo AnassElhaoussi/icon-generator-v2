@@ -1,13 +1,25 @@
 import React, { useState } from "react";
 import { Stack, Flex, Card, Text } from "@chakra-ui/react";
 import { openai } from "../../helpers/openai_sdk";
-import axios from "axios";
+import { usePrompt } from "../../hooks/usePrompt";
+import { IconStyleEnum } from "../../types/icon_styles";
 
-const GenerateImage = () => {
+const GenerateImage = ({
+  chosenColor,
+  iconObject,
+  iconDescription,
+  chosenStyle,
+}: {
+  chosenColor: string;
+  iconObject: null | string;
+  iconDescription: null | string;
+  chosenStyle: IconStyleEnum | null;
+}) => {
   const [numberOfGenerations, setNumberOfGenerations] = useState<number>(0);
   const incrementCount = () => setNumberOfGenerations(numberOfGenerations + 1);
   const decrementCount = () =>
     numberOfGenerations > 0 && setNumberOfGenerations(numberOfGenerations - 1);
+  const prompt = usePrompt(iconObject, iconDescription, chosenColor, chosenStyle);
 
   return (
     <Stack alignItems="start" width="full">
