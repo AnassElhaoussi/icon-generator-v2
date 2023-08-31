@@ -27,20 +27,27 @@ const GenerateImage = ({
   const incrementCount = () => setNumberOfGenerations(numberOfGenerations + 1);
   const decrementCount = () =>
     numberOfGenerations > 0 && setNumberOfGenerations(numberOfGenerations - 1);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const prompt = usePrompt(iconObject, iconDescription, chosenColor, chosenStyle) as string;
   const mutation = useMutation({
-    mutationFn: (bodyObj: {prompt: string, n: number}) => generateDalleIcons(bodyObj) 
+    mutationFn: async (bodyObj: {prompt: string, n: number}) => await generateDalleIcons(bodyObj) 
   }) 
+
   const mutate = () => {
     if(
-      Object
+      (Object
       .values(formObj)
-      .map(
+      .every(
         property => (typeof property === "string") 
         ? property?.trim().length !== 0 
-        : property !== null
+        : property !== null)
+        &&
+        numberOfGenerations > 0
       )
     ) mutation.mutate({prompt, n: numberOfGenerations})
+    else {
+      setErrorMessage("Some field are missing, try again!")
+    }
   }
 
   return (
@@ -82,6 +89,7 @@ const GenerateImage = ({
           +
         </Card>
       </Flex>
+      {errorMessage && <Text textColor="red.700">{errorMessage}</Text>}
       <button
       onClick={mutate} 
       className="bg-gradient-to-r from-blue-900 to-blue-600 py-2 px-5 text-white font-light rounded-lg shadow-xl shadow-blue-900">
