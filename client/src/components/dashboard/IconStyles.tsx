@@ -40,7 +40,7 @@ const IconStyles = () => {
               style={{
                 borderBottom:
                   chosenStyle === name
-                    ? "8px solid blueviolet"
+                    ? "8px solid black"
                     : "2px solid transparent",
               }}
             >
