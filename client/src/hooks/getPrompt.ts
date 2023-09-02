@@ -1,15 +1,17 @@
 
+import { GetColorName } from "hex-color-to-color-name"
 import { getIconPrompts } from "../constants/prompts"
 import { IconStyleEnum } from "../types/icon_styles"
 
-export const usePrompt = (
+export const getPrompt = (
     iconObject: string | null,
     state: string | null,
-    color: string | null,
+    chosenColor: string | null,
     iconStyle: IconStyleEnum | null
 ) => {
     const iconObjectDescription = `${iconObject as string} that is ${state as string}`
-    const iconPrompts = getIconPrompts(iconObjectDescription, color as string)
+    const colorName = GetColorName(chosenColor as string) as string
+    const iconPrompts = getIconPrompts(iconObjectDescription, colorName)
     if (
         Object.prototype.hasOwnProperty
             .call(iconPrompts, iconStyle as IconStyleEnum)

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Stack, Flex, Card, Text } from "@chakra-ui/react";
 import { openai } from "../../helpers/openai_sdk";
-import { usePrompt } from "../../hooks/usePrompt";
+import { getPrompt } from "../../hooks/getPrompt";
 import { IconStyleEnum } from "../../types/icon_styles";
 import { useMutation } from "@tanstack/react-query";
 import { generateDalleIcons } from "../../api";
@@ -21,34 +21,45 @@ const GenerateImage = ({
     chosenColor,
     iconObject,
     iconDescription,
-    chosenStyle
-  }
+    chosenStyle,
+  };
   const [numberOfGenerations, setNumberOfGenerations] = useState<number>(0);
   const incrementCount = () => setNumberOfGenerations(numberOfGenerations + 1);
   const decrementCount = () =>
     numberOfGenerations > 0 && setNumberOfGenerations(numberOfGenerations - 1);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
-  const prompt = usePrompt(iconObject, iconDescription, chosenColor, chosenStyle) as string;
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const prompt = Object.values(formObj).every((property) =>
+    typeof property === "string"
+      ? property.trim().length !== 0
+      : property !== null
+  )
+    ? (getPrompt(
+        iconObject,
+        iconDescription,
+        chosenColor,
+        chosenStyle
+      ) as string)
+    : null;
   const mutation = useMutation({
-    mutationFn: async (bodyObj: {prompt: string, n: number}) => await generateDalleIcons(bodyObj) 
-  }) 
+    mutationFn: async (bodyObj: { prompt: string; n: number }) =>
+      await generateDalleIcons(bodyObj),
+  });
+  console.log(mutation.data);
 
   const mutate = () => {
-    if(
-      (Object
-      .values(formObj)
-      .every(
-        property => (typeof property === "string") 
-        ? property?.trim().length !== 0 
-        : property !== null)
-        &&
-        numberOfGenerations > 0
-      )
-    ) mutation.mutate({prompt, n: numberOfGenerations})
-    else {
-      setErrorMessage("Some field are missing, try again!")
+    if (
+      Object.values(formObj).every((property) =>
+        typeof property === "string"
+          ? property?.trim()?.length !== 0
+          : property !== null
+      ) &&
+      numberOfGenerations > 0
+    ) {
+      mutation.mutate({ prompt: prompt as string, n: numberOfGenerations });
+    } else {
+      setErrorMessage("Some field are missing, try again!");
     }
-  }
+  };
 
   return (
     <Stack alignItems="start" width="full">
@@ -91,8 +102,9 @@ const GenerateImage = ({
       </Flex>
       {errorMessage && <Text textColor="red.700">{errorMessage}</Text>}
       <button
-      onClick={mutate} 
-      className="bg-gradient-to-r from-blue-900 to-blue-600 py-2 px-5 text-white font-light rounded-lg shadow-xl shadow-blue-900">
+        onClick={mutate}
+        className="bg-gradient-to-r from-blue-900 to-blue-600 py-2 px-5 text-white font-light rounded-lg shadow-xl shadow-blue-900"
+      >
         Generate
       </button>
     </Stack>
