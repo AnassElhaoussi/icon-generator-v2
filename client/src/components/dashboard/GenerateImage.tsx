@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { Stack, Flex, Card, Text } from "@chakra-ui/react";
+import React, { useState, useRef } from "react";
+import { Stack, Flex, Card, Text, Image } from "@chakra-ui/react";
 import { openai } from "../../helpers/openai_sdk";
 import { getPrompt } from "../../hooks/getPrompt";
 import { IconStyleEnum } from "../../types/icon_styles";
 import { useMutation } from "@tanstack/react-query";
 import { generateDalleIcons } from "../../api";
+import { setDefaultResultOrder } from "dns";
 
 const GenerateImage = ({
   chosenColor,
@@ -27,7 +28,7 @@ const GenerateImage = ({
   const incrementCount = () => setNumberOfGenerations(numberOfGenerations + 1);
   const decrementCount = () =>
     numberOfGenerations > 0 && setNumberOfGenerations(numberOfGenerations - 1);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [error, setError] = useState<null | string>(null)
   const prompt = Object.values(formObj).every((property) =>
     typeof property === "string"
       ? property.trim().length !== 0
@@ -40,11 +41,11 @@ const GenerateImage = ({
         chosenStyle
       ) as string)
     : null;
-  const mutation = useMutation({
-    mutationFn: async (bodyObj: { prompt: string; n: number }) =>
-      await generateDalleIcons(bodyObj),
+  const mutation = useMutation(generateDalleIcons, {
+    onError: (errorMessage: string) => {
+      setError(errorMessage)
+    }
   });
-  console.log(mutation.data);
 
   const mutate = () => {
     if (
@@ -57,7 +58,7 @@ const GenerateImage = ({
     ) {
       mutation.mutate({ prompt: prompt as string, n: numberOfGenerations });
     } else {
-      setErrorMessage("Some field are missing, try again!");
+      setError("Some field are missing, try again!")
     }
   };
 
@@ -100,13 +101,20 @@ const GenerateImage = ({
           +
         </Card>
       </Flex>
-      {errorMessage && <Text textColor="red.700">{errorMessage}</Text>}
+      {error && <Text textColor="red.700">{error}</Text>}      
       <button
         onClick={mutate}
         className="bg-gradient-to-r from-blue-900 to-blue-600 py-2 px-5 text-white font-light rounded-lg shadow-xl shadow-blue-900"
       >
         Generate
       </button>
+      <Flex>
+        {mutation.isSuccess && mutation.data?.data.map(({url}, id) => {
+          return (
+            <Image src={url} key={id} />
+          )
+        }) }
+      </Flex>
     </Stack>
   );
 };

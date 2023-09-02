@@ -35,7 +35,7 @@ const DashboardForm = () => {
   const onMouseEnter = (colorName: string) => setHoveredColor(colorName);
   const onMouseLeave = () => setHoveredColor("");
   const isCustomColor = defaultColors.every(
-    (colorObj) => chosenColor !== "" && chosenColor !== colorObj.color
+    (colorObj) => chosenColor !== null && chosenColor !== colorObj.color
   );
 
   return (
