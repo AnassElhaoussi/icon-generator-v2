@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Stack, Flex, Card, Text, Image } from "@chakra-ui/react";
+import { Stack, Flex, Card, Text, Image, Spinner } from "@chakra-ui/react";
 import { openai } from "../../helpers/openai_sdk";
 import { getPrompt } from "../../hooks/getPrompt";
 import { IconStyleEnum } from "../../types/icon_styles";
@@ -28,7 +28,7 @@ const GenerateImage = ({
   const incrementCount = () => setNumberOfGenerations(numberOfGenerations + 1);
   const decrementCount = () =>
     numberOfGenerations > 0 && setNumberOfGenerations(numberOfGenerations - 1);
-  const [error, setError] = useState<null | string>(null)
+  const [error, setError] = useState<null | string>(null);
   const prompt = Object.values(formObj).every((property) =>
     typeof property === "string"
       ? property.trim().length !== 0
@@ -43,8 +43,8 @@ const GenerateImage = ({
     : null;
   const mutation = useMutation(generateDalleIcons, {
     onError: (errorMessage: string) => {
-      setError(errorMessage)
-    }
+      setError(errorMessage);
+    },
   });
 
   const mutate = () => {
@@ -57,13 +57,14 @@ const GenerateImage = ({
       numberOfGenerations > 0
     ) {
       mutation.mutate({ prompt: prompt as string, n: numberOfGenerations });
+      setError(null);
     } else {
-      setError("Some field are missing, try again!")
+      setError("Some field are missing, try again!");
     }
   };
 
   return (
-    <Stack alignItems="start" width="full">
+    <Stack display="flex" gap="1.5rem" alignItems="start" width="full">
       <Flex alignItems="center" gap="1rem">
         <Card
           display="flex"
@@ -101,19 +102,34 @@ const GenerateImage = ({
           +
         </Card>
       </Flex>
-      {error && <Text textColor="red.700">{error}</Text>}      
+      {error && <Text textColor="red.700">{error}</Text>}
       <button
         onClick={mutate}
         className="bg-gradient-to-r from-blue-900 to-blue-600 py-2 px-5 text-white font-light rounded-lg shadow-xl shadow-blue-900"
       >
-        Generate
+        {mutation.isLoading ? (
+          <div className="flex items-center gap-x-2">
+            <Spinner />
+            Generating...
+          </div>
+        ) : (
+          "Generate"
+        )}
       </button>
-      <Flex>
-        {mutation.isSuccess && mutation.data?.data.map(({url}, id) => {
-          return (
-            <Image src={url} key={id} />
-          )
-        }) }
+      <Flex flexWrap="wrap" gap="0.8rem" marginTop="1rem">
+        <Text fontSize="1rem">Generations</Text>
+        {mutation.isSuccess &&
+          mutation.data?.data.map(({ url }, id) => {
+            return (
+                <Image
+                  src={url}
+                  key={id}
+                  borderRadius="2xl"
+                  width={80}
+                  height={80}
+                />
+            );
+          })}
       </Flex>
     </Stack>
   );
