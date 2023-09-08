@@ -23,9 +23,9 @@ const Pricing = () => {
         <div className="flex justify-center items-stretch gap-4 lg:flex-nowrap flex-wrap w-full px-10">
           <div className="flex flex-col gap-y-6 bg-gray-900 h-[17rem] items-center justify-around p-8 rounded-2xl shadow-lg  md:w-[20rem] w-full ">
             <div className="space-y-2">
-              <h3 className="text-5xl font-bold text-blue-700">Free</h3>
+              <h3 className="text-5xl font-bold text-blue-700">Basic</h3>
               <p className="text-sm font-light">
-                Enjoy our free plan by using 10 credits.
+                Buy 20 credits in 5$ 
               </p>
             </div>
             {user !== null ? (
@@ -45,7 +45,7 @@ const Pricing = () => {
           <div className="flex flex-col gap-y-6 bg-gray-900 h-[17rem] items-center justify-around p-8 rounded-2xl shadow-lg  md:w-[20rem] w-full">
             <div className="space-y-2">
               <h3 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-purple-700">
-                Basic
+                Standard
               </h3>
               <p className="text-sm font-light">Buy 50 credits with 9$</p>
             </div>

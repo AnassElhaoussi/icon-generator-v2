@@ -35,7 +35,7 @@ export default async function (req: Request, res: Response) {
                     verified_email,
                     name,
                     given_name,
-                    picture,
+                    picture
                 },
             });
             res.status(200).send({

@@ -5,7 +5,7 @@ import { getPrompt } from "../../hooks/getPrompt";
 import { IconStyleEnum } from "../../types/icon_styles";
 import { useMutation } from "@tanstack/react-query";
 import { generateDalleIcons } from "../../api";
-import { setDefaultResultOrder } from "dns";
+import { IMutationData } from "../../types/mutations";
 
 const GenerateImage = ({
   chosenColor,
@@ -44,8 +44,9 @@ const GenerateImage = ({
   const mutation = useMutation(generateDalleIcons, {
     onError: (errorMessage: string) => {
       setError(errorMessage);
-    },
+    }
   });
+  const mutationData = mutation.data?.data as IMutationData[]
 
   const mutate = () => {
     if (
@@ -117,9 +118,8 @@ const GenerateImage = ({
         )}
       </button>
       <Flex flexWrap="wrap" gap="0.8rem" marginTop="1rem">
-        <Text fontSize="1rem">Generations</Text>
-        {mutation.isSuccess &&
-          mutation.data?.data.map(({ url }, id) => {
+        {mutation.isSuccess && <Text>Generations</Text>}
+        {mutation.isSuccess && mutationData.map(({ url }, id) => {
             return (
                 <Image
                   src={url}
