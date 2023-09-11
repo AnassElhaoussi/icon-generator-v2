@@ -5,7 +5,8 @@ import { prisma } from "../../util/prisma"
 
 
 export default async function (req: Request, res: Response) {
-    const { access_token } = req.body;
+    const { access_token } = req.body
+    req.session.emails = []
     try {
         // Getting the user object with his unique access token
         const response = await fetch(
@@ -26,21 +27,35 @@ export default async function (req: Request, res: Response) {
             given_name,
             picture
         } = await response.json() as IUserObject
+
+        const emails = [...req.session.emails, email]
         try {
-            // Adds user data to the database
-            const createdUser = await prisma.user.create({
-                data: {
-                    id,
-                    email,
-                    verified_email,
-                    name,
-                    given_name,
-                    picture
-                },
-            });
+            await prisma.$transaction(async (tx) => {
+                // Adds user data to the database
+                const user = await prisma.user.create({
+                    data: {
+                        id,
+                        email,
+                        verified_email,
+                        name,
+                        given_name,
+                        picture
+                    }
+                });
+
+                const filteredEmails = emails.filter((email) => email === user.email)
+                if (filteredEmails.length === 1) {
+                    await tx.credits.create({
+                        data: {
+                            amount: 10
+                        }
+                    })
+                }
+            })
+
             res.status(200).send({
                 status: 200,
-                message: `User Created : ${createdUser}`
+                message: `User Created successfully`
             })
         } catch (e) {
             res.status(e.code).send(e.message)

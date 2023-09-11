@@ -11,11 +11,15 @@
     "strict": true,
     "noImplicitAny": true,
     "useUnknownInCatchVariables": false,
-    "inlineSourceMap": true
+    "inlineSourceMap": true,
+    "typeRoots": [
+      "./src/types",
+      "./node_modules/@types"
+    ]
   },
   "ts-node": {
       "esm": true,
       "experimentalSpecifierResolution": "node",
   },
-  "lib": ["esnext"]
+  "lib": ["esnext"],
 }
