@@ -5,6 +5,8 @@ import {prisma} from "../../util/prisma"
 
 export default async function (req: Request, res: Response) {
     const { access_token } = req.body
+    let emails = req.session?.emails || []
+    let emailsSession = req.session?.emails
     try {
         // Getting the user object with his unique access token
         const response = await fetch(
@@ -26,7 +28,8 @@ export default async function (req: Request, res: Response) {
             picture
         } = await response.json() as IUserObject
 
-        const emails = [...req.session?.emails as string[], email]
+        emailsSession = [...emails, email]
+
         try {
             await prisma.$transaction(async (tx) => {
                 // Adds user data to the database
@@ -41,7 +44,7 @@ export default async function (req: Request, res: Response) {
                     }
                 });
 
-                const filteredEmails = emails.filter((email) => email === user.email)
+                const filteredEmails = emails.filter((email: string) => email === user.email)
                 if (filteredEmails.length === 1) {
                     await tx.credits.create({
                         data: {
@@ -56,10 +59,10 @@ export default async function (req: Request, res: Response) {
                 message: `User Created successfully`
             })
         } catch (e) {
-            res.status(e.code).send(e.message)
+            res.send(e.message)
         }
 
     } catch (e) {
-        res.status(e.code).send(e.message)
+        res.send(e.message)
     }
 };
