@@ -11,20 +11,9 @@ const app = express()
 const PORT = 8000
 const generateImagesController = new GenerateImagesController()
 
-declare module "express-session" {
-    interface SessionData {
-      emails: string[];
-    }
-}
-
 app.use(cors())
 app.use(express.json())
-app.use(cookieParser())
-app.use(sessions({
-    secret: process.env.SESSION_SECRET_KEY as string,
-    saveUninitialized: true,
-    resave: true
-}))
+
 
 // For creating and deleting users
 app.post("/api/createuser", CreateUser)

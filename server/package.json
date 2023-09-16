@@ -13,6 +13,7 @@
     "license": "ISC",
     "dependencies": {
         "@prisma/client": "^5.0.0",
+        "@types/express-session": "^1.17.0",
         "@types/node": "^20.5.7",
         "aws-sdk": "^2.1446.0",
         "cookie-parser": "^1.4.6",
@@ -32,7 +33,6 @@
         "@types/cookie-parser": "^1.4.4",
         "@types/cors": "^2.8.13",
         "@types/express": "^4.17.17",
-        "@types/express-session": "^1.17.7",
         "prisma": "^5.0.0",
         "ts-node": "^10.9.1",
         "ts-node-dev": "^2.0.0",

@@ -1,19 +1,17 @@
 import { Request, Response } from "express";
 import fetch from "node-fetch";
 import { IUserObject } from "./IUserObject";
-import { prisma } from "../../util/prisma"
-
+import {prisma} from "../../util/prisma"
 
 export default async function (req: Request, res: Response) {
     const { access_token } = req.body
-    req.session.emails = []
     try {
         // Getting the user object with his unique access token
         const response = await fetch(
             `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${access_token}`, {
             headers: {
                 Accept: "application/json",
-                Authorizartion: `Bearer ${access_token}`,
+                Authorization: `Bearer ${access_token}`,
             },
         }
         );
@@ -28,7 +26,7 @@ export default async function (req: Request, res: Response) {
             picture
         } = await response.json() as IUserObject
 
-        const emails = [...req.session.emails, email]
+        const emails = [...req.session?.emails as string[], email]
         try {
             await prisma.$transaction(async (tx) => {
                 // Adds user data to the database
