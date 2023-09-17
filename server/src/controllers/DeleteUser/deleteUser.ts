@@ -6,7 +6,8 @@ export default async function (req: Request, res: Response){
     const { id, email } = req.query
     try {
         // Deleting a user with a specifi email and id
-        const deletedUser = await prisma.user.delete({
+        const deletedUser = await prisma.user
+        .delete({
             where: {
                 id,
                 email
@@ -19,6 +20,6 @@ export default async function (req: Request, res: Response){
             `
         })
     } catch (e) {
-        res.status(e.code).send(e.message)
+        res.send(e.message)
     }
 }

@@ -3,10 +3,21 @@ import fetch from "node-fetch";
 import { IUserObject } from "./IUserObject";
 import {prisma} from "../../util/prisma"
 
+declare module "express-session" {
+    interface Session {
+        session: {
+            emails: string[]
+        }
+    }
+}
+
 export default async function (req: Request, res: Response) {
     const { access_token } = req.body
-    let emails = req.session?.emails || []
-    let emailsSession = req.session?.emails
+    let emails = !req.session?.emails
+    ? []
+    : req.session?.emails
+
+    if(emails.length === 0) req.session.emails = []
     try {
         // Getting the user object with his unique access token
         const response = await fetch(
@@ -28,10 +39,12 @@ export default async function (req: Request, res: Response) {
             picture
         } = await response.json() as IUserObject
 
-        emailsSession = [...emails, email]
+        req.session && (req.session.emails = [...emails, email])
 
         try {
-            await prisma.$transaction(async (tx) => {
+            await prisma
+            .$transaction(
+                async (tx) => {
                 // Adds user data to the database
                 const user = await prisma.user.create({
                     data: {
@@ -43,10 +56,16 @@ export default async function (req: Request, res: Response) {
                         picture
                     }
                 });
-
-                const filteredEmails = emails.filter((email: string) => email === user.email)
-                if (filteredEmails.length === 1) {
-                    await tx.credits.create({
+                console.log(req.session?.emails)
+                const filteredEmails = req.session
+                ?.emails.filter(
+                    (email: string) => email === user.email
+                )
+                if(
+                    filteredEmails.length === 1
+                ) {
+                    await tx.credits
+                    .create({
                         data: {
                             amount: 10
                         }
@@ -54,7 +73,9 @@ export default async function (req: Request, res: Response) {
                 }
             })
 
-            res.status(200).send({
+            res
+            .status(200)
+            .send({
                 status: 200,
                 message: `User Created successfully`
             })

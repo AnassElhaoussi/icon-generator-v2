@@ -23,19 +23,17 @@ export const UserContextProvider = ({
 }) => {
   const [state, dispatch] = useReducer(UserReducer, initialState);
   const addUser = async (user: object) => {
-    console.log("working here");
     const userData = await getExactUser(user);
-    console.log("working here");
     const loginResponse = await CreateUser(user.access_token);
-    console.log("hello world");
+    console.log(loginResponse)
     if (loginResponse.status === 200) {
-      console.log("helloworl");
       dispatch({ type: UserActionType.ADD_USER, payload: userData.data });
     }
     return loginResponse;
   };
   const logoutUser = async (user: object) => {
     const logoutResponse = await deleteUser(user.id, user.email);
+    console.log(logoutResponse)
     if (logoutResponse.status === 200) {
       dispatch({ type: UserActionType.LOGOUT_USER, payload: null });
     }
