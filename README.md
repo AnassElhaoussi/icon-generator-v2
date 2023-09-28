@@ -7,10 +7,7 @@ This README provides an overview of the Icon Generator SaaS (Software as a Servi
 - [Introduction](#introduction)
 - [Features](#features)
 - [Tech Stack](#tech-stack)
-- [Getting Started](#getting-started)
-  - [Setting Up the Backend](#setting-up-the-backend)
-  - [Setting Up the Frontend](#setting-up-the-frontend)
-- [Deployment](#deployment)
+- [Setting Up the Frontend](#setting-up-the-frontend)
 - [License](#license)
 
 ## Introduction
