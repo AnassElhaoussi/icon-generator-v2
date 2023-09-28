@@ -17,7 +17,7 @@ const SignIn = () => {
     useContext(UserContext) as UserContextType;
 
   const signIn = useGoogleLogin({
-    onSuccess: async function (response: object): Promise {
+    onSuccess: async function (response: object) {
       isLoading();
       try {
         const res = await addUser(response);

@@ -17,7 +17,6 @@ export default async function (req: Request, res: Response) {
     ? []
     : req.session?.emails
 
-    if(emails.length === 0) req.session.emails = []
     try {
         // Getting the user object with his unique access token
         const response = await fetch(
@@ -29,7 +28,7 @@ export default async function (req: Request, res: Response) {
         }
         );
 
-        // Destructuring properties from the object
+        // Destructuring properties from the user object
         const {
             id,
             email,
@@ -56,13 +55,14 @@ export default async function (req: Request, res: Response) {
                         picture
                     }
                 });
-                console.log(req.session?.emails)
-                const filteredEmails = req.session
+
+                const uniqueEmails = req
+                .session
                 ?.emails.filter(
                     (email: string) => email === user.email
                 )
                 if(
-                    filteredEmails.length === 1
+                    uniqueEmails.length === 1
                 ) {
                     await tx.credits
                     .create({
