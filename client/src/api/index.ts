@@ -23,4 +23,3 @@ export async function deleteUser(id: number, email: string) {
 export async function generateDalleIcons({ prompt, n }: { prompt: string, n: number }) {
     return await axios.post("http://localhost:8000/api/generate", { prompt, n })
 }
-

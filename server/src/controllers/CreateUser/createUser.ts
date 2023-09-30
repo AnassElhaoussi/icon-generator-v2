@@ -38,51 +38,42 @@ export default async function (req: Request, res: Response) {
         } = await response.json() as IUserObject
 
         req.session && (req.session.emails = [...emails, email])
-
+        const uniqueEmails = emails.filter(
+            (savedEmail: string) => savedEmail === email 
+        )
         try {
-            await prisma
-            .$transaction(
-                async (tx) => {
-                // Adds user data to the database
-                const user = await prisma.user.create({
-                    data: {
-                        id,
-                        email,
-                        verified_email,
-                        name,
-                        given_name,
-                        picture
-                    }
-                });
-
-                const uniqueEmails = req
-                .session
-                ?.emails.filter(
-                    (email: string) => email === user.email
-                )
-                if(
-                    uniqueEmails.length === 1
-                ) {
-                    await tx.credits
-                    .create({
+            const user = await prisma.$transaction(
+                async (prisma) => {
+                    const user = await prisma.user.create({
                         data: {
-                            amount: 10
+                            id,
+                            email,
+                            verified_email,
+                            name,
+                            given_name,
+                            picture
                         }
                     })
+                    await prisma.credits.create({
+                        data: {
+                            amount: uniqueEmails.length > 1 
+                            ? 0 
+                            : 3,
+                            userId: user.id
+                        }
+                    })
+                    return user
                 }
-            })
-
-            res
-            .status(200)
-            .send({
+            )
+            res.status(200).send({
                 status: 200,
-                message: `User Created successfully`
+                createdUser: user
             })
         } catch (e) {
-            res.send(e.message)
+            throw new Error(e.message)
         }
 
     } catch (e) {
-        res.send(e.message)
+        throw new Error(e.message)
     }
 };

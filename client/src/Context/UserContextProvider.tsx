@@ -23,11 +23,9 @@ export const UserContextProvider = ({
 }) => {
   const [state, dispatch] = useReducer(UserReducer, initialState);
   const addUser = async (user: object) => {
-    const userData = await getExactUser(user);
     const loginResponse = await CreateUser(user.access_token);
-    console.log(loginResponse)
     if (loginResponse.status === 200) {
-      dispatch({ type: UserActionType.ADD_USER, payload: userData.data });
+      dispatch({ type: UserActionType.ADD_USER, payload: loginResponse.data.createdUser as object });
     }
     return loginResponse;
   };
