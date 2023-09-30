@@ -10,7 +10,6 @@ declare module "express-session" {
         }
     }
 }
-
 export default async function (req: Request, res: Response) {
     const { access_token } = req.body
     let emails = !req.session?.emails
