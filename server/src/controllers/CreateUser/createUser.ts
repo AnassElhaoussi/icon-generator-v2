@@ -2,19 +2,22 @@ import { Request, Response } from "express";
 import fetch from "node-fetch";
 import { IUserObject } from "./IUserObject";
 import {prisma} from "../../util/prisma"
+import * as fs from "fs"
 
-declare module "express-session" {
-    interface Session {
-        session: {
-            emails: string[]
-        }
-    }
-}
 export default async function (req: Request, res: Response) {
     const { access_token } = req.body
-    let emails = !req.session?.emails
-    ? []
-    : req.session?.emails
+    const emailsRecordFile = "emails.json"
+    let loggedEmails = []
+
+    if(fs.existsSync(emailsRecordFile)) {
+        loggedEmails = JSON
+        .parse(
+            fs.readFileSync(
+                emailsRecordFile,
+                "utf-8"
+            )
+        )
+    }
 
     try {
         // Getting the user object with his unique access token
@@ -37,14 +40,25 @@ export default async function (req: Request, res: Response) {
             picture
         } = await response.json() as IUserObject
 
-        req.session && (req.session.emails = [...emails, email])
-        const uniqueEmails = emails.filter(
+        // Adding the new email to the array and saving the new array in the file
+        email && loggedEmails.push(email)
+        fs.writeFileSync(
+            emailsRecordFile,
+            JSON.stringify(loggedEmails),
+            "utf-8"
+        )
+
+        // Getting unique user email records from the logged emails array
+        const uniqueUserEmailRecord = loggedEmails.filter(
             (savedEmail: string) => savedEmail === email 
         )
+
         try {
             const user = await prisma.$transaction(
                 async (prisma) => {
-                    const user = await prisma.user.create({
+                    const user = await prisma
+                    .user
+                    .create({
                         data: {
                             id,
                             email,
@@ -54,14 +68,24 @@ export default async function (req: Request, res: Response) {
                             picture
                         }
                     })
-                    await prisma.credits.create({
+                    
+                    
+                    uniqueUserEmailRecord.length === 1
+                    ? await prisma
+                    .credits
+                    .create({
                         data: {
-                            amount: uniqueEmails.length > 1 
-                            ? 0 
-                            : 3,
+                            amount: 3,
                             userId: user.id
                         }
                     })
+                    : await prisma
+                    .credits
+                    .update({
+                        where: {userId: ""},
+                        data: {userId: user.id}
+                    })
+
                     return user
                 }
             )

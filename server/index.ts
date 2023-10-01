@@ -3,9 +3,6 @@ import cors from "cors"
 import CreateUser from "./src/controllers/CreateUser/createUser"
 import DeleteUser from "./src/controllers/DeleteUser/deleteUser"
 import { GenerateImagesController } from "./src/controllers/GenerateImages/GenerateImagesController"
-import sessions from "express-session"
-import cookieParser from "cookie-parser"
-import { prisma } from "./src/util/prisma"
 
 const app = express()
 const PORT = 8000
