@@ -6,17 +6,18 @@ import * as fs from "fs"
 
 export default async function (req: Request, res: Response) {
     const { access_token } = req.body
-    const emailsRecordFile = "emails.json"
+    const emailsRecordFilePath = "../../emails.json"
     let loggedEmails = []
 
-    if(fs.existsSync(emailsRecordFile)) {
+    if(fs.existsSync(emailsRecordFilePath)) {
         loggedEmails = JSON
         .parse(
             fs.readFileSync(
-                emailsRecordFile,
+                emailsRecordFilePath,
                 "utf-8"
             )
         )
+        console.log(loggedEmails)
     }
 
     try {
@@ -43,7 +44,7 @@ export default async function (req: Request, res: Response) {
         // Adding the new email to the array and saving the new array in the file
         email && loggedEmails.push(email)
         fs.writeFileSync(
-            emailsRecordFile,
+            emailsRecordFilePath,
             JSON.stringify(loggedEmails),
             "utf-8"
         )
