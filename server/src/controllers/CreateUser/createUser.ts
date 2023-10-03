@@ -57,39 +57,40 @@ export default async function (req: Request, res: Response) {
         try {
             const user = await prisma.$transaction(
                 async (prisma) => {
-                    const user = await prisma
-                    .user
-                    .create({
-                        data: {
-                            id,
+                    let user
+                    if(uniqueUserEmailRecord.length === 1){
+                        // Creating the user using data fetched from google apis
+                        user = await prisma.user.create({
+                            data: {
+                                id,
+                                email,
+                                verified_email,
+                                name,
+                                given_name,
+                                picture
+                            }
+                        })
+                        // 3 Free credits for each new account signed in to the app
+                        await prisma.credits.create({
+                            data: {
+                                userId: id,
+                                amount: 3
+                            }
+                        })
+                    } 
+
+                    // Finding the unique user if it's already created 
+                    user = await prisma.user.findUnique({
+                        where: {
                             email,
-                            verified_email,
-                            name,
-                            given_name,
-                            picture
+                            id
                         }
-                    })
-                    
-                    
-                    uniqueUserEmailRecord.length === 1
-                    ? await prisma
-                    .credits
-                    .create({
-                        data: {
-                            amount: 3,
-                            userId: user.id
-                        }
-                    })
-                    : await prisma
-                    .credits
-                    .update({
-                        where: {userId: ""},
-                        data: {userId: user.id}
                     })
 
                     return user
                 }
             )
+
             res.status(200).send({
                 status: 200,
                 createdUser: user

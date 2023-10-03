@@ -23,6 +23,6 @@ model User {
 model Credits {
   creditsId Int    @id @default(autoincrement())
   amount    Int
-  userId    String  @unique
+  userId    String?  @unique
   user      User?  @relation(fields: [userId], references: [id])
 }

@@ -19,11 +19,9 @@ import ColorModeButton from "./ColorModeButton";
 
 const Navigation = () => {
   const { user, logoutUser } = useContext(UserContext) as UserContextType;
-  const signOut = async () => {
-    const res = await logoutUser(user as object);
-    if (res.status === 200) {
-      location.href = "/";
-    }
+  const signOut = () => {
+    logoutUser()
+    location.href = "/"
   };
 
   return (

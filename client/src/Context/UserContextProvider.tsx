@@ -5,7 +5,7 @@ import {
   UserContextState,
   UserContextType,
 } from "../types/Context/signin";
-import { CreateUser, deleteUser, getExactUser } from "../api";
+import { CreateUser } from "../api";
 
 const initialState: UserContextState = {
   user: JSON.parse(localStorage.getItem("user") as string) as object,
@@ -29,14 +29,10 @@ export const UserContextProvider = ({
     }
     return loginResponse;
   };
-  const logoutUser = async (user: object) => {
-    const logoutResponse = await deleteUser(user.id, user.email);
-    console.log(logoutResponse)
-    if (logoutResponse.status === 200) {
-      dispatch({ type: UserActionType.LOGOUT_USER, payload: null });
-    }
-    return logoutResponse;
-  };
+  const logoutUser = () => {
+    dispatch({ type: UserActionType.LOGOUT_USER, payload: null });
+  } 
+
   const isLoading = () =>
     dispatch({ type: UserActionType.LOADING_TRUE, payload: null });
   const isNotLoading = () =>
