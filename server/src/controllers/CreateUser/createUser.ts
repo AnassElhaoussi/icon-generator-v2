@@ -17,7 +17,6 @@ export default async function (req: Request, res: Response) {
                 "utf-8"
             )
         )
-        console.log(loggedEmails)
     }
 
     try {

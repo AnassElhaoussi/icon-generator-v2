@@ -11,7 +11,7 @@ const Dashboard = () => {
   const { isDarkMode } = useContext(DarkThemeContext) as IColorModeState;
   return (
     <main className={!isDarkMode ? "light" : ""}>
-      <Stack display="flex" flexDirection="column" columnGap="2rem" backgroundColor="#121212" height="full" className="font-poppins light:bg-gray-100">
+      <Stack display="flex" flexDirection="column" columnGap="2rem" backgroundColor="gray.800" height="full" className="font-poppins light:bg-gray-100">
         <Navigation />
         <DashboardForm />
       </Stack>

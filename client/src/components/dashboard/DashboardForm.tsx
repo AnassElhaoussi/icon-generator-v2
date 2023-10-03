@@ -6,7 +6,7 @@ import {
   FormLabel,
   FormHelperText,
   Flex,
-  Divider,
+  Stack,
   Heading,
   Text,
   useDisclosure,
@@ -50,9 +50,9 @@ const DashboardForm = () => {
       >
         <FormControl maxWidth="min-content">
           <FormLabel
-            fontSize="lg"
+            fontSize="md"
             width="max-content"
-            className="bg-gradient-to-r from-gray-400 to-white bg-clip-text text-transparent"
+            textColor="gray.400"
           >
             What's your icon object ?
           </FormLabel>
@@ -64,14 +64,17 @@ const DashboardForm = () => {
               />
             )}
             <Input
-              placeholder="Example : Bird"
-              fontWeight="light"
+              isInvalid
+              errorBorderColor="gray.700"
               border="none"
-              focusBorderColor="blue.800"
-              borderRadius="full"
+              variant="outline"
+              focusBorderColor="blue.700"
+              placeholder="Example : Bird"
+              borderRadius="0.6rem"
+              fontWeight="light"
               textColor="gray.400"
-              backgroundColor="black"
               paddingLeft="2rem"
+              className="placeholder:text-gray-600"
               value={iconObject as string}
               onChange={(e) => setIconObject(e.target.value)}
               onFocus={() => setIsInputOnBlur1(false)}
@@ -81,9 +84,9 @@ const DashboardForm = () => {
         </FormControl>
         <FormControl maxWidth="min-content">
           <FormLabel
-            fontSize="lg"
+            fontSize="md"
             width="max-content"
-            className="bg-gradient-to-r from-gray-400 to-white bg-clip-text text-transparent"
+            textColor="gray.400"
           >
             Describe the state of your icon object{" "}
             <span className="text-sm text-gray-700">*optional</span>
@@ -97,14 +100,17 @@ const DashboardForm = () => {
                 />
               )}
             <Input
-              placeholder="Example : Angry, Happy, Flying.."
+              isInvalid
+              errorBorderColor="gray.700"
               border="none"
-              focusBorderColor="blue.800"
-              borderRadius="full"
+              variant="outline"
+              focusBorderColor="blue.700"
+              placeholder="Example : Angry, Happy, Flying.."
+              borderRadius="0.6rem"
               fontWeight="light"
               textColor="gray.400"
-              backgroundColor="black"
               paddingLeft="2rem"
+              className="placeholder:text-gray-600"
               value={iconDescription as string}
               onChange={(e) => setIconDescription(e.target.value)}
               onFocus={() => setIsInputOnBlur2(false)}
@@ -117,58 +123,49 @@ const DashboardForm = () => {
           </FormHelperText>
         </FormControl>
         <FormControl display="flex" flexDirection="column" gap="2rem">
-          <VStack alignItems="start">
+          
             <FormLabel
-              fontSize="lg"
+              fontSize="md"
               width="max-content"
-              className="bg-gradient-to-r from-gray-400 to-white bg-clip-text text-transparent"
+              textColor="gray.400"
             >
               Choose the main color of your icon wisely{" "}
               <span className="text-gray-700 text-sm">*optional</span>
             </FormLabel>
-            <Flex
-              textColor="white"
-              gap={2}
-              className="bg-gradient-to-r from-blue-800 to-purple-800"
-              width="fit-content"
-              fontWeight="light"
-              borderRadius="md"
-              paddingX="1rem"
-              height="2rem"
-              alignItems="center"
-            >
-              <small className="text-sm cursor-pointer">default</small>
-              <Divider orientation="vertical" />
-              <small className="text-sm cursor-pointer" onClick={onOpen}>
-                customized
-              </small>
+          <Stack gap="1rem">
+            <Flex gap="2rem" alignItems="center">
+              {defaultColors.map(({ name, color }, id) => (
+                <VStack key={id} onClick={() => chooseColor(color)}>
+                  <div
+                    style={{
+                      backgroundColor: color,
+                      transform:
+                        color === chosenColor ? "scale(1.2)" : "scale(1)",
+                      borderBottomWidth: name === hoveredColor ? "7px" : "0px",
+                      borderColor:
+                        name === hoveredColor
+                          ? `rgb(${hexToRgb(color)?.r as number}, ${
+                              (hexToRgb(color)?.g as number) + 80
+                            }, ${(hexToRgb(color)?.b as number) + 80})`
+                          : "none",
+                    }}
+                    onMouseEnter={() => onMouseEnter(name)}
+                    onMouseLeave={onMouseLeave}
+                    className="w-14 h-14 rounded-2xl shadow-[inset_0_-10px_16px_rgba(0,0,0,0.6)] transition-all cursor-pointer"
+                  ></div>
+                  <h4 className="text-sm text-gray-300 font-light">{name}</h4>
+                </VStack>
+              ))}
             </Flex>
-          </VStack>
-
-          <Flex gap="2rem">
-            {defaultColors.map(({ name, color }, id) => (
-              <VStack key={id} onClick={() => chooseColor(color)}>
-                <div
-                  style={{
-                    backgroundColor: color,
-                    transform:
-                      color === chosenColor ? "scale(1.2)" : "scale(1)",
-                    borderBottomWidth: name === hoveredColor ? "7px" : "0px",
-                    borderColor:
-                      name === hoveredColor
-                        ? `rgb(${hexToRgb(color)?.r as number}, ${
-                            (hexToRgb(color)?.g as number) + 80
-                          }, ${(hexToRgb(color)?.b as number) + 80})`
-                        : "none",
-                  }}
-                  onMouseEnter={() => onMouseEnter(name)}
-                  onMouseLeave={onMouseLeave}
-                  className="w-14 h-14 rounded-2xl shadow-[inset_0_-10px_16px_rgba(0,0,0,0.6)] transition-all cursor-pointer"
-                ></div>
-                <h4 className="text-sm text-gray-300 font-light">{name}</h4>
-              </VStack>
-            ))}
-          </Flex>
+            <Stack gap="0.8rem">
+              <Text textColor="gray.600" fontSize="sm">Use our color customizer for your specific cases</Text>
+              <button className="bg-gradient-to-r from-gray-900 to-gray-800 w-fit text-white py-2 px-4 rounded-md"
+              onClick={onOpen}
+              >
+                Color Customizer
+              </button>
+            </Stack>
+          </Stack>
           {isCustomColor && (
             <VStack alignItems="start" gap={4}>
               <Flex alignItems="center" gap={3}>

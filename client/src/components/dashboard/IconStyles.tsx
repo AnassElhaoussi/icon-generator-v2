@@ -35,24 +35,27 @@ const IconStyles = ({chosenStyle, setChosenStyle}: {
           {iconStyles.map(({ name, description, imgUrl }) => (
             <Card
               onClick={() => chooseStyle(name as IconStyleEnum)}
-              backgroundColor="#1A1A1A"
-              dropShadow="dark-lg"
+              backgroundColor="gray.900"
               cursor="pointer"
               borderRadius="2xl"
               className="transition-all"
               style={{
-                borderBottom:
+                transform:
                   chosenStyle === name
-                    ? "8px solid black"
-                    : "2px solid transparent",
+                    ? "scale(1.1)"
+                    : "scale(1)",
+                borderBottom: 
+                  chosenStyle === name
+                  ? "8px solid #2A4365"
+                  : "2px solid transparent"
               }}
             >
               <CardHeader>
                 <Heading
                   fontFamily="Poppins, sans-serif"
-                  fontWeight="normal"
-                  fontSize="2rem"
-                  textColor="gray.200"
+                  fontWeight="extrabold"
+                  fontSize="2.5rem"
+                  textColor="gray.300"
                 >
                   {name}
                 </Heading>
