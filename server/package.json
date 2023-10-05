@@ -12,7 +12,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@prisma/client": "^5.0.0",
+        "@prisma/client": "^5.4.1",
         "@types/express-session": "^1.17.0",
         "@types/node": "^20.5.7",
         "aws-sdk": "^2.1446.0",

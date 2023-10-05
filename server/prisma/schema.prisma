@@ -11,18 +11,28 @@ datasource db {
 }
 
 model User {
-  id             String   @id @unique
-  email          String   @unique
+  id             String        @id @unique
+  email          String        @unique
   verified_email Boolean
   name           String
   given_name     String
   picture        String
   credits        Credits?
+  generations    Generations[]
 }
 
 model Credits {
-  creditsId Int    @id @default(autoincrement())
+  creditsId Int     @id @default(autoincrement())
   amount    Int
-  userId    String?  @unique
-  user      User?  @relation(fields: [userId], references: [id])
+  userId    String? @unique
+  user      User?   @relation(fields: [userId], references: [id])
+}
+
+model Generations {
+  generationId String   @id @default(uuid())
+  prompt       String
+  URLs         String[]
+  n            Int
+  authorEmail  String   @unique
+  author       User     @relation(fields: [authorEmail], references: [email])
 }

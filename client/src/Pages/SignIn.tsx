@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { logo } from "../assets";
+import { logo } from "../images";
 import { useGoogleLogin } from "@react-oauth/google";
 import { UserContext } from "../Context/UserContextProvider";
 import { UserContextType } from "../types/Context/signin";

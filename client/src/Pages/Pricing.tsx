@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { logo } from "../assets";
+import { logo } from "../images";
 import { UserContext } from "../Context/UserContextProvider";
 import { UserContextType } from "../types/Context/signin";
 import { Link } from "react-router-dom";

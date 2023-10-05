@@ -66,20 +66,28 @@ export default async function (req: Request, res: Response) {
                                 verified_email,
                                 name,
                                 given_name,
-                                picture
+                                picture,
+                                generations: {}
                             }
                         })
                         // 3 Free credits for each new account signed in to the app
-                        await prisma.credits.create({
+                        await prisma
+                        .credits
+                        .create({
                             data: {
                                 userId: id,
                                 amount: 3
+                            },
+                            include: {
+                                user: true
                             }
                         })
                     } 
 
                     // Finding the unique user if it's already created 
-                    user = await prisma.user.findUnique({
+                    user = await prisma
+                    .user
+                    .findUnique({
                         where: {
                             email,
                             id

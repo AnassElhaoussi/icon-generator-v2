@@ -1,6 +1,7 @@
 import {useState, createContext} from "react"
 import { useContext, useEffect } from "react"
 import { UserContext } from "./UserContextProvider"
+import { useQuery } from "@tanstack/react-query"
 
 export const CreditContext = createContext(null)
 

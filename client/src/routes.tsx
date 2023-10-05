@@ -9,7 +9,6 @@ import Pricing from "./Pages/Pricing";
 import Dashboard from "./Pages/Dashboard";
 import { ChakraProvider } from "@chakra-ui/react";
 import Activity from "./Pages/Activity";
-import Account from "./Pages/Account";
 import { DarkThemeProvider } from "./Context/DarkThemeContext";
 import {QueryClientProvider, QueryClient} from "@tanstack/react-query"
 
@@ -33,11 +32,6 @@ const AppRoutes = () => {
                     <Route path="/dashboard" element={
                       <ProtectedRoute currentPath="/dashboard" redirectPath="/signin" user={user as object}>
                         <Dashboard />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/dashboard/account" element={
-                      <ProtectedRoute currentPath="/dashboard/account" redirectPath="/signin" user={user as object}>    
-                        <Account />
                       </ProtectedRoute>
                     } />
                     <Route path="/dashboard/activity" element={

@@ -2,10 +2,11 @@ import React, { useContext, useState } from "react";
 import { UserContext } from "../../Context/UserContextProvider";
 import { UserContextType } from "../../types/Context/signin";
 import { googleLogout } from "@react-oauth/google";
-import { logo } from "../../assets";
+import { logo } from "../../images";
 import { Link } from "react-router-dom";
 import {
   Avatar,
+  Text,
   Menu,
   MenuButton,
   MenuList,
@@ -40,7 +41,7 @@ const Navigation = () => {
         </ul>
         <Divider orientation="vertical" borderColor="black" />
         <Menu>
-          <MenuButton display="flex" alignItems="center" position="relative">
+          <MenuButton display="flex" alignItems="center" position="relative" className="hover:bg-gray-900 p-2 rounded-md">
             <Avatar src={user?.picture} size="sm" mr={1} />
             <span className="text-sm font-light">
               @{user?.given_name.toLowerCase()}
@@ -51,35 +52,29 @@ const Navigation = () => {
             flexDirection="column"
             gap="1rem"
             padding="2rem"
-            backgroundColor="black"
+            backgroundColor="gray.900"
             border="none"
           >
             <Stack textAlign="center">
-              <h2 className="text-4xl font-light text-purple-300">
+              <Text fontSize="2xl" fontWeight="bold">
                 {user?.name}
-              </h2>
+              </Text>
               <p className="text-sm font-light text-gray-500">{user?.email}</p>
             </Stack>
-            <MenuItem
-              backgroundColor="gray.800"
-              borderRadius="lg"
-              fontWeight="600"
-            >
-              Account Settings
-            </MenuItem>
-            <MenuItem
-              backgroundColor="gray.800"
-              borderRadius="lg"
-              fontWeight="600"
-            >
-              Your Activity
-            </MenuItem>
-            <Button colorScheme="purple" onClick={signOut}>
+            <Link to="activity">
+              <MenuItem
+                backgroundColor="gray.800"
+                borderRadius="lg"
+                fontWeight="600"
+              >
+                Your Activity
+              </MenuItem>
+            </Link>
+            <Button colorScheme="facebook" onClick={signOut}>
               Sign Out
             </Button>
           </MenuList>
         </Menu>
-        <ColorModeButton />
       </Stack>
     </Flex>
   );
