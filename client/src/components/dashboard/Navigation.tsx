@@ -1,8 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { UserContext } from "../../Context/UserContextProvider";
 import { UserContextType } from "../../types/Context/signin";
-import { googleLogout } from "@react-oauth/google";
-import { logo } from "../../images";
+import { CreditContext, CreditsContextProvider } from "../../Context/CreditsContext";
 import { Link } from "react-router-dom";
 import {
   Avatar,
@@ -15,8 +14,12 @@ import {
   Flex,
   Stack,
   Divider,
+  Spinner,
+  Heading
 } from "@chakra-ui/react";
-import ColorModeButton from "./ColorModeButton";
+
+import { ICreditsContextValues } from "../../types/Context/credits";
+import axios from "axios";
 
 const Navigation = () => {
   const { user, logoutUser } = useContext(UserContext) as UserContextType;
@@ -24,7 +27,13 @@ const Navigation = () => {
     logoutUser()
     location.href = "/"
   };
-
+  const {
+    credits,
+    isSuccess,
+    isLoading,
+    isError
+  } = useContext(CreditContext) as ICreditsContextValues
+  
   return (
     <Flex
       alignItems="center"
@@ -34,11 +43,17 @@ const Navigation = () => {
       px="5rem"
       textColor="whiteAlpha.800"
     >
-      <h2 className="text-xl font-light">Dashboard</h2>
+      <button onClick={async () => {
+        console.log("hello wr")
+        return await axios.patch(`http://localhost:8000/api/update-credits?id=${user.id}`)
+      }}>Decrement</button>
+      <Heading fontFamily="Poppins, sans-serif" fontSize="xl" fontWeight="bold">Dashboard</Heading>
       <Stack direction="row" gap="2rem" h="2rem">
-        <ul className="font-light text-md">
-          <span className="text-purple-400 text-lg">100</span> Credits Left
-        </ul>
+        {isLoading && <Spinner />}
+        {isSuccess && <ul className="font-light text-md">
+          <span className="text-blue-400 text-lg">{credits}</span> Credits Left
+        </ul>}
+        {isError && <Text textColor="red.500">Something went wrong</Text>}
         <Divider orientation="vertical" borderColor="black" />
         <Menu>
           <MenuButton display="flex" alignItems="center" position="relative" className="hover:bg-gray-900 p-2 rounded-md">

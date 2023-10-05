@@ -1,5 +1,5 @@
 
-import axios, { AxiosResponse } from "axios"
+import axios from "axios"
 
 export async function CreateUser(access_token: string) {
     return await axios.post("http://localhost:8000/api/createuser", { access_token })
@@ -10,5 +10,9 @@ export async function generateDalleIcons({ prompt, n }: { prompt: string, n: num
 }
 
 export async function retrieveGenerations() {
-    return await axios.get("http://localhost:8000/api/get-generations")
+    return await axios.get(`http://localhost:8000/api/get-generations?email=${email}`)
 }
+
+export async function getUserCredits(id: string) {
+    return await axios.get(`http://localhost:8000/api/get-credits?id=${id}`)
+} 

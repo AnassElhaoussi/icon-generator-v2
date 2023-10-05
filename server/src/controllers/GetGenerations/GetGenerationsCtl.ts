@@ -4,14 +4,14 @@ import {prisma} from "../../util/prisma"
 export class GetGenerationsCtl {
     constructor() {}
     async get(req: Request, res: Response){
-        const {email} = req.body
+        const {email} = req.query
         // Find unique generation records
         const uniqueUserGenerations = await prisma
         .generations
         .findMany({
             where: {
                 author: {
-                    email
+                    email: email as string
                 }
             },
         })

@@ -11,6 +11,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import Activity from "./Pages/Activity";
 import { DarkThemeProvider } from "./Context/DarkThemeContext";
 import {QueryClientProvider, QueryClient} from "@tanstack/react-query"
+import { CreditsContextProvider } from "./Context/CreditsContext";
 
 const AppRoutes = () => {
   const {user} = useContext(UserContext)
@@ -29,16 +30,20 @@ const AppRoutes = () => {
                       </ProtectedRoute>
                     } />
                     <Route path="/pricing" element={<Pricing />} />
-                    <Route path="/dashboard" element={
-                      <ProtectedRoute currentPath="/dashboard" redirectPath="/signin" user={user as object}>
-                        <Dashboard />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/dashboard/activity" element={
-                      <ProtectedRoute currentPath="/dashboard/activity" redirectPath="/signin" user={user as object}>
-                        <Activity />
-                      </ProtectedRoute>
-                    } />
+                      <Route path="/dashboard" element={
+                        <ProtectedRoute currentPath="/dashboard" redirectPath="/signin" user={user as object}>
+                          <CreditsContextProvider>
+                            <Dashboard />
+                          </CreditsContextProvider>
+                        </ProtectedRoute>
+                      } />
+                      <Route path="/dashboard/activity" element={
+                        <ProtectedRoute currentPath="/dashboard/activity" redirectPath="/signin" user={user as object}>
+                          <CreditsContextProvider>
+                            <Activity />
+                          </CreditsContextProvider>
+                        </ProtectedRoute>
+                      } />
                   </Routes>
               </BrowserRouter>
           </ChakraProvider>

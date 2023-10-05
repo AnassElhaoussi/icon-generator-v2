@@ -3,6 +3,8 @@ import cors from "cors"
 import CreateUser from "./src/controllers/CreateUser/createUser"
 import { GenerateImagesCtl } from "./src/controllers/GenerateImages/GenerateImagesCtl"
 import { GetGenerationsCtl } from "./src/controllers/GetGenerations/GetGenerationsCtl"
+import GetCredits from "./src/controllers/GetCredits/get-credits"
+import { prisma } from "./src/util/prisma"
 
 const app = express()
 const PORT = 8000
@@ -19,6 +21,26 @@ app.post("/api/createuser", CreateUser)
 app.post("/api/generate", generateImagesController.handle)
 
 app.get("/api/get-generations", getGenerationsController.get)
+
+// For getting user's unique credits from the db
+app.get("/api/get-credits", GetCredits)
+app.patch("/api/update-credits", async (req, res) => {
+    const {id} = req.query
+    console.log("hello")
+    const {amount: prev_amount} = await prisma.credits.findUnique({
+        where: {userId: id as string}
+    }) as {amount: number}
+
+    const updatedCredit = await prisma.credits.update({
+        where: {
+            userId: id as string
+        },
+        data: {
+            amount: prev_amount - 1
+        }
+    })
+    res.status(201).send(updatedCredit)
+})  
 
 app.listen(PORT, () => {
     console.log("Server is listening on port " + PORT)
