@@ -135,7 +135,11 @@ const DashboardForm = () => {
           <Stack gap="1rem">
             <Flex gap="2rem" alignItems="center">
               {defaultColors.map(({ name, color }, id) => (
-                <VStack key={id} onClick={() => chooseColor(color)}>
+                <VStack key={id} onClick={
+                  () => chosenColor === color 
+                  ? setChosenColor(null) 
+                  : chooseColor(color)
+                }>
                   <div
                     style={{
                       backgroundColor: color,

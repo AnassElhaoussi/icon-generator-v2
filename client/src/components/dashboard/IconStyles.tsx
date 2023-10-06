@@ -34,7 +34,11 @@ const IconStyles = ({chosenStyle, setChosenStyle}: {
         <Flex display="flex" flexWrap="wrap" rowGap="1rem" columnGap="2rem" alignItems="stretch">
           {iconStyles.map(({ name, description, imgUrl }) => (
             <Card
-              onClick={() => chooseStyle(name as IconStyleEnum)}
+              onClick={
+                () => name === chosenStyle
+                ? setChosenStyle(null)
+                : chooseStyle(name as IconStyleEnum)
+              }
               backgroundColor="gray.900"
               cursor="pointer"
               borderRadius="2xl"
