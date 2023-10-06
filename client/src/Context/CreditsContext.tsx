@@ -1,5 +1,5 @@
 import {useState, createContext} from "react"
-import { useContext, useEffect } from "react"
+import { useContext } from "react"
 import { UserContext } from "./UserContextProvider"
 import { useQuery } from "@tanstack/react-query"
 import { getUserCredits } from "../api"
@@ -17,7 +17,12 @@ export const CreditsContextProvider = ({children}: {children: React.ReactNode}) 
     })
     
     return (
-        <CreditContext.Provider value={{credits: data?.data.credits.amount, isLoading, isError, isSuccess}}>
+        <CreditContext.Provider value={{
+            credits: data?.data.credits.amount as number,
+            isLoading,
+            isError,
+            isSuccess
+        }}>
             {children}
         </CreditContext.Provider>
     )
