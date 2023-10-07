@@ -5,8 +5,31 @@ export async function CreateUser(access_token: string) {
     return await axios.post("http://localhost:8000/api/createuser", { access_token })
 }
 
-export async function generateDalleIcons({ prompt, n }: { prompt: string, n: number }) {
-    return await axios.post("http://localhost:8000/api/generate", { prompt, n })
+export async function generateDalleIcons({ prompt, 
+    n,
+    prevCreditsAmt,
+    creditsId,
+    email
+}: { 
+    prompt: string, 
+    n: number, 
+    prevCreditsAmt: number, 
+    creditsId: number,
+    email: string
+}): Promise<AxiosResponse<{
+    prompt: string,
+    n: number,
+    URLs: string[],
+    authorEmail: string
+}>> {
+    return await axios.post(
+        "http://localhost:8000/api/generate", { 
+            prompt, 
+            n, 
+            prevCreditsAmt, 
+            creditsId,
+            email
+        })
 }
 
 export async function retrieveGenerations() {

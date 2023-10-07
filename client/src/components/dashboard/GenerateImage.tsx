@@ -1,10 +1,14 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import { Stack, Flex, Card, Text, Image, Spinner } from "@chakra-ui/react";
 import { openai } from "../../helpers/openai_sdk";
 import { getPrompt } from "../../hooks/getPrompt";
 import { IconStyleEnum } from "../../types/icon_styles";
 import { useMutation } from "@tanstack/react-query";
 import { generateDalleIcons } from "../../api";
+import { CreditContext } from "../../Context/CreditsContext";
+import { ICreditsContextValues } from "../../types/Context/credits";
+import { UserContext } from "../../Context/UserContextProvider";
+import { UserContextType } from "../../types/Context/signin";
 
 const GenerateImage = ({
   chosenColor,
@@ -28,6 +32,9 @@ const GenerateImage = ({
   const decrementCount = () =>
     numberOfGenerations > 0 && setNumberOfGenerations(numberOfGenerations - 1);
   const [error, setError] = useState<null | string>(null);
+  const {credits, creditsId} = useContext(CreditContext) as ICreditsContextValues
+  const {user} = useContext(UserContext) as UserContextType
+
   const prompt = Object.values(formObj).every((property) =>
     typeof property === "string"
       ? property.trim().length !== 0
@@ -45,7 +52,7 @@ const GenerateImage = ({
       setError(errorMessage);
     }
   });
-  const mutationData = mutation.data?.data as string[]
+  const mutationData = mutation.data?.data.URLs as string[]
 
   const mutate = () => {
     if (
@@ -53,11 +60,21 @@ const GenerateImage = ({
         typeof property === "string"
           ? property?.trim()?.length !== 0
           : property !== null
-      ) &&
-      numberOfGenerations > 0
+      ) 
+      && numberOfGenerations > 0
     ) {
-      mutation.mutate({ prompt: prompt as string, n: numberOfGenerations });
-      setError(null);
+      if(numberOfGenerations <= (credits as number)) {
+        mutation.mutate({ 
+          prompt: prompt as string, 
+          n: numberOfGenerations,
+          email: user?.email as string,
+          creditsId,
+          prevCreditsAmt: credits as number
+        });
+        setError(null);
+      } else {
+        setError("Insufficient amount of credits!")
+      }
     } else {
       setError("Some field are missing, try again!");
     }

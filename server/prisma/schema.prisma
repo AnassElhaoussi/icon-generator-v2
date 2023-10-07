@@ -33,6 +33,6 @@ model Generations {
   prompt       String
   URLs         String[]
   n            Int
-  authorEmail  String   @unique
+  authorEmail  String
   author       User     @relation(fields: [authorEmail], references: [email])
 }

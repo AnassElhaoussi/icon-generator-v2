@@ -19,6 +19,7 @@ export const CreditsContextProvider = ({children}: {children: React.ReactNode}) 
     return (
         <CreditContext.Provider value={{
             credits: data?.data.credits.amount as number,
+            creditsId: data?.data.credits.creditsId as number,
             isLoading,
             isError,
             isSuccess

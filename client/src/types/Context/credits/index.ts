@@ -1,5 +1,6 @@
 export interface ICreditsContextValues {
     credits: number | null,
+    creditsId: number,
     isLoading: boolean,
     isSuccess: boolean,
     isError: boolean

@@ -6,24 +6,36 @@ import { prisma } from "../../util/prisma";
 export class GenerateImagesCtl {
     constructor(){}
     async handle(req: Request, res: Response) {
-        // Getting the prompt and the number of images from the request body
-        const {prompt, n, email} = req.body
+        // Request body
+        const {prompt, n, email, prevCreditsAmt, creditsId} = req.body
         // Calling the class and the method that generates dalle images
         const generateDalleImage = new GenerateDalleImage()
         const generatedImages = await generateDalleImage.generateImages(prompt, n)
 
-        // Adding a prisma child record that includes author data
-        const generation = await prisma.generations.create({
-            data: {
-                prompt,
-                n,
-                URLs: generatedImages.map(image => image.url) as string[],
-                authorEmail: email
-            },
-            include: {
-                author: true
-            }
-        })
+        const generation = await prisma.$transaction(
+            async (prisma) => {                 
+                // Adding a prisma child record that includes author data
+                const generation = await prisma.generations.create({
+                    data: {
+                        prompt,
+                        n,
+                        URLs: generatedImages.map(image => image.url) as string[],
+                        authorEmail: email
+                    },
+                    include: {
+                        author: true
+                    }
+                })
+
+                // Decrementing the amount of credits in the db record for n amount of generations
+                await prisma.credits.update({
+                    where: {creditsId},
+                    data: {amount: prevCreditsAmt - n}
+                })
+
+                return generation
+            } 
+        )
         // Sending a 200 status message to the client
         res.status(201).send(generation)
     }
