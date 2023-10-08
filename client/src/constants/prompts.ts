@@ -9,6 +9,8 @@ export function getIconPrompts(icon: string, color: string) {
         "Pop Art": `A ${icon} riding a banana, pop art`,
         "Oil Painting": `A impressionist ${color} oil painting of a ${icon} as an exploding nebula`,
         "Vector Style": `${icon} in vector style,${color} split-lighting`,
-        "Pixel Art": `pixel art of a ${icon}, ${color} color`
+        "Pixel Art": `pixel art of a ${icon}, ${color} color`,
+        "Emoji":`Minimalistic emoji kawaii icon of a ${icon}, ${color} , matte 3D render on white background`,
+        "Logo Style": `a ${icon}, modern, angular, aggressive, stylized, classic, ${color}, black, pictorial mark, iconic logo symbol`
     }
 }

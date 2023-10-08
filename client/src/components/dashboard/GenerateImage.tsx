@@ -9,6 +9,7 @@ import { CreditContext } from "../../Context/CreditsContext";
 import { ICreditsContextValues } from "../../types/Context/credits";
 import { UserContext } from "../../Context/UserContextProvider";
 import { UserContextType } from "../../types/Context/signin";
+import { DashboardAlert } from "./Alert";
 
 const GenerateImage = ({
   chosenColor,
@@ -31,7 +32,7 @@ const GenerateImage = ({
   const incrementCount = () => setNumberOfGenerations(numberOfGenerations + 1);
   const decrementCount = () =>
     numberOfGenerations > 0 && setNumberOfGenerations(numberOfGenerations - 1);
-  const [error, setError] = useState<null | string>(null);
+  const [error, setError] = useState<null | {errorType: string, message: string}>(null);
   const {credits, creditsId} = useContext(CreditContext) as ICreditsContextValues
   const {user} = useContext(UserContext) as UserContextType
 
@@ -49,7 +50,10 @@ const GenerateImage = ({
     : null;
   const mutation = useMutation(generateDalleIcons, {
     onError: (errorMessage: string) => {
-      setError(errorMessage);
+      setError({
+        errorType: "API Error",
+        message: errorMessage
+      });
     }
   });
   const mutationData = mutation.data?.data.URLs as string[]
@@ -73,15 +77,27 @@ const GenerateImage = ({
         });
         setError(null);
       } else {
-        setError("Insufficient amount of credits!")
+        setError({
+          errorType: "Out of credits",
+          message: "You're out of credits!"
+        })
       }
     } else {
-      setError("Some field are missing, try again!");
+      setError({
+        errorType: "Missing fields",
+        message: "Some field are missing, try again!"
+      });
     }
   };
 
   return (
-    <Stack display="flex" gap="1.5rem" alignItems="start" width="full">
+    <Stack 
+    display="flex" 
+    gap="1.5rem" 
+    alignItems="start" 
+    width="full" 
+    position="relative"
+    >
       <Flex alignItems="center" gap="1rem">
         <Card
           display="flex"
@@ -119,7 +135,11 @@ const GenerateImage = ({
           +
         </Card>
       </Flex>
-      {error && <Text textColor="red.700">{error}</Text>}
+      {(error && error.errorType !== "Out of credits") && 
+      <Text textColor="red.700">
+        {error.message}
+      </Text>
+      }
       <button
         onClick={mutate}
         className="bg-gradient-to-r from-blue-900 to-blue-600 py-2 px-5 text-white font-light rounded-lg shadow-xl shadow-blue-900"
@@ -147,6 +167,10 @@ const GenerateImage = ({
             );
           })}
       </Flex>
+      {(error || mutation.isSuccess) 
+      && <DashboardAlert 
+      error={error as {errorType: string, message: string}} 
+      isSuccess={mutation.isSuccess} /> }      
     </Stack>
   );
 };

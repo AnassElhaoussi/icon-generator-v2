@@ -133,6 +133,36 @@ export const iconStyles = [
             "Retro and pixelated",
             "Nostalgic aesthetic"
         ]
+    },
+    {
+        name: "Emoji",
+        description: "Icons resembling popular emojis, with a wide range of facial expressions and symbols.",
+        imgUrl: "", // Provide an image URL if available
+        category: {
+            name: "Dimensional Styles",
+            color: "purple"
+        },
+        detailed_description: "The Emoji style features icons that closely resemble popular emojis commonly used in digital communication. These icons capture a wide range of facial expressions, symbols, and emotions, making them suitable for product design.",
+        key_features: [
+            "Wide range of facial expressions",
+            "Symbolic representations",
+            "Product design"
+        ]
+    },
+    {
+        name: "Logo Style",
+        description: "Icons designed with a focus on brand identity and logo aesthetics.",
+        imgUrl: "", // Provide an image URL if available
+        category: {
+            name: "Branding",
+            color: "orange"
+        },
+        detailed_description: "The Logo Style focuses on creating icons with a strong emphasis on brand identity and logo aesthetics. These icons are designed to convey a brand's essence and are often used for marketing and branding purposes.",
+        key_features: [
+            "Brand identity focus",
+            "Logo aesthetics",
+            "Suitable for branding and marketing"
+        ]
     }
 ];
 

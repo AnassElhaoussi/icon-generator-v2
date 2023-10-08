@@ -13,9 +13,12 @@ export class GetGenerationsCtl {
                 author: {
                     email: email as string
                 }
-            },
+            }
         })
 
-        res.status(201).send(uniqueUserGenerations)
+        res
+        .status(201)
+        .send(uniqueUserGenerations)
+
     }
 }
