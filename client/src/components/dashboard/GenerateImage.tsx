@@ -96,7 +96,6 @@ const GenerateImage = ({
     gap="1.5rem" 
     alignItems="start" 
     width="full" 
-    position="relative"
     >
       <Flex alignItems="center" gap="1rem">
         <Card
@@ -151,8 +150,17 @@ const GenerateImage = ({
           </div>
         ) : (
           "Generate"
-        )}
+          )}
       </button>
+      {
+      (error?.errorType === "Out of credits" || mutation.isSuccess) 
+        && 
+        <div className="alert">
+            <DashboardAlert 
+            error={error as {errorType: string, message: string}} 
+            isSuccess={mutation.isSuccess} />
+        </div>
+      }      
       <Flex flexWrap="wrap" gap="0.8rem" marginTop="1rem">
         {mutation.isSuccess && <Text>Generations</Text>}
         {mutation.isSuccess && mutationData.map((url, id) => {
@@ -167,10 +175,6 @@ const GenerateImage = ({
             );
           })}
       </Flex>
-      {(error || mutation.isSuccess) 
-      && <DashboardAlert 
-      error={error as {errorType: string, message: string}} 
-      isSuccess={mutation.isSuccess} /> }      
     </Stack>
   );
 };

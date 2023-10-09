@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   VStack,
   FormControl,
@@ -20,6 +20,7 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import IconStyles from "./IconStyles";
 import GenerateImage from "./GenerateImage";
 import { IconStyleEnum } from "../../types/icon_styles";
+import { AlertMountingStateContext } from "../../Context/AlertMountingStateContext";
 
 const DashboardForm = () => {
   const [chosenColor, setChosenColor] = useState<null | string>(null);
@@ -30,6 +31,11 @@ const DashboardForm = () => {
   const [isInputOnBlur1, setIsInputOnBlur1] = useState<boolean>(false);
   const [isInputOnBlur2, setIsInputOnBlur2] = useState<boolean>(false);
   const { onOpen, isOpen, onClose } = useDisclosure();
+  const {isAlertMounted} = useContext(AlertMountingStateContext) as {
+    isAlertMounted: boolean,
+    setIsAlertMounted: React.Dispatch<React.SetStateAction<boolean>>
+  }
+  isAlertMounted && (document.body.style.overflowY = "hidden")
 
   const chooseColor = (hexColor: string) => setChosenColor(hexColor);
   const onMouseEnter = (colorName: string) => setHoveredColor(colorName);
@@ -37,9 +43,10 @@ const DashboardForm = () => {
   const isCustomColor = defaultColors.every(
     (colorObj) => chosenColor !== null && chosenColor !== colorObj.color
   );
+  
 
   return (
-    <VStack width="full" alignItems="start">
+    <VStack width="full" alignItems="start" >
       <VStack
         display="flex"
         alignItems="start"
@@ -203,13 +210,17 @@ const DashboardForm = () => {
             onClose={onClose}
           />
         </FormControl>
-        <IconStyles chosenStyle={chosenStyle} setChosenStyle={setChosenStyle} />
-        <GenerateImage
-          chosenColor={chosenColor}
-          iconObject={iconObject}
-          iconDescription={iconDescription}
-          chosenStyle={chosenStyle}
-        />
+          <Stack position="relative">
+            <IconStyles 
+            chosenStyle={chosenStyle} 
+            setChosenStyle={setChosenStyle} />
+            <GenerateImage
+              chosenColor={chosenColor}
+              iconObject={iconObject}
+              iconDescription={iconDescription}
+              chosenStyle={chosenStyle}
+            />
+          </Stack>
       </VStack>
     </VStack>
   );

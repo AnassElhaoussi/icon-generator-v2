@@ -12,6 +12,7 @@ import Activity from "./Pages/Activity";
 import { DarkThemeProvider } from "./Context/DarkThemeContext";
 import {QueryClientProvider, QueryClient} from "@tanstack/react-query"
 import { CreditsContextProvider } from "./Context/CreditsContext";
+import { AlertMountingStateProvider } from "./Context/AlertMountingStateContext";
 
 const AppRoutes = () => {
   const {user} = useContext(UserContext)
@@ -32,9 +33,11 @@ const AppRoutes = () => {
                     <Route path="/pricing" element={<Pricing />} />
                       <Route path="/dashboard" element={
                         <ProtectedRoute currentPath="/dashboard" redirectPath="/signin" user={user as object}>
-                          <CreditsContextProvider>
-                            <Dashboard />
-                          </CreditsContextProvider>
+                          <AlertMountingStateProvider>
+                            <CreditsContextProvider>
+                              <Dashboard />
+                            </CreditsContextProvider>
+                          </AlertMountingStateProvider>
                         </ProtectedRoute>
                       } />
                       <Route path="/dashboard/activity" element={
