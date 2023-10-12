@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Stack, Flex, Card, Text, Image, Spinner } from "@chakra-ui/react";
 import { openai } from "../../helpers/openai_sdk";
 import { getPrompt } from "../../hooks/getPrompt";
@@ -33,8 +33,10 @@ const GenerateImage = ({
   const decrementCount = () =>
     numberOfGenerations > 0 && setNumberOfGenerations(numberOfGenerations - 1);
   const [error, setError] = useState<null | {errorType: string, message: string}>(null);
+  const [isSuccess, setIsSuccess] = useState<boolean | null>(null)
   const {credits, creditsId} = useContext(CreditContext) as ICreditsContextValues
   const {user} = useContext(UserContext) as UserContextType
+
 
   const prompt = Object.values(formObj).every((property) =>
     typeof property === "string"
@@ -56,6 +58,10 @@ const GenerateImage = ({
       });
     }
   });
+  useEffect(() => {
+    setIsSuccess(mutation.isSuccess)
+  }, [mutation.isSuccess])
+
   const mutationData = mutation.data?.data.URLs as string[]
 
   const mutate = () => {
@@ -153,12 +159,15 @@ const GenerateImage = ({
           )}
       </button>
       {
-      (error?.errorType === "Out of credits" || mutation.isSuccess) 
+      (error?.errorType === "Out of credits" || isSuccess) 
         && 
         <div className="alert">
             <DashboardAlert 
-            error={error as {errorType: string, message: string}} 
-            isSuccess={mutation.isSuccess} />
+              error={error as {errorType: string, message: string}} 
+              setError={setError}
+              isSuccess={isSuccess}
+              setIsSuccess={setIsSuccess}
+            />
         </div>
       }      
       <Flex flexWrap="wrap" gap="0.8rem" marginTop="1rem">

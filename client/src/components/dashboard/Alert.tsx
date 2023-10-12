@@ -7,28 +7,35 @@ import { AlertMountingStateContext } from "../../Context/AlertMountingStateConte
 type statusType = "error" | "success"
 
 export const DashboardAlert = (
-    {error, isSuccess}: {
+    {error, setError, isSuccess, setIsSuccess}: {
         error: {
             errorType: string, 
             message: string
         },
-        isSuccess: boolean,
+        isSuccess: boolean | null,
+        setIsSuccess: React.Dispatch<React.SetStateAction<null | boolean>>
+        setError: React.Dispatch<React.SetStateAction<null | {errorType: string, message: string}>>        
     }) => {
-    const {isAlertMounted ,setIsAlertMounted} = useContext(AlertMountingStateContext) as {
+    const {setIsAlertMounted} = useContext(AlertMountingStateContext) as {
         isAlertMounted: boolean,
         setIsAlertMounted: React.Dispatch<React.SetStateAction<boolean>>
     }
     const status = getAlertStatus(
         error?.errorType,
-        isSuccess
+        isSuccess as boolean
     )
     const description = getAlertDescription(
         error, 
-        isSuccess
+        isSuccess as boolean
     )
 
     useEffect(() => {
         setIsAlertMounted(true)
+        setTimeout(() => {
+            setIsAlertMounted(false)
+            setError(null)
+            setIsSuccess(null)            
+        }, 3000)
         return () => {
             setIsAlertMounted(false)
         }

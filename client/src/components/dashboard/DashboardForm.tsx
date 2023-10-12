@@ -35,7 +35,9 @@ const DashboardForm = () => {
     isAlertMounted: boolean,
     setIsAlertMounted: React.Dispatch<React.SetStateAction<boolean>>
   }
-  isAlertMounted && (document.body.style.overflowY = "hidden")
+  isAlertMounted 
+  ? (document.body.style.overflowY = "hidden") 
+  : (document.body.style.overflowY = "scroll")
 
   const chooseColor = (hexColor: string) => setChosenColor(hexColor);
   const onMouseEnter = (colorName: string) => setHoveredColor(colorName);

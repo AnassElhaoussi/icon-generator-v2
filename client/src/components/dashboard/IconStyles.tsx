@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import { IconStyleEnum } from "../../types/icon_styles";
 import {
   FormControl,
@@ -22,6 +22,7 @@ import { DarkMode } from "@chakra-ui/react";
 import { IconStyle } from "@fortawesome/fontawesome-svg-core";
 import { Icon } from "@chakra-ui/react";
 import {HamburgerIcon, CheckIcon} from "@chakra-ui/icons"
+import { AlertMountingStateContext } from "../../Context/AlertMountingStateContext";
 
 const IconStyles = ({chosenStyle, setChosenStyle}: {
   chosenStyle: IconStyleEnum | null,
@@ -43,8 +44,12 @@ const IconStyles = ({chosenStyle, setChosenStyle}: {
     key_features: string[]
   }>(null)
   const finalRef = useRef(null)
+  const {isAlertMounted} = useContext(AlertMountingStateContext) as {
+    isAlertMounted: boolean,
+    setIsAlertMounted: React.Dispatch<React.SetStateAction<boolean>>
+  }
 
-  return (
+  return (  
     <DarkMode>
       <FormControl ref={finalRef}>
         <FormLabel
@@ -53,7 +58,13 @@ const IconStyles = ({chosenStyle, setChosenStyle}: {
         >
           Choose your icon style
         </FormLabel>
-        <Flex display="flex" flexWrap="wrap" rowGap="1rem" columnGap="2rem" alignItems="stretch">
+        <Flex
+        opacity={isAlertMounted ? "0.3" : "1"} 
+        display="flex" 
+        flexWrap="wrap" 
+        rowGap="1rem" 
+        columnGap="2rem" 
+        alignItems="stretch">
           {iconStyles.map(({ name, description, imgUrl, category, detailed_description, key_features }) => (
             <Card
               onClick={
