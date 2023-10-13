@@ -10,6 +10,7 @@ import { ICreditsContextValues } from "../../types/Context/credits";
 import { UserContext } from "../../Context/UserContextProvider";
 import { UserContextType } from "../../types/Context/signin";
 import { DashboardAlert } from "./Alert";
+import { AlertMountingStateContext } from "../../Context/AlertMountingStateContext";
 
 const GenerateImage = ({
   chosenColor,
@@ -36,7 +37,10 @@ const GenerateImage = ({
   const [isSuccess, setIsSuccess] = useState<boolean | null>(null)
   const {credits, creditsId} = useContext(CreditContext) as ICreditsContextValues
   const {user} = useContext(UserContext) as UserContextType
-
+  const {isAlertMounted} = useContext(AlertMountingStateContext) as {
+    isAlertMounted: boolean,
+    setIsAlertMounted: React.Dispatch<React.SetStateAction<boolean>>
+  }
 
   const prompt = Object.values(formObj).every((property) =>
     typeof property === "string"
@@ -103,7 +107,7 @@ const GenerateImage = ({
     alignItems="start" 
     width="full" 
     >
-      <Flex alignItems="center" gap="1rem">
+      <Flex alignItems="center" gap="1rem" opacity={isAlertMounted ? "0.2" : "1"}>
         <Card
           display="flex"
           alignItems="center"
@@ -147,7 +151,7 @@ const GenerateImage = ({
       }
       <button
         onClick={mutate}
-        className="bg-gradient-to-r from-blue-900 to-blue-600 py-2 px-5 text-white font-light rounded-lg shadow-xl shadow-blue-900"
+        className="bg-gradient-to-r from-blue-900 to-blue-600 py-2 px-5 text-white font-light rounded-lg shadow-xl shadow-blue-900 "
       >
         {mutation.isLoading ? (
           <div className="flex items-center gap-x-2">

@@ -212,7 +212,7 @@ const DashboardForm = () => {
             onClose={onClose}
           />
         </FormControl>
-          <Stack position="relative">
+          <Stack position="relative" gap="2rem">
             <IconStyles 
             chosenStyle={chosenStyle} 
             setChosenStyle={setChosenStyle} />

@@ -3,6 +3,7 @@ import { getAlertStatus } from "../../hooks/getAlertStatus"
 import { getAlertDescription } from "../../hooks/getAlertDescription"
 import { useEffect, useContext, MutableRefObject } from "react"
 import { AlertMountingStateContext } from "../../Context/AlertMountingStateContext"
+import {motion} from "framer-motion"
 
 type statusType = "error" | "success"
 

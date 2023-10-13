@@ -59,12 +59,13 @@ const IconStyles = ({chosenStyle, setChosenStyle}: {
           Choose your icon style
         </FormLabel>
         <Flex
-        opacity={isAlertMounted ? "0.3" : "1"} 
+        opacity={isAlertMounted ? "0.1" : "1"} 
         display="flex" 
         flexWrap="wrap" 
-        rowGap="1rem" 
-        columnGap="2rem" 
-        alignItems="stretch">
+        rowGap="2.5rem" 
+        columnGap="2.5rem" 
+        alignItems="center"
+        >
           {iconStyles.map(({ name, description, imgUrl, category, detailed_description, key_features }) => (
             <Card
               onClick={
@@ -84,7 +85,7 @@ const IconStyles = ({chosenStyle, setChosenStyle}: {
               backgroundColor="gray.900"
               cursor="pointer"
               borderRadius="2xl"
-              className="transition-all"
+              className="transition-all select-none"
               style={{
 
                 transform:
@@ -93,7 +94,7 @@ const IconStyles = ({chosenStyle, setChosenStyle}: {
                     : "scale(1)",
                 borderBottom: 
                   chosenStyle === name
-                  ? "8px solid #2A4365"
+                  ? "6px solid #2A4365"
                   : "2px solid transparent"
                 }}
                 >
