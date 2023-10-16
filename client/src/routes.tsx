@@ -10,51 +10,46 @@ import Dashboard from "./Pages/Dashboard";
 import { ChakraProvider } from "@chakra-ui/react";
 import Activity from "./Pages/Activity";
 import { DarkThemeProvider } from "./Context/DarkThemeContext";
-import {QueryClientProvider, QueryClient} from "@tanstack/react-query"
-import { CreditsContextProvider } from "./Context/CreditsContext";
 import { AlertMountingStateProvider } from "./Context/AlertMountingStateContext";
+import { ICreditsContextValues } from "./types/Context/credits";
+import { CreditContext } from "./Context/CreditsContext";
 
 const AppRoutes = () => {
   const {user} = useContext(UserContext)
-  const queryClient = new QueryClient()
+  const {credits} = useContext(CreditContext) as ICreditsContextValues
+  
   return (
-    <QueryClientProvider client={queryClient}>
-      <CreditsContextProvider>
-        <UserContextProvider>
-          <DarkThemeProvider>
-            <ChakraProvider>
-                <BrowserRouter>
-                    <Routes>
-                      <Route path="/" element={<App />} />
-                      <Route path="/signin" element={
-                        <ProtectedRoute currentPath="/signin" redirectPath="/" user={user as object}>
-                          <SignIn />
-                        </ProtectedRoute>
-                      } />
-                      <Route path="/pricing" element={
-                        <ProtectedRoute currentPath="/pricing" redirectPath="/dashboard" user={user as object}>
-                            <Pricing />
-                        </ProtectedRoute>
-                      } />
-                        <Route path="/dashboard" element={
-                          <ProtectedRoute currentPath="/dashboard" redirectPath="/signin" user={user as object}>
-                            <AlertMountingStateProvider>
-                                <Dashboard />
-                            </AlertMountingStateProvider>
+            <DarkThemeProvider>
+              <ChakraProvider>
+                  <BrowserRouter>
+                      <Routes>
+                        <Route path="/" element={<App />} />
+                        <Route path="/signin" element={
+                          <ProtectedRoute currentPath="/signin" redirectPath="/" user={user as object} credits={credits as number}>
+                            <SignIn />
                           </ProtectedRoute>
                         } />
-                        <Route path="/dashboard/activity" element={
-                          <ProtectedRoute currentPath="/dashboard/activity" redirectPath="/signin" user={user as object}>
-                              <Activity />
+                        <Route path="/pricing" element={
+                          <ProtectedRoute currentPath="/pricing" redirectPath="/dashboard" user={user as object} credits={credits as number}>
+                              <Pricing />
                           </ProtectedRoute>
                         } />
-                    </Routes>
-                </BrowserRouter>
-            </ChakraProvider>
-          </DarkThemeProvider>
-        </UserContextProvider>
-      </CreditsContextProvider>
-    </QueryClientProvider>
+                          <Route path="/dashboard" element={
+                            <ProtectedRoute currentPath="/dashboard" redirectPath="/signin" user={user as object} credits={credits as number}>
+                              <AlertMountingStateProvider>
+                                  <Dashboard />
+                              </AlertMountingStateProvider>
+                            </ProtectedRoute>
+                          } />
+                          <Route path="/dashboard/activity" element={
+                            <ProtectedRoute currentPath="/dashboard/activity" redirectPath="/signin" user={user as object} credits={credits as number}>
+                                <Activity />
+                            </ProtectedRoute>
+                          } />
+                      </Routes>
+                  </BrowserRouter>
+              </ChakraProvider>
+            </DarkThemeProvider>
   );
 };
 

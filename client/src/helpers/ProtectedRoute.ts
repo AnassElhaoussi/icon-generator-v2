@@ -1,29 +1,35 @@
-import React, {useEffect, useContext} from 'react'
-import { redirect, useNavigate } from 'react-router-dom'
-import { CreditContext } from '../Context/CreditsContext'
-import { ICreditsContextValues } from '../types/Context/credits'
+import React, {useEffect} from 'react'
+import { useNavigate } from 'react-router-dom'
 
-const ProtectedRoute = (props: {children: React.ReactNode, currentPath: string, redirectPath: string, user: object}) => {
+const ProtectedRoute = (
+    props: {
+        children: React.ReactNode, 
+        currentPath: string, 
+        redirectPath: string, 
+        user: object, 
+        credits: number
+    }
+) => {
     const navigate = useNavigate()
-    const {credits} = useContext(CreditContext) as ICreditsContextValues
 
     useEffect(() => {
         if(props.currentPath === "/signin" 
         && props.user) {
             navigate(props.redirectPath)
         }
-        
+
         if(props.currentPath.startsWith("/dashboard") 
         && !props.user) {
             navigate(props.redirectPath)
         }
-
-        if(props.currentPath === "/pricing"  
+        if(props.currentPath === "/pricing"
         && props.user
-        && (credits as number) > 0) {
+        && props.credits > 0
+        ) {
             navigate(`${props.redirectPath}?credits=true`)
         }
-    }, [])
+        
+    }, [props.credits])
     
     return props.children
 }
