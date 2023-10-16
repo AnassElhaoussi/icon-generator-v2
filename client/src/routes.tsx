@@ -19,39 +19,41 @@ const AppRoutes = () => {
   const queryClient = new QueryClient()
   return (
     <QueryClientProvider client={queryClient}>
-      <UserContextProvider>
-        <DarkThemeProvider>
-          <ChakraProvider>
-              <BrowserRouter>
-                  <Routes>
-                    <Route path="/" element={<App />} />
-                    <Route path="/signin" element={
-                      <ProtectedRoute currentPath="/signin" redirectPath="/" user={user as object}>
-                        <SignIn />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/pricing" element={<Pricing />} />
-                      <Route path="/dashboard" element={
-                        <ProtectedRoute currentPath="/dashboard" redirectPath="/signin" user={user as object}>
-                          <AlertMountingStateProvider>
-                            <CreditsContextProvider>
-                              <Dashboard />
-                            </CreditsContextProvider>
-                          </AlertMountingStateProvider>
+      <CreditsContextProvider>
+        <UserContextProvider>
+          <DarkThemeProvider>
+            <ChakraProvider>
+                <BrowserRouter>
+                    <Routes>
+                      <Route path="/" element={<App />} />
+                      <Route path="/signin" element={
+                        <ProtectedRoute currentPath="/signin" redirectPath="/" user={user as object}>
+                          <SignIn />
                         </ProtectedRoute>
                       } />
-                      <Route path="/dashboard/activity" element={
-                        <ProtectedRoute currentPath="/dashboard/activity" redirectPath="/signin" user={user as object}>
-                          <CreditsContextProvider>
-                            <Activity />
-                          </CreditsContextProvider>
+                      <Route path="/pricing" element={
+                        <ProtectedRoute currentPath="/pricing" redirectPath="/dashboard" user={user as object}>
+                            <Pricing />
                         </ProtectedRoute>
                       } />
-                  </Routes>
-              </BrowserRouter>
-          </ChakraProvider>
-        </DarkThemeProvider>
-      </UserContextProvider>
+                        <Route path="/dashboard" element={
+                          <ProtectedRoute currentPath="/dashboard" redirectPath="/signin" user={user as object}>
+                            <AlertMountingStateProvider>
+                                <Dashboard />
+                            </AlertMountingStateProvider>
+                          </ProtectedRoute>
+                        } />
+                        <Route path="/dashboard/activity" element={
+                          <ProtectedRoute currentPath="/dashboard/activity" redirectPath="/signin" user={user as object}>
+                              <Activity />
+                          </ProtectedRoute>
+                        } />
+                    </Routes>
+                </BrowserRouter>
+            </ChakraProvider>
+          </DarkThemeProvider>
+        </UserContextProvider>
+      </CreditsContextProvider>
     </QueryClientProvider>
   );
 };

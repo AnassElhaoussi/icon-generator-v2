@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const Pricing = () => {
   const { user } = useContext(UserContext) as UserContextType;
   return (
-    <main className=" bg-black text-center text-white font-poppins flex flex-col items-center justify-center gap-10 pb-32 pt-10 px-8">
+    <main className=" bg-black text-center text-white font-poppins flex flex-col items-center justify-center gap-20 pb-44 pt-10 px-8">
         <img src={logo} alt="" className="w-40" />
         <div className="space-y-4">
           <div className="relative">

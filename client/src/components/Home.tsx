@@ -4,7 +4,7 @@ import { Image } from '@chakra-ui/react'
 
 const Home = () => {
   return (
-    <section className="flex w-full items-center justify-center p-10">
+    <section className="flex w-full items-center justify-center  p-10">
         <div className="relative flex flex-col gap-6 items-center lg:w-3/4 w-full text-center ">
               <Image src={diamond_icon} position="absolute" top="-6rem" width="10rem" zIndex="0" />
               <div className="absolute -top-20 w-32 h-32 rounded-2xl blur-3xl bg-pink-500"></div>
