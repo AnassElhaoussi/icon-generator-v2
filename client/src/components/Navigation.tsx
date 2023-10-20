@@ -26,26 +26,38 @@ const Navigation = () => {
         <div className="lg:static absolute z-10 top-20 lg:w-auto w-full flex lg:flex-row flex-col lg:gap-32 gap-5 lg:py-0 py-5 items-center lg:bg-transparent bg-gray-900">
           <div className="lg:w-auto w-full flex lg:flex-row lg:text-sm text-xl font-light flex-col lg:gap-x-20 items-center">
             <a
-              href=""
-              className="py-4 hover:bg-gray-700 lg:hover:bg-transparent lg:hover:text-blue-500 w-full text-center transition-all"
+              href="#home"
+              className="py-4 hover:bg-gray-700 lg:hover:bg-transparent lg:hover:text-blue-700 w-full text-center transition-all"
             >
               Home
             </a>
             <a
-              href=""
-              className="py-4 hover:bg-gray-700 lg:hover:bg-transparent lg:hover:text-blue-500 w-full text-center transition-all"
+              href="#about"
+              className="py-4 hover:bg-gray-700 lg:hover:bg-transparent lg:hover:text-blue-700 w-full text-center transition-all"
             >
               About
             </a>
             <a
-              href=""
-              className="py-4 hover:bg-gray-700 lg:hover:bg-transparent lg:hover:text-blue-500 w-full text-center transition-all"
+              href="#guide"
+              className="py-4 hover:bg-gray-700 lg:hover:bg-transparent lg:hover:text-blue-700 w-full text-center transition-all"
             >
-              Pricing
+              Guide
             </a>
             <a
-              href=""
-              className="py-4 hover:bg-gray-700 lg:hover:bg-transparent lg:hover:text-blue-500 w-full text-center transition-all"
+              href="#features"
+              className="py-4 hover:bg-gray-700 lg:hover:bg-transparent lg:hover:text-blue-700 w-full text-center transition-all"
+            >
+              Features
+            </a>
+
+            <Link to="/pricing"
+              className="py-4 hover:bg-gray-700 lg:hover:bg-transparent lg:hover:text-blue-700 w-full text-center transition-all"
+            >
+              Pricing
+            </Link>
+            <a
+              href="#footer"
+              className="py-4 hover:bg-gray-700 lg:hover:bg-transparent lg:hover:text-blue-700 w-full text-center transition-all"
             >
               Contact
             </a>

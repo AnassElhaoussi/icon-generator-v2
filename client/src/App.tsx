@@ -3,6 +3,7 @@ import Navigation from "./components/Navigation"
 import AboutUs from "./components/AboutUs"
 import Features from "./components/Features"
 import Guide from "./components/Guide"
+import Footer from "./components/Footer"
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
       <AboutUs />
       <Features />
       <Guide />
+      <Footer />
     </main>
   )
 }

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Stack, Flex, Card, Text, Image, Spinner } from "@chakra-ui/react";
+import { Stack, Flex, Card, Text, Image, Spinner, Drawer, useDisclosure, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, DrawerFooter, Button } from "@chakra-ui/react";
 import { openai } from "../../helpers/openai_sdk";
 import { getPrompt } from "../../hooks/getPrompt";
 import { IconStyleEnum } from "../../types/icon_styles";
@@ -37,6 +37,7 @@ const GenerateImage = ({
   const [isSuccess, setIsSuccess] = useState<boolean | null>(null)
   const {credits, creditsId} = useContext(CreditContext) as ICreditsContextValues
   const {user} = useContext(UserContext) as UserContextType
+  const {isOpen, onClose, onOpen} = useDisclosure()
   const {isAlertMounted} = useContext(AlertMountingStateContext) as {
     isAlertMounted: boolean,
     setIsAlertMounted: React.Dispatch<React.SetStateAction<boolean>>
@@ -64,6 +65,9 @@ const GenerateImage = ({
   });
   useEffect(() => {
     setIsSuccess(mutation.isSuccess)
+    if(mutation.isSuccess) {
+      onOpen()
+    }
   }, [mutation.isSuccess])
 
   const mutationData = mutation.data?.data.URLs as string[]
@@ -149,7 +153,7 @@ const GenerateImage = ({
         </Card>
       </Flex>
       {(error && error.errorType !== "Out of credits") && 
-      <Text textColor="red.700">
+      <Text textColor="red.700" onClick={onOpen}>
         {error.message}
       </Text>
       }
@@ -177,21 +181,36 @@ const GenerateImage = ({
               setIsSuccess={setIsSuccess}
             />
         </div>
-      }      
-      <Flex flexWrap="wrap" gap="0.8rem" marginTop="1rem">
-        {mutation.isSuccess && <Text>Generations</Text>}
-        {mutation.isSuccess && mutationData.map((url, id) => {
-            return (
-                <Image
-                  src={url}
-                  key={id}
-                  borderRadius="2xl"
-                  width={80}
-                  height={80}
-                />
-            );
-          })}
-      </Flex>
+      }
+        <Drawer isOpen={isOpen} onClose={onClose}>
+          <DrawerOverlay />
+          <DrawerContent display="flex" flexDirection="column" alignItems="center" textColor="white" fontFamily="Poppins, sans-serif" backgroundColor="black">
+            <DrawerCloseButton />
+            <DrawerHeader>Generations</DrawerHeader>
+            <DrawerBody display="flex" flexDirection="column" gap="1rem">
+              {mutationData?.map((url) => (
+                  <Image 
+                  src={url} 
+                  width={40} 
+                  height={40}
+                  borderRadius="lg" 
+                  border={`4px solid #7e14ff
+                  `} />
+              ))}
+            </DrawerBody>
+            <DrawerFooter justifyContent="space-between" width="full">
+                <Button 
+                colorScheme="blue">
+                  Details
+                </Button>
+                <Button colorScheme="gray" 
+                onClick={onClose}>
+                  Cancel
+                </Button>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
+
     </Stack>
   );
 };

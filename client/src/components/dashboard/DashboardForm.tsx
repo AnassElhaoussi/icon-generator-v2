@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   VStack,
   FormControl,
@@ -21,6 +21,10 @@ import IconStyles from "./IconStyles";
 import GenerateImage from "./GenerateImage";
 import { IconStyleEnum } from "../../types/icon_styles";
 import { AlertMountingStateContext } from "../../Context/AlertMountingStateContext";
+import { useSearchParams } from "react-router-dom";
+import SideAlert from "./SideAlert";
+import { CreditContext } from "../../Context/CreditsContext";
+import { CreditsContextType, ICreditsContextValues } from "../../types/Context/credits";
 
 const DashboardForm = () => {
   const [chosenColor, setChosenColor] = useState<null | string>(null);
@@ -30,7 +34,10 @@ const DashboardForm = () => {
   const [chosenStyle, setChosenStyle] = useState<IconStyleEnum | null>(null);
   const [isInputOnBlur1, setIsInputOnBlur1] = useState<boolean>(false);
   const [isInputOnBlur2, setIsInputOnBlur2] = useState<boolean>(false);
+  const [queryParams] = useSearchParams()
+  const [sideAlertOn, setSideAlertOn] = useState<boolean>(false)
   const { onOpen, isOpen, onClose } = useDisclosure();
+  const {credits} = useContext(CreditContext) as ICreditsContextValues
   const {isAlertMounted} = useContext(AlertMountingStateContext) as {
     isAlertMounted: boolean,
     setIsAlertMounted: React.Dispatch<React.SetStateAction<boolean>>
@@ -46,13 +53,22 @@ const DashboardForm = () => {
     (colorObj) => chosenColor !== null && chosenColor !== colorObj.color
   );
   
+  
+  useEffect(() => {
+    if(queryParams.get("credits") && credits as number > 0) {
+      setSideAlertOn(true)
+      setTimeout(() => {
+        setSideAlertOn(false)
+      }, 3000);
+    } 
+  }, [])
 
   return (
     <VStack width="full" alignItems="start" >
       <VStack
         display="flex"
         alignItems="start"
-        paddingLeft="4rem"
+        paddingX="4rem"
         borderRadius="1rem"
         gap="1.5rem"
         width="100%"
@@ -63,7 +79,7 @@ const DashboardForm = () => {
             width="max-content"
             textColor="gray.400"
           >
-            What's your icon object ?
+            1- What's your icon object ?
           </FormLabel>
           <Flex alignItems="center" gap={3}>
             {isInputOnBlur1 && (iconObject?.trim().length as number) > 0 && (
@@ -73,13 +89,12 @@ const DashboardForm = () => {
               />
             )}
             <Input
-              isInvalid
-              errorBorderColor="gray.700"
-              border="none"
               variant="outline"
-              focusBorderColor="blue.700"
+              backgroundColor="gray.900"
+              border="none"
               placeholder="Example : Bird"
-              borderRadius="0.6rem"
+              borderRadius="full"
+              shadow="2xl"
               fontWeight="light"
               textColor="gray.400"
               paddingLeft="2rem"
@@ -97,8 +112,8 @@ const DashboardForm = () => {
             width="max-content"
             textColor="gray.400"
           >
-            Describe the state of your icon object{" "}
-            <span className="text-sm text-gray-700">*optional</span>
+            2- Describe the state of your icon object{" "}
+            <span className="text-sm text-gray-700 sm:inline-block block">*optional</span>
           </FormLabel>
           <Flex alignItems="center" gap={3}>
             {isInputOnBlur2 &&
@@ -109,13 +124,12 @@ const DashboardForm = () => {
                 />
               )}
             <Input
-              isInvalid
-              errorBorderColor="gray.700"
-              border="none"
               variant="outline"
-              focusBorderColor="blue.700"
-              placeholder="Example : Angry, Happy, Flying.."
-              borderRadius="0.6rem"
+              backgroundColor="gray.900"
+              border="none"
+              placeholder="Example : Bird"
+              borderRadius="full"
+              shadow="2xl"
               fontWeight="light"
               textColor="gray.400"
               paddingLeft="2rem"
@@ -138,11 +152,11 @@ const DashboardForm = () => {
               width="max-content"
               textColor="gray.400"
             >
-              Choose the main color of your icon wisely{" "}
-              <span className="text-gray-700 text-sm">*optional</span>
+              3- Choose the main color of your icon wisely{" "}
+              <span className="text-gray-700 text-sm sm:inline-block block">*optional</span>
             </FormLabel>
           <Stack gap="1rem">
-            <Flex gap="2rem" alignItems="center">
+            <Flex gap="2rem" alignItems="center" flexWrap="wrap">
               {defaultColors.map(({ name, color }, id) => (
                 <VStack key={id} onClick={
                   () => chosenColor === color 
@@ -224,6 +238,7 @@ const DashboardForm = () => {
             />
           </Stack>
       </VStack>
+      {sideAlertOn && <SideAlert description={`You can't access the pricing page, you still got ${credits as number} credits left`} />}
     </VStack>
   );
 };

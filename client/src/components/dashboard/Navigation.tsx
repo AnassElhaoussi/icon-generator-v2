@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 
 import { ICreditsContextValues } from "../../types/Context/credits";
-import axios from "axios";
+
 
 const Navigation = () => {
   const { user, logoutUser } = useContext(UserContext) as UserContextType;
@@ -39,15 +39,12 @@ const Navigation = () => {
       alignItems="center"
       justifyContent="space-between"
       width="full"
-      py="0.8rem"
+      py="1rem"
+      pb="2rem"
       px="5rem"
       textColor="whiteAlpha.800"
     >
-      <button onClick={async () => {
-        console.log("hello wr")
-        return await axios.patch(`http://localhost:8000/api/update-credits?id=${user.id}`)
-      }}>Decrement</button>
-      <Heading fontFamily="Poppins, sans-serif" fontSize="xl" fontWeight="bold">Dashboard</Heading>
+      <Heading fontFamily="Poppins, sans-serif" fontSize="3xl" fontWeight="extrabold">Welcome,</Heading>
       <Stack direction="row" gap="2rem" h="2rem">
         {isLoading && <Spinner />}
         {isSuccess && <ul className="font-light text-md">

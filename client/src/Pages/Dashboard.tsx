@@ -8,7 +8,6 @@ import {Stack} from "@chakra-ui/react"
 import Navigation from "../components/dashboard/Navigation";
 import { AlertMountingStateProvider, AlertMountingStateContext } from "../Context/AlertMountingStateContext";
 
-
 const Dashboard = () => {
   const { isDarkMode } = useContext(DarkThemeContext) as IColorModeState;
   

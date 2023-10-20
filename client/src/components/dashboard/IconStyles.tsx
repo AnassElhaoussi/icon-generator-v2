@@ -56,7 +56,7 @@ const IconStyles = ({chosenStyle, setChosenStyle}: {
           fontSize="lg"
           className="bg-gradient-to-r from-gray-400 to-white text-transparent bg-clip-text"
         >
-          Choose your icon style
+          4- Choose your icon style
         </FormLabel>
         <Flex
         opacity={isAlertMounted ? "0.1" : "1"} 

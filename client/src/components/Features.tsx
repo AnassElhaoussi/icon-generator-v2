@@ -1,10 +1,10 @@
 import { idea_bulb, colors, ai_icon } from "../images"
 const Features = () => {
     return (
-        <section className="flex flex-col gap-28 px-20">
+        <section id="features" className="flex flex-col gap-28 md:px-20 px-10">
             <div className="relative space-x-2">
                 <div className="absolute -top-32 -z-0 -left-20 w-96 h-96 rounded-full bg-gray-800 blur-3xl"></div>
-                <h2 className="relative z-10 text-8xl text-gray-200 font-bold">Features</h2>
+                <h2 className="relative z-10 lg:text-8xl md:text-7xl text-6xl text-gray-200 font-bold">Features</h2>
                 <p className="relative z-10 text-gray-500">Discover the powerful capabilities of our icon-generating Tool through these key features. </p>
             </div>
 
