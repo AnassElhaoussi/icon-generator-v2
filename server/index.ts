@@ -5,6 +5,7 @@ import { GenerateImagesCtl } from "./src/controllers/GenerateImages/GenerateImag
 import { GetGenerationsCtl } from "./src/controllers/GetGenerations/GetGenerationsCtl"
 import GetCredits from "./src/controllers/GetCredits/get-credits"
 import { prisma } from "./src/util/prisma"
+import {createOrder, captureOrder} from "./src/providers/paypal/paypal-apis"
 
 const app = express()
 const PORT = 8000
@@ -41,6 +42,25 @@ app.patch("/api/update-credits", async (req, res) => {
     })
     res.status(201).send(updatedCredit)
 })  
+
+app.post("/api/my-server/create-paypal-order", async (req, res) => {
+    try {
+        const order = await createOrder(req.body)
+        res.json(order)
+    } catch (err){
+        res.status(500).send(err.message)
+    }
+})
+
+app.post("/api/my-server/capture-paypal-order", async (req, res) => {
+    const {orderId} = req.body
+    try {
+        const captureData = await captureOrder(orderId)
+        res.json(captureData)
+    } catch(err) {
+        res.status(500).send(err.message)
+    }
+})
 
 app.listen(PORT, () => {
     console.log("Server is listening on port " + PORT)
