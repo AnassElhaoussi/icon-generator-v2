@@ -11,7 +11,7 @@ import {PayPalScriptProvider} from "@paypal/react-paypal-js"
 const client = new QueryClient()
 
 const initialOptions = {
-  clientId: process.env.PAYPAL_CLIENT_ID as string,
+  clientId: process.env.PAYPAL_CLIENT_ID,
   currency: "USD",
   intent: "capture"
 }

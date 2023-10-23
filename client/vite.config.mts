@@ -7,6 +7,7 @@ export default defineConfig(({ command, mode }) => {
     return {
         define: {
             'process.env.GOOGLE_CLIENT_ID': JSON.stringify(env.GOOGLE_CLIENT_ID),
+            'process.env.PAYPAL_CLIENT_ID': JSON.stringify(env.PAYPAL_CLIENT_ID)
         },
     };
 });
