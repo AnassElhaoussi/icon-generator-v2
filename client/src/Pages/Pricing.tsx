@@ -1,14 +1,30 @@
-import React, { useContext } from "react";
+import React, { SetStateAction, useContext, useState } from "react";
 import { logo } from "../images";
 import { UserContext } from "../Context/UserContextProvider";
 import { UserContextType } from "../types/Context/signin";
 import { Link } from "react-router-dom";
 import { useDisclosure } from "@chakra-ui/react";
 import PaypalPayment from "../components/dashboard/PaypalPayments";
+import { pricingPlans } from "../constants/plans";
+
+interface ICheckoutInfos {
+  id: number
+  category: string, 
+  description: string, 
+  cost: string,
+  amount: number
+}
 
 const Pricing = () => {
   const { user } = useContext(UserContext) as UserContextType;
   const {isOpen, onClose, onOpen} = useDisclosure()
+  const [checkoutInfos, setCheckoutInfos] = useState<null | ICheckoutInfos>(null)
+
+  const handlePlanClick = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCheckoutInfos((pricingPlans[parseInt(e.currentTarget.id)] as ICheckoutInfos))
+    onOpen()
+  }
+
   return (
     <main className=" bg-black text-center text-white font-poppins flex flex-col items-center justify-center gap-20 pb-44 pt-10 px-8">
         <img src={logo} alt="" className="w-40" />
@@ -30,7 +46,7 @@ const Pricing = () => {
                 Buy 80 Credits
             </p>
             <span className="absolute top-0 -rotate-45 -left-10 text-xs text-yellow-900 py-1 px-3 rounded-md bg-yellow-600">0.06$ /image</span>
-            <button onClick={onOpen} className="py-3 px-5 bg-gradient-to-r from-blue-900 via-blue-700 to-blue-600 rounded-md font-light text-lg hover:scale-110 transition-all ">
+            <button onClick={(e) => handlePlanClick(e)} id="0" className="py-3 px-5 bg-gradient-to-r from-blue-900 via-blue-700 to-blue-600 rounded-md font-light text-lg hover:scale-110 transition-all ">
               Buy in 5$
             </button>
           </div>
@@ -40,7 +56,7 @@ const Pricing = () => {
                 Buy 160 Credits
             </p>
             <span className="absolute top-0 -rotate-45 -left-10 text-xs text-yellow-900 py-1 px-3 rounded-md bg-yellow-600">0.07$ /image</span>
-            <button onClick={onOpen} className="py-3 px-5 bg-gradient-to-r from-purple-700 to-blue-600 rounded-md font-light text-lg hover:scale-110 transition-all ">
+            <button onClick={(e) => handlePlanClick(e)} id="1" className="py-3 px-5 bg-gradient-to-r from-purple-700 to-blue-600 rounded-md font-light text-lg hover:scale-110 transition-all ">
               Buy in 12$
             </button>
           </div>
@@ -50,12 +66,15 @@ const Pricing = () => {
                 Buy 240 Credits
             </p>
             <span className="absolute top-0 -rotate-45 -left-10 text-xs text-yellow-900 py-1 px-3 rounded-md bg-yellow-600">0.08$ /image</span>
-            <button onClick={onOpen} className="py-3 px-5 bg-gradient-to-r from-purple-700 to-blue-600 rounded-md font-light text-lg hover:scale-110 transition-all ">
+            <button onClick={(e) => handlePlanClick(e)} id="2" className="py-3 px-5 bg-gradient-to-r from-purple-700 to-blue-600 rounded-md font-light text-lg hover:scale-110 transition-all ">
               Buy in 20$
             </button>
           </div>
         </div>
-        <PaypalPayment isOpen={isOpen} onClose={onClose} />
+        <PaypalPayment 
+          checkoutInfos={checkoutInfos as ICheckoutInfos} 
+          isOpen={isOpen} 
+          onClose={onClose} />
     </main>
   );
 };

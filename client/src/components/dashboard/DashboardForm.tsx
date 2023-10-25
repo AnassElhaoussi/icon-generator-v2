@@ -21,10 +21,12 @@ import IconStyles from "./IconStyles";
 import GenerateImage from "./GenerateImage";
 import { IconStyleEnum } from "../../types/icon_styles";
 import { AlertMountingStateContext } from "../../Context/AlertMountingStateContext";
-import { useSearchParams } from "react-router-dom";
-import SideAlert from "./SideAlert";
 import { CreditContext } from "../../Context/CreditsContext";
 import { CreditsContextType, ICreditsContextValues } from "../../types/Context/credits";
+import { useSearchParams } from "react-router-dom";
+import SideAlert from "./SideAlert";
+import { PurchaseContext } from "../../Context/PurchaseContext";
+import { IPurchaseContextValues } from "../../types/Context/payment";
 
 const DashboardForm = () => {
   const [chosenColor, setChosenColor] = useState<null | string>(null);
@@ -34,14 +36,16 @@ const DashboardForm = () => {
   const [chosenStyle, setChosenStyle] = useState<IconStyleEnum | null>(null);
   const [isInputOnBlur1, setIsInputOnBlur1] = useState<boolean>(false);
   const [isInputOnBlur2, setIsInputOnBlur2] = useState<boolean>(false);
-  const [queryParams] = useSearchParams()
   const [sideAlertOn, setSideAlertOn] = useState<boolean>(false)
   const { onOpen, isOpen, onClose } = useDisclosure();
   const {credits} = useContext(CreditContext) as ICreditsContextValues
+  const [searchParams] = useSearchParams()
+  const {isPaymentSuccessful, creditsPurchased, setIsPaymentSuccessful} = useContext(PurchaseContext) as IPurchaseContextValues
   const {isAlertMounted} = useContext(AlertMountingStateContext) as {
     isAlertMounted: boolean,
     setIsAlertMounted: React.Dispatch<React.SetStateAction<boolean>>
   }
+  
   isAlertMounted 
   ? (document.body.style.overflowY = "hidden") 
   : (document.body.style.overflowY = "scroll")
@@ -52,15 +56,15 @@ const DashboardForm = () => {
   const isCustomColor = defaultColors.every(
     (colorObj) => chosenColor !== null && chosenColor !== colorObj.color
   );
-  
-  
+
   useEffect(() => {
-    if(queryParams.get("credits") && credits as number > 0) {
+    if(searchParams.get("payment") && isPaymentSuccessful) {
       setSideAlertOn(true)
       setTimeout(() => {
         setSideAlertOn(false)
-      }, 3000);
-    } 
+        setIsPaymentSuccessful(false)
+      }, 3000 )
+    }
   }, [])
 
   return (
@@ -127,7 +131,7 @@ const DashboardForm = () => {
               variant="outline"
               backgroundColor="gray.900"
               border="none"
-              placeholder="Example : Bird"
+              placeholder="Example : Happy, Angry, cute..."
               borderRadius="full"
               shadow="2xl"
               fontWeight="light"
@@ -238,7 +242,7 @@ const DashboardForm = () => {
             />
           </Stack>
       </VStack>
-      {sideAlertOn && <SideAlert description={`You can't access the pricing page, you still got ${credits as number} credits left`} />}
+      {sideAlertOn && <SideAlert description={`Payment successful : You have purchased ${creditsPurchased as number} credits!`} />}
     </VStack>
   );
 };

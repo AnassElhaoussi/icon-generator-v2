@@ -9,7 +9,7 @@ const SideAlert = ({
         <Alert 
         status="info" position="fixed" 
         borderRadius="md" top="90vh" 
-        right="1rem" backgroundColor="black" 
+        right="1rem" backgroundColor="gray.900" 
         textColor="white" 
         width="fit-content"
         

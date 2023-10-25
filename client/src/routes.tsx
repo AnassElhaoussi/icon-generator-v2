@@ -30,7 +30,7 @@ const AppRoutes = () => {
                           </ProtectedRoute>
                         } />
                         <Route path="/pricing" element={
-                          <ProtectedRoute currentPath="/pricing" redirectPath="/dashboard" user={user as object} credits={credits as number}>
+                          <ProtectedRoute currentPath="/pricing" redirectPath="/signin" user={user as object} credits={credits as number}>
                               <Pricing />
                           </ProtectedRoute>
                         } />

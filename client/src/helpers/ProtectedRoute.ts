@@ -1,5 +1,7 @@
-import React, {useEffect} from 'react'
+import React, {useContext, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
+import { PricingAccessContext } from '../Context/PricingAccessContext'
+import { IPricingAccessContextValues } from '../types/Context/pricing_access'
 
 const ProtectedRoute = (
     props: {
@@ -11,6 +13,7 @@ const ProtectedRoute = (
     }
 ) => {
     const navigate = useNavigate()
+    const {setIsAccessDenied} = useContext(PricingAccessContext) as IPricingAccessContextValues
 
     useEffect(() => {
         if(props.currentPath === "/signin" 
@@ -22,11 +25,10 @@ const ProtectedRoute = (
         && !props.user) {
             navigate(props.redirectPath)
         }
-        if(props.currentPath === "/pricing"
-        && props.user
-        && props.credits > 0
-        ) {
-            navigate(`${props.redirectPath}?credits=true`)
+
+        if(props.currentPath === "/pricing" && !props.user) {
+           setIsAccessDenied(true)
+           navigate(`${props.redirectPath}?pricing_access=denied`) 
         }
         
     }, [props.credits])

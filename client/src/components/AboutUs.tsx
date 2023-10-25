@@ -1,8 +1,11 @@
-import React from "react"
+import React, {useContext} from "react"
 import { aboutus_decoration, rising_icon } from "../images"
-
+import { UserContext } from "../Context/UserContextProvider"
+import { UserContextType } from "../types/Context/signin"
+import { Link } from "react-router-dom"
 
 const AboutUs = () => {
+    const {user} = useContext(UserContext) as UserContextType
     return (
         <section id="about" className="relative flex flex-col justify-center gap-20 md:px-20 px-10 py-10">
             <div className="absolute -top-20 -left-10 w-96 h-96 rounded-full bg-gray-800 blur-3xl"></div>
@@ -22,8 +25,10 @@ const AboutUs = () => {
             <div className="space-y-4">
                 <h4 className="md:text-4xl text-3xl font-semibold text-gray-300">Our vision</h4>
                 <p className="text-sm font-light text-gray-400 lg:w-1/2 w-full">We envision a world where design is made effortless through cutting-edge technology. Our goal is to revolutionize the way icons are created, offering a simple and efficient solution for designers, developers, and enthusiasts alike.</p>
-                <button className="bg-blue-600 shadow-lg shadow-blue-900 rounded-lg py-2 px-5 text-white font-normal text-md">
-                    See our pricing plan
+                <button>
+                    <Link to={!user ? "/signin" : "/pricing"} className="bg-blue-600 shadow-lg shadow-blue-900 rounded-lg py-2 px-5 text-white font-normal text-md">
+                        {!user ? "Sign in" : "See our pricing plan"}
+                    </Link>
                 </button>
             </div>
         

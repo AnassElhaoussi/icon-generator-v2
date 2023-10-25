@@ -1,6 +1,6 @@
 import express from "express";
 import fetch from "node-fetch";
-
+import { prisma } from "../../util/prisma";
 
 const base = "https://api-m.sandbox.paypal.com";
 
@@ -72,7 +72,12 @@ export const createOrder = async (data: {product: {cost: string}}) => {
  * Capture payment for the created order to complete the transaction.
  * @see https://developer.paypal.com/docs/api/orders/v2/#orders_capture
  */
-export const captureOrder = async (orderID: string) => {
+export const captureOrder = async (
+  orderID: string, 
+  userId: string, 
+  creditsAmount: number, 
+  prevCreditsAmt: number
+) => {
   const accessToken = await generateAccessToken();
   const url = `${base}/v2/checkout/orders/${orderID}/capture`;
 
@@ -88,6 +93,11 @@ export const captureOrder = async (orderID: string) => {
       // "PayPal-Mock-Response": '{"mock_application_codes": "INTERNAL_SERVER_ERROR"}'
     },
   });
+
+  const updatedCredits = await prisma.credits.update({
+    where: {userId},
+    data: {amount: prevCreditsAmt + creditsAmount}
+  })
 
   return handleResponse(response);
 };

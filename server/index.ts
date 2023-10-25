@@ -53,9 +53,14 @@ app.post("/api/my-server/create-paypal-order", async (req, res) => {
 })
 
 app.post("/api/my-server/capture-paypal-order", async (req, res) => {
-    const {orderId} = req.body
+    const {orderId, userId, creditsAmount, prevCreditsAmt} = req.body
     try {
-        const captureData = await captureOrder(orderId)
+        const captureData = await captureOrder(
+            orderId, 
+            userId, 
+            creditsAmount, 
+            prevCreditsAmt
+        )
         res.json(captureData)
     } catch(err) {
         res.status(500).send(err.message)

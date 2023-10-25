@@ -3,7 +3,11 @@ import { logo } from "../images";
 import { useGoogleLogin } from "@react-oauth/google";
 import { UserContext } from "../Context/UserContextProvider";
 import { UserContextType } from "../types/Context/signin";
-import { Spinner } from "@chakra-ui/react";
+import { Divider, Spinner } from "@chakra-ui/react";
+import { useSearchParams } from "react-router-dom";
+import { PricingAccessContext } from "../Context/PricingAccessContext";
+import { IPricingAccessContextValues } from "../types/Context/pricing_access";
+import SideAlert from "../components/dashboard/SideAlert";
 
 const SignIn = () => {
   const [error, setError] = useState<{
@@ -15,6 +19,19 @@ const SignIn = () => {
   });
   const { user, addUser, logoutUser, isLoading, isNotLoading, loading } =
     useContext(UserContext) as UserContextType;
+  const {isAccessDenied, setIsAccessDenied} = useContext(PricingAccessContext) as IPricingAccessContextValues
+  const [sideAlertOn, setSideAlertOn] = useState<boolean>(false)
+
+  const [searchParams] = useSearchParams()
+  useEffect(() => {
+    if(searchParams.get("pricing_access") === "denied" && isAccessDenied) {
+      setSideAlertOn(true)
+      setTimeout(() => {
+        setSideAlertOn(false)
+        setIsAccessDenied(false)  
+      }, 5000)
+    }
+  }, [])
 
   const signIn = useGoogleLogin({
     onSuccess: async function (response: object) {
@@ -22,7 +39,9 @@ const SignIn = () => {
       try {
         const res = await addUser(response);
         if (res.status === 200) {
-          window.location.href = "/dashboard";
+          searchParams.get("pricing_access") === "denied"
+          ? window.location.href = "/pricing"
+          : window.location.href = "/dashboard"
         }
       } catch (e) {
         setError({
@@ -39,8 +58,8 @@ const SignIn = () => {
       }),
   });
   return (
-    <section className="relative overflow-hidden font-poppins text-white bg-black flex flex-col items-center justify-center h-[110vh] ">
-      <img src={logo} alt="" className="absolute w-64 -top-16" />
+    <section className="relative overflow-hidden font-poppins text-white bg-black flex flex-col items-center justify-center h-screen ">
+      <img src={logo} alt="" className="relative top-10 w-56 " />
       <div className="px-5 relative flex flex-col gap-8 items-center h-full w-screen justify-center">
         <div className="text-center md:w-3/4 space-y-2">
           <div className="relative">
@@ -64,6 +83,7 @@ const SignIn = () => {
           <small className="text-red-500 text-lg">{error.errorMessage}</small>
         )}
       </div>
+      {sideAlertOn && <SideAlert description="You need to sign in before accessing the pricing page!" />}
     </section>
   );
 };
