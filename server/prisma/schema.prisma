@@ -22,17 +22,21 @@ model User {
 }
 
 model Credits {
-  creditsId Int     @id @default(autoincrement())
+  creditsId Int    @id @default(autoincrement())
   amount    Int
   userId    String @unique
   user      User   @relation(fields: [userId], references: [id])
 }
 
 model Generations {
-  generationId String   @id @default(uuid())
-  prompt       String
-  URLs         String[]
-  n            Int
-  authorEmail  String
-  author       User     @relation(fields: [authorEmail], references: [email])
+  generationId    String   @id @default(uuid())
+  prompt          String
+  URLs            String[]
+  iconObject      String
+  iconDescription String
+  color           String
+  style           String
+  n               Int
+  authorEmail     String
+  author          User     @relation(fields: [authorEmail], references: [email])
 }

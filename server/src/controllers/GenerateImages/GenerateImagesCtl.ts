@@ -7,7 +7,17 @@ export class GenerateImagesCtl {
     constructor(){}
     async handle(req: Request, res: Response) {
         // Request body
-        const {prompt, n, email, prevCreditsAmt, creditsId} = req.body
+        const {
+            prompt,
+            n, 
+            email, 
+            prevCreditsAmt, 
+            creditsId, 
+            iconObject, 
+            iconDescription, 
+            color,
+            style
+        } = req.body
         // Calling the class and the method that generates dalle images
         const generateDalleImage = new GenerateDalleImage()
         const generatedImages = await generateDalleImage.generateImages(prompt, n)
@@ -19,6 +29,10 @@ export class GenerateImagesCtl {
                     data: {
                         prompt,
                         n,
+                        iconObject,
+                        iconDescription,
+                        color,
+                        style,
                         URLs: generatedImages.map(image => image.url) as string[],
                         authorEmail: email
                     },

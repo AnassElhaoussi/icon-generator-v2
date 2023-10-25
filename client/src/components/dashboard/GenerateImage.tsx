@@ -11,6 +11,7 @@ import { UserContext } from "../../Context/UserContextProvider";
 import { UserContextType } from "../../types/Context/signin";
 import { DashboardAlert } from "./Alert";
 import { AlertMountingStateContext } from "../../Context/AlertMountingStateContext";
+import { iconStyles } from "../../constants/iconstyles";
 
 const GenerateImage = ({
   chosenColor,
@@ -83,7 +84,11 @@ const GenerateImage = ({
     ) {
       if(numberOfGenerations <= (credits as number)) {
         mutation.mutate({ 
-          prompt: prompt as string, 
+          prompt: prompt as string,
+          iconObject: iconObject as string,
+          iconDescription: iconDescription as string,
+          color: chosenColor as string,
+          style: chosenStyle as string,
           n: numberOfGenerations,
           email: user?.email as string,
           creditsId,

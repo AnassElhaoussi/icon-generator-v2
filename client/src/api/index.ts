@@ -10,18 +10,30 @@ export async function generateDalleIcons({ prompt,
     n,
     prevCreditsAmt,
     creditsId,
-    email
+    email,
+    iconObject,
+    iconDescription,
+    color,
+    style
 }: { 
     prompt: string, 
     n: number, 
     prevCreditsAmt: number, 
     creditsId: number,
-    email: string
+    email: string,
+    iconObject: string,
+    iconDescription: string,
+    color: string,
+    style: string
 }): Promise<AxiosResponse<{
     prompt: string,
     n: number,
     URLs: string[],
-    authorEmail: string
+    authorEmail: string,
+    iconObject: string,
+    iconDescription: string,
+    color: string,
+    style: string
 }>> {
     return await axios.post(
         "http://localhost:8000/api/generate", { 
@@ -29,7 +41,11 @@ export async function generateDalleIcons({ prompt,
             n, 
             prevCreditsAmt, 
             creditsId,
-            email
+            email,
+            iconDescription,
+            iconObject,
+            color,
+            style
         })
 }
 
