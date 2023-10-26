@@ -15,10 +15,14 @@ import {
   Stack,
   Divider,
   Spinner,
-  Heading
+  Heading,
+  Image
 } from "@chakra-ui/react";
+import { logo } from "../../images";
 
 import { ICreditsContextValues } from "../../types/Context/credits";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDiamond } from "@fortawesome/free-solid-svg-icons";
 
 
 const Navigation = () => {
@@ -39,25 +43,22 @@ const Navigation = () => {
       alignItems="center"
       justifyContent="space-between"
       width="full"
-      py="1rem"
-      pb="2rem"
+      py="2rem"
       px="5rem"
       textColor="whiteAlpha.800"
     >
-      <Heading fontFamily="Poppins, sans-serif" fontSize="3xl" fontWeight="extrabold">Welcome,</Heading>
+      <Image src={logo} className="w-32" />
       <Stack direction="row" gap="2rem" h="2rem">
         {isLoading && <Spinner />}
         {isSuccess && <ul className="font-light text-md">
-          <span className="text-blue-400 text-lg">{credits}</span> Credits Left
+          <span className="text-white text-lg">{credits}</span> <FontAwesomeIcon className="text-blue-700" icon={faDiamond} />
         </ul>}
+        <Link to="/pricing" className="text-blue-900 bg-blue-400 h-fit p-1 rounded-md text-sm hover:scale-105 transition-all">Buy credits</Link>
         {isError && <Text textColor="red.500">Something went wrong</Text>}
         <Divider orientation="vertical" borderColor="black" />
         <Menu>
           <MenuButton display="flex" alignItems="center" position="relative" className="hover:bg-gray-900 p-2 rounded-md">
             <Avatar src={user?.picture} size="sm" mr={1} />
-            <span className="text-sm font-light">
-              @{user?.given_name.toLowerCase()}
-            </span>
           </MenuButton>
           <MenuList
             display="flex"

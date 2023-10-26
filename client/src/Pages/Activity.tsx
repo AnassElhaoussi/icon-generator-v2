@@ -46,7 +46,7 @@ const Activity = () => {
         <Card position="relative" minWidth="15rem" padding="1rem" className="bg-gradient-to-r from-purple-500 to-purple-800" borderRadius="xl">
           <FontAwesomeIcon icon={faDiamond} className="absolute right-5 text-white" />
           <Heading textColor="white" fontFamily="Poppins, sans-serif" as="h2" fontSize="8xl">100</Heading>
-          <Text textColor="gray.200" fontWeight="light">Credits used</Text>
+          <Text textColor="gray.200" fontWeight="light">Credits left</Text>
         </Card>
       </Flex>
       <Divider borderColor="gray.700" />

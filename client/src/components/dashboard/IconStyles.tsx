@@ -54,9 +54,10 @@ const IconStyles = ({chosenStyle, setChosenStyle}: {
       <FormControl ref={finalRef}>
         <FormLabel
           fontSize="lg"
-          className="bg-gradient-to-r from-gray-400 to-white text-transparent bg-clip-text"
+          fontWeight="semibold"
+          color="gray.300"
         >
-          4- Choose your icon style
+          4- Choose your icon style <span className="text-red-600">*</span>
         </FormLabel>
         <Flex
         opacity={isAlertMounted ? "0.1" : "1"} 
@@ -82,7 +83,7 @@ const IconStyles = ({chosenStyle, setChosenStyle}: {
                 })()
                 : chooseStyle(name as IconStyleEnum)
               }
-              backgroundColor="gray.900"
+              backgroundColor="#101010"
               cursor="pointer"
               borderRadius="2xl"
               className="transition-all select-none"
@@ -94,7 +95,7 @@ const IconStyles = ({chosenStyle, setChosenStyle}: {
                     : "scale(1)",
                 borderBottom: 
                   chosenStyle === name
-                  ? "6px solid #2A4365"
+                  ? `6px solid ${category.color}`
                   : "2px solid transparent"
                 }}
                 >

@@ -10,13 +10,15 @@ import {
   Heading,
   Text,
   useDisclosure,
+  InputGroup,
+  InputRightElement,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { defaultColors } from "../../constants/colors";
 import { hexToRgb } from "../../helpers/hexToRgb";
 import DashboardColorPicker from "./ColorPicker";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faIcons, faPen } from "@fortawesome/free-solid-svg-icons";
 import IconStyles from "./IconStyles";
 import GenerateImage from "./GenerateImage";
 import { IconStyleEnum } from "../../types/icon_styles";
@@ -76,14 +78,16 @@ const DashboardForm = () => {
         borderRadius="1rem"
         gap="1.5rem"
         width="100%"
+        
       >
         <FormControl maxWidth="min-content">
           <FormLabel
-            fontSize="md"
+            fontSize="lg"
             width="max-content"
-            textColor="gray.400"
+            fontWeight="semibold"
+            textColor="gray.300"
           >
-            1- What's your icon object ?
+            1- What's your icon object ? <span className="text-red-600">*</span>
           </FormLabel>
           <Flex alignItems="center" gap={3}>
             {isInputOnBlur1 && (iconObject?.trim().length as number) > 0 && (
@@ -92,33 +96,40 @@ const DashboardForm = () => {
                 className="text-green-500 text-xl"
               />
             )}
-            <Input
-              variant="outline"
-              backgroundColor="gray.900"
-              border="none"
-              placeholder="Example : Bird"
-              borderRadius="full"
-              shadow="2xl"
-              fontWeight="light"
-              textColor="gray.400"
-              paddingLeft="2rem"
-              className="placeholder:text-gray-600"
-              value={iconObject as string}
-              onChange={(e) => setIconObject(e.target.value)}
-              onFocus={() => setIsInputOnBlur1(false)}
-              onBlur={() => setIsInputOnBlur1(true)}
-            />
+            <InputGroup>
+              <InputRightElement children={<FontAwesomeIcon icon={faIcons} className="text-gray-300" />} />
+              <Input
+                variant="outline"
+                backgroundColor="#121212"
+                border="none"
+                placeholder="Example : Bird"
+                borderRadius="full"
+                shadow="2xl"
+                fontWeight="light"
+                textColor="gray.400"
+                paddingX="3rem"
+                className="placeholder:text-gray-600"
+                value={iconObject as string}
+                onChange={(e) => setIconObject(e.target.value)}
+                onFocus={() => setIsInputOnBlur1(false)}
+                onBlur={() => setIsInputOnBlur1(true)}
+                
+              />
+            </InputGroup>
+            
           </Flex>
         </FormControl>
-        <FormControl maxWidth="min-content">
-          <FormLabel
-            fontSize="md"
-            width="max-content"
-            textColor="gray.400"
-          >
-            2- Describe the state of your icon object{" "}
-            <span className="text-sm text-gray-700 sm:inline-block block">*optional</span>
-          </FormLabel>
+        <FormControl width="min-content">
+          
+              <FormLabel
+                fontSize="lg"
+                fontWeight="semibold"
+                width="max-content"
+                textColor="gray.300"
+              >
+                3- Describe your icon precisely{" "}<span className="text-red-600">*</span>
+              </FormLabel>
+            
           <Flex alignItems="center" gap={3}>
             {isInputOnBlur2 &&
               (iconDescription?.trim().length as number) > 0 && (
@@ -127,22 +138,25 @@ const DashboardForm = () => {
                   className="text-green-500 text-xl"
                 />
               )}
-            <Input
-              variant="outline"
-              backgroundColor="gray.900"
-              border="none"
-              placeholder="Example : Happy, Angry, cute..."
-              borderRadius="full"
-              shadow="2xl"
-              fontWeight="light"
-              textColor="gray.400"
-              paddingLeft="2rem"
-              className="placeholder:text-gray-600"
-              value={iconDescription as string}
-              onChange={(e) => setIconDescription(e.target.value)}
-              onFocus={() => setIsInputOnBlur2(false)}
-              onBlur={() => setIsInputOnBlur2(true)}
-            />
+            <InputGroup>
+              <InputRightElement children={<FontAwesomeIcon icon={faPen} className="text-gray-300" />} />
+              <Input
+                variant="outline"
+                backgroundColor="#121212"
+                border="none"
+                placeholder="Example : Cute and Happy, Angry.."
+                borderRadius="full"
+                shadow="2xl"
+                fontWeight="light"
+                textColor="gray.400"
+                paddingX="2rem"
+                className="placeholder:text-gray-600"
+                value={iconDescription as string}
+                onChange={(e) => setIconDescription(e.target.value)}
+                onFocus={() => setIsInputOnBlur2(false)}
+                onBlur={() => setIsInputOnBlur2(true)}
+              />
+            </InputGroup>
           </Flex>
           <FormHelperText>
             Use adjectives for better results or Follow Our{" "}
@@ -150,15 +164,17 @@ const DashboardForm = () => {
           </FormHelperText>
         </FormControl>
         <FormControl display="flex" flexDirection="column" gap="2rem">
-          
-            <FormLabel
-              fontSize="md"
-              width="max-content"
-              textColor="gray.400"
-            >
-              3- Choose the main color of your icon wisely{" "}
-              <span className="text-gray-700 text-sm sm:inline-block block">*optional</span>
-            </FormLabel>
+            <Stack spacing="-0.5">
+              <FormLabel
+                fontSize="lg"
+                fontWeight="semibold"
+                width="max-content"
+                textColor="gray.300"
+              >
+                3- Choose the main color of your icon wisely{" "}<span className="text-red-600">*</span>
+              </FormLabel>
+              <Text className="text-gray-500 text-sm font-normal">Choose from our default colors to start generating your icons</Text>
+            </Stack>
           <Stack gap="1rem">
             <Flex gap="2rem" alignItems="center" flexWrap="wrap">
               {defaultColors.map(({ name, color }, id) => (
@@ -182,9 +198,9 @@ const DashboardForm = () => {
                     }}
                     onMouseEnter={() => onMouseEnter(name)}
                     onMouseLeave={onMouseLeave}
-                    className="w-14 h-14 rounded-2xl shadow-[inset_0_-10px_16px_rgba(0,0,0,0.6)] transition-all cursor-pointer"
+                    className="w-16 h-16 rounded-full shadow-[inset_0_-10px_16px_rgba(0,0,0,0.6)] transition-all cursor-pointer"
                   ></div>
-                  <h4 className="text-sm text-gray-300 font-light">{name}</h4>
+                  <h4 className="text-sm  font-light text-gray-300 font-light">{name}</h4>
                 </VStack>
               ))}
             </Flex>

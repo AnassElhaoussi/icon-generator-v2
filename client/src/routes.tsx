@@ -13,6 +13,7 @@ import { DarkThemeProvider } from "./Context/DarkThemeContext";
 import { AlertMountingStateProvider } from "./Context/AlertMountingStateContext";
 import { ICreditsContextValues } from "./types/Context/credits";
 import { CreditContext } from "./Context/CreditsContext";
+import { TermsAndConditions } from "./Pages/TermsAndConditions";
 
 const AppRoutes = () => {
   const {user} = useContext(UserContext)
@@ -46,6 +47,7 @@ const AppRoutes = () => {
                                 <Activity />
                             </ProtectedRoute>
                           } />
+                          <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
                       </Routes>
                   </BrowserRouter>
               </ChakraProvider>

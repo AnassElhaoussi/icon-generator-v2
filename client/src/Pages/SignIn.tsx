@@ -63,7 +63,7 @@ const SignIn = () => {
       <div className="px-5 relative flex flex-col gap-8 items-center h-full w-screen justify-center">
         <div className="text-center md:w-3/4 space-y-2">
           <div className="relative">
-            <div className="absolute right-[5rem] -z-0 w-3/4 h-28 bg-purple-800 rounded-4xl blur-3xl"></div>
+            <div className="absolute right-[5rem]  -z-0 w-3/4 h-28 bg-purple-800 rounded-4xl blur-3xl"></div>
             <span className="relative z-10 font-extrabold lg:text-[6.5rem] md:text-[5rem] text-7xl text-gray-200 text-center lg:leading-[6.5rem] mg:[5rem] leading-[4.5rem] ">
               Sign in and get 10 free credits.
             </span>
@@ -73,7 +73,7 @@ const SignIn = () => {
           </p>
         </div>
         <button
-          className=" flex gap-x-3 bg-blue-700 items-center text-white font-light py-3 px-6 rounded-lg hover:scale-110 transition-all"
+          className=" flex gap-x-3 bg-white items-center text-blue-600 font-semibold text-xl font-light py-3 px-6 rounded-lg hover:scale-110 transition-all"
           onClick={() => signIn()}
         >
           {loading && <Spinner size="md" />}
