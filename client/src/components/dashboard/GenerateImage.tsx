@@ -12,6 +12,7 @@ import { UserContextType } from "../../types/Context/signin";
 import { DashboardAlert } from "./Alert";
 import { AlertMountingStateContext } from "../../Context/AlertMountingStateContext";
 import { iconStyles } from "../../constants/iconstyles";
+import { Link } from "react-router-dom";
 
 const GenerateImage = ({
   chosenColor,
@@ -187,11 +188,11 @@ const GenerateImage = ({
             />
         </div>
       }
-        <Drawer isOpen={isOpen} onClose={onClose}>
+      <Drawer isOpen={isOpen} onClose={onClose}>
           <DrawerOverlay />
           <DrawerContent display="flex" flexDirection="column" alignItems="center" textColor="white" fontFamily="Poppins, sans-serif" backgroundColor="black">
             <DrawerCloseButton />
-            <DrawerHeader>Generations</DrawerHeader>
+            <DrawerHeader>Generation</DrawerHeader>
             <DrawerBody display="flex" flexDirection="column" gap="1rem">
               {mutationData?.map((url) => (
                   <Image 
@@ -204,10 +205,12 @@ const GenerateImage = ({
               ))}
             </DrawerBody>
             <DrawerFooter justifyContent="space-between" width="full">
-                <Button 
-                colorScheme="blue">
-                  Details
-                </Button>
+                <Link to="activity">
+                  <Button
+                  colorScheme="blue">
+                      More details
+                  </Button>
+                </Link>
                 <Button colorScheme="gray" 
                 onClick={onClose}>
                   Cancel
@@ -215,7 +218,6 @@ const GenerateImage = ({
             </DrawerFooter>
           </DrawerContent>
         </Drawer>
-
     </Stack>
   );
 };
