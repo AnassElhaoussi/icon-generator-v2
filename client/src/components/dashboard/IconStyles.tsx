@@ -19,10 +19,9 @@ import {
 } from "@chakra-ui/react";
 import { iconStyles } from "../../constants/iconstyles";
 import { DarkMode } from "@chakra-ui/react";
-import { IconStyle } from "@fortawesome/fontawesome-svg-core";
 import { Icon } from "@chakra-ui/react";
 import {HamburgerIcon, CheckIcon} from "@chakra-ui/icons"
-import { AlertMountingStateContext } from "../../Context/AlertMountingStateContext";
+
 
 const IconStyles = ({chosenStyle, setChosenStyle}: {
   chosenStyle: IconStyleEnum | null,
@@ -44,10 +43,6 @@ const IconStyles = ({chosenStyle, setChosenStyle}: {
     key_features: string[]
   }>(null)
   const finalRef = useRef(null)
-  const {isAlertMounted} = useContext(AlertMountingStateContext) as {
-    isAlertMounted: boolean,
-    setIsAlertMounted: React.Dispatch<React.SetStateAction<boolean>>
-  }
 
   return (  
     <DarkMode>
@@ -60,7 +55,6 @@ const IconStyles = ({chosenStyle, setChosenStyle}: {
           4- Choose your icon style <span className="text-red-600">*</span>
         </FormLabel>
         <Flex
-        opacity={isAlertMounted ? "0.1" : "1"} 
         display="flex" 
         flexWrap="wrap" 
         rowGap="2.5rem" 

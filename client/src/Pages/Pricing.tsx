@@ -1,9 +1,9 @@
-import React, { SetStateAction, useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { logo } from "../images";
 import { UserContext } from "../Context/UserContextProvider";
 import { UserContextType } from "../types/Context/signin";
-import { Link } from "react-router-dom";
-import { useDisclosure } from "@chakra-ui/react";
+import { Link, useSearchParams } from "react-router-dom";
+import { useDisclosure, useToast } from "@chakra-ui/react";
 import PaypalPayment from "../components/dashboard/PaypalPayments";
 import { pricingPlans } from "../constants/plans";
 
@@ -19,6 +19,20 @@ const Pricing = () => {
   const { user } = useContext(UserContext) as UserContextType;
   const {isOpen, onClose, onOpen} = useDisclosure()
   const [checkoutInfos, setCheckoutInfos] = useState<null | ICheckoutInfos>(null)
+  const [searchParams] = useSearchParams()
+  const toast = useToast()
+
+  useEffect(() => {
+    if(searchParams.get("pricing_access")) {
+      toast({
+        title: "You can now access our pricing page",
+        description: "Choose a payment plan and method and start generating icons easily!",
+        status: "info",
+        duration: 9000,
+        isClosable: true
+      })
+    }
+  }, [])
 
   const handlePlanClick = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCheckoutInfos((pricingPlans[parseInt(e.currentTarget.id)] as ICheckoutInfos))
@@ -46,9 +60,13 @@ const Pricing = () => {
                 Buy 80 Credits
             </p>
             <span className="absolute top-0 -rotate-45 -left-10 text-xs text-yellow-900 py-1 px-3 rounded-md bg-yellow-600">0.06$ /image</span>
-            <button onClick={(e) => handlePlanClick(e)} id="0" className="py-3 px-5 bg-gradient-to-r from-blue-900 via-blue-700 to-blue-600 rounded-md font-light text-lg hover:scale-110 transition-all ">
+            {
+              !user
+              ? <Link to="/signin">Sign in</Link>
+              : <button onClick={(e) => handlePlanClick(e)} id="0" className="py-3 px-5 bg-gradient-to-r from-blue-900 via-blue-700 to-blue-600 rounded-md font-light text-lg hover:scale-110 transition-all ">
               Buy in 5$
             </button>
+            }
           </div>
           <div className="relative flex flex-col gap-y-6 bg-gradient-to-t from-gray-800 to-gray-900 h-[17rem] items-center justify-around p-8 rounded-2xl shadow-lg  md:w-[20rem] w-full">
             <h3 className="bg-gradient-to-r from-purple-700 to-blue-700 text-transparent bg-clip-text text-5xl font-bold text-blue-700">Standard</h3>
@@ -56,9 +74,13 @@ const Pricing = () => {
                 Buy 160 Credits
             </p>
             <span className="absolute top-0 -rotate-45 -left-10 text-xs text-yellow-900 py-1 px-3 rounded-md bg-yellow-600">0.07$ /image</span>
-            <button onClick={(e) => handlePlanClick(e)} id="1" className="py-3 px-5 bg-gradient-to-r from-purple-700 to-blue-600 rounded-md font-light text-lg hover:scale-110 transition-all ">
+            {
+              !user
+              ? <Link to="/signin">Sign in</Link>
+              : <button onClick={(e) => handlePlanClick(e)} id="0" className="py-3 px-5 bg-gradient-to-r from-blue-900 via-blue-700 to-blue-600 rounded-md font-light text-lg hover:scale-110 transition-all ">
               Buy in 12$
             </button>
+            }
           </div>
           <div className="relative flex flex-col gap-y-6 bg-gradient-to-t from-gray-800 to-gray-900 h-[17rem] items-center justify-around p-8 rounded-2xl shadow-lg  md:w-[20rem] w-full">
             <h3 className="bg-gradient-to-r from-purple-700 to-blue-700 text-transparent bg-clip-text text-5xl font-bold text-blue-700">Premium</h3>
@@ -66,9 +88,13 @@ const Pricing = () => {
                 Buy 240 Credits
             </p>
             <span className="absolute top-0 -rotate-45 -left-10 text-xs text-yellow-900 py-1 px-3 rounded-md bg-yellow-600">0.08$ /image</span>
-            <button onClick={(e) => handlePlanClick(e)} id="2" className="py-3 px-5 bg-gradient-to-r from-purple-700 to-blue-600 rounded-md font-light text-lg hover:scale-110 transition-all ">
+            {
+              !user
+              ? <Link to="/signin">Sign in</Link>
+              : <button onClick={(e) => handlePlanClick(e)} id="0" className="py-3 px-5 bg-gradient-to-r from-blue-900 via-blue-700 to-blue-600 rounded-md font-light text-lg hover:scale-110 transition-all ">
               Buy in 20$
             </button>
+            }
           </div>
         </div>
         <PaypalPayment 

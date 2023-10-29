@@ -6,7 +6,6 @@ import { IColorModeState } from "../types/Context/darkmode";
 import DashboardForm from "../components/dashboard/DashboardForm";
 import {Stack} from "@chakra-ui/react"
 import Navigation from "../components/dashboard/Navigation";
-import { AlertMountingStateProvider, AlertMountingStateContext } from "../Context/AlertMountingStateContext";
 import InfosCard from "../components/dashboard/InfosCard";
 
 const Dashboard = () => {
@@ -17,7 +16,7 @@ const Dashboard = () => {
         <Stack 
         display="flex" 
         flexDirection="column" 
-        gap="4rem" 
+        gap="3rem" 
         height="full" 
         className="bg-gradient-to-r from-black to-gray-800 font-poppins ">
             <Navigation />

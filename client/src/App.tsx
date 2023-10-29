@@ -8,14 +8,14 @@ import Footer from "./components/Footer"
 function App() {
 
   return (
-    <main className="flex flex-col gap-32 font-poppins bg-black overflow-hidden">
-      <Navigation />
-      <Home />
-      <AboutUs />
-      <Features />
-      <Guide />
-      <Footer />
-    </main>
+      <main className="flex flex-col bg-gray-200 dark:bg-black gap-32 font-poppins overflow-hidden">
+        <Navigation />
+        <Home />
+        <AboutUs />
+        <Features />
+        <Guide />
+        <Footer />
+      </main>
   )
 }
 

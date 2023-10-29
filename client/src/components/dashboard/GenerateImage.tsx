@@ -9,10 +9,8 @@ import { CreditContext } from "../../Context/CreditsContext";
 import { ICreditsContextValues } from "../../types/Context/credits";
 import { UserContext } from "../../Context/UserContextProvider";
 import { UserContextType } from "../../types/Context/signin";
-import { DashboardAlert } from "./Alert";
-import { AlertMountingStateContext } from "../../Context/AlertMountingStateContext";
-import { iconStyles } from "../../constants/iconstyles";
 import { Link } from "react-router-dom";
+import { useToast } from "@chakra-ui/react";
 
 const GenerateImage = ({
   chosenColor,
@@ -25,6 +23,7 @@ const GenerateImage = ({
   iconDescription: null | string;
   chosenStyle: IconStyleEnum | null;
 }) => {
+  const toast = useToast()
   const formObj = {
     chosenColor,
     iconObject,
@@ -36,14 +35,9 @@ const GenerateImage = ({
   const decrementCount = () =>
     numberOfGenerations > 0 && setNumberOfGenerations(numberOfGenerations - 1);
   const [error, setError] = useState<null | {errorType: string, message: string}>(null);
-  const [isSuccess, setIsSuccess] = useState<boolean | null>(null)
   const {credits, creditsId} = useContext(CreditContext) as ICreditsContextValues
   const {user} = useContext(UserContext) as UserContextType
   const {isOpen, onClose, onOpen} = useDisclosure()
-  const {isAlertMounted} = useContext(AlertMountingStateContext) as {
-    isAlertMounted: boolean,
-    setIsAlertMounted: React.Dispatch<React.SetStateAction<boolean>>
-  }
 
   const prompt = Object.values(formObj).every((property) =>
     typeof property === "string"
@@ -66,8 +60,14 @@ const GenerateImage = ({
     }
   });
   useEffect(() => {
-    setIsSuccess(mutation.isSuccess)
     if(mutation.isSuccess) {
+      toast({
+        title: "Successfully Generated!",
+        description: "More details on the activity page",
+        status: "success",
+        duration: 9000,
+        isClosable: true
+      })
       onOpen()
     }
   }, [mutation.isSuccess])
@@ -97,9 +97,12 @@ const GenerateImage = ({
         });
         setError(null);
       } else {
-        setError({
-          errorType: "Out of credits",
-          message: "You're out of credits!"
+        toast({
+          title: "Out of credits",
+          description: "Visit our pricing page to buy more credits",
+          status: "error",
+          duration: 9000,
+          isClosable: true
         })
       }
     } else {
@@ -117,7 +120,7 @@ const GenerateImage = ({
     alignItems="start" 
     width="full" 
     >
-      <Flex alignItems="center" gap="1rem" opacity={isAlertMounted ? "0.2" : "1"}>
+      <Flex alignItems="center" gap="1rem">
         <Card
           display="flex"
           alignItems="center"
@@ -159,9 +162,9 @@ const GenerateImage = ({
         </Card>
       </Flex>
       {(error && error.errorType !== "Out of credits") && 
-      <Text textColor="red.700" onClick={onOpen}>
-        {error.message}
-      </Text>
+        <Text textColor="red.700" onClick={onOpen}>
+          {error.message}
+        </Text>
       }
       <button
         onClick={mutate}
@@ -176,18 +179,6 @@ const GenerateImage = ({
           "Generate"
           )}
       </button>
-      {
-      (error?.errorType === "Out of credits" || isSuccess) 
-        && 
-        <div className="alert">
-            <DashboardAlert 
-              error={error as {errorType: string, message: string}} 
-              setError={setError}
-              isSuccess={isSuccess}
-              setIsSuccess={setIsSuccess}
-            />
-        </div>
-      }
       <Drawer isOpen={isOpen} onClose={onClose}>
           <DrawerOverlay />
           <DrawerContent display="flex" flexDirection="column" alignItems="center" textColor="white" fontFamily="Poppins, sans-serif" backgroundColor="black">

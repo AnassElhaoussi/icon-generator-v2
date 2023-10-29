@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import {PayPalScriptProvider} from "@paypal/react-paypal-js"
 import { PurchaseContextProvider } from './Context/PurchaseContext.tsx'
 import { PricingAccessContextProvider } from './Context/PricingAccessContext.tsx'
+import { DarkThemeProvider } from './Context/DarkThemeContext.tsx'
 
 const client = new QueryClient()
 
@@ -26,7 +27,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           <PurchaseContextProvider>
             <UserContextProvider>
               <CreditsContextProvider>
-                <Routes />
+                <DarkThemeProvider>
+                  <Routes />
+                </DarkThemeProvider>
               </CreditsContextProvider>
             </UserContextProvider>
           </PurchaseContextProvider>

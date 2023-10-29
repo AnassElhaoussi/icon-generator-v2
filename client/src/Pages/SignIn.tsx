@@ -3,11 +3,10 @@ import { logo } from "../images";
 import { useGoogleLogin } from "@react-oauth/google";
 import { UserContext } from "../Context/UserContextProvider";
 import { UserContextType } from "../types/Context/signin";
-import { Divider, Spinner } from "@chakra-ui/react";
+import { Divider, Spinner, useToast } from "@chakra-ui/react";
 import { useSearchParams } from "react-router-dom";
 import { PricingAccessContext } from "../Context/PricingAccessContext";
 import { IPricingAccessContextValues } from "../types/Context/pricing_access";
-import SideAlert from "../components/dashboard/SideAlert";
 
 const SignIn = () => {
   const [error, setError] = useState<{
@@ -20,16 +19,18 @@ const SignIn = () => {
   const { user, addUser, logoutUser, isLoading, isNotLoading, loading } =
     useContext(UserContext) as UserContextType;
   const {isAccessDenied, setIsAccessDenied} = useContext(PricingAccessContext) as IPricingAccessContextValues
-  const [sideAlertOn, setSideAlertOn] = useState<boolean>(false)
-
+  const toast = useToast()
   const [searchParams] = useSearchParams()
+
   useEffect(() => {
     if(searchParams.get("pricing_access") === "denied" && isAccessDenied) {
-      setSideAlertOn(true)
-      setTimeout(() => {
-        setSideAlertOn(false)
-        setIsAccessDenied(false)  
-      }, 5000)
+      toast({
+        title: "Cannot access the pricing page",
+        description: "You're not signed in",
+        status: "info",
+        duration: 9000,
+        isClosable: true
+      })
     }
   }, [])
 
@@ -40,8 +41,8 @@ const SignIn = () => {
         const res = await addUser(response);
         if (res.status === 200) {
           searchParams.get("pricing_access") === "denied"
-          ? window.location.href = "/pricing"
-          : window.location.href = "/dashboard"
+          ? window.location.href = "/pricing?pricing_access=true"
+          : window.location.href = "/dashboard?account_created=true"
         }
       } catch (e) {
         setError({
@@ -83,7 +84,6 @@ const SignIn = () => {
           <small className="text-red-500 text-lg">{error.errorMessage}</small>
         )}
       </div>
-      {sideAlertOn && <SideAlert description="You need to sign in before accessing the pricing page!" />}
     </section>
   );
 };

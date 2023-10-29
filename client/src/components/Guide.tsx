@@ -3,11 +3,11 @@ import { question_mark } from "../images"
 const Guide = () => {
     return (
         <section id="guide" className="relative flex flex-col gap-16 md:px-20 px-10">
-            <div className="absolute -z-0 -left-10 top-0 w-64 h-64 bg-gray-800 rounded-2xl blur-3xl "></div>
+            <div className="absolute -z-0 -left-10 top-0 w-64 h-64 dark:bg-gray-800 text-gray-300 rounded-2xl blur-3xl "></div>
             <div className="flex justify-between items-center">
                 <div className="relative z-10 space-y-2">
-                    <h5 className="text-blue-600 font-normal text-lg">Guide</h5>
-                    <h2 className="text-gray-300 font-extrabold md:text-7xl text-6xl">How to generate icons?</h2>
+                    <h5 className="dark:text-blue-600 text-blue-500 font-normal text-lg">Guide</h5>
+                    <h2 className="text-gray-800 dark:text-gray-300 font-extrabold md:text-7xl text-6xl">How to generate icons?</h2>
                     <p className="text-gray-500">Straight-forward guide to start using our application safely!</p>
                 </div>
                 <img src={question_mark} className="md:w-20 w-10 rotate-45" alt="" />

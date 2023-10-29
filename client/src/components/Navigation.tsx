@@ -13,7 +13,7 @@ const Navigation = () => {
   const { user, logoutUser } = useContext(UserContext) as UserContextType;
 
   return (
-    <nav className="relative flex lg:flex-row flex-col justify-between items-center text-gray-200 px-10 py-5 font-light ">
+    <nav className="relative flex lg:flex-row flex-col justify-between items-center dark:text-gray-200 text-gray-800 px-10 py-5 font-light">
       <div className="flex justify-between items-center lg:w-fit w-full">
         <span className="font-black text-2xl pr-10">IconAI</span>
         <FontAwesomeIcon

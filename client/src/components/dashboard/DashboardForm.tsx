@@ -12,6 +12,7 @@ import {
   useDisclosure,
   InputGroup,
   InputRightElement,
+  useToast,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { defaultColors } from "../../constants/colors";
@@ -22,13 +23,13 @@ import { faCheck, faIcons, faPen } from "@fortawesome/free-solid-svg-icons";
 import IconStyles from "./IconStyles";
 import GenerateImage from "./GenerateImage";
 import { IconStyleEnum } from "../../types/icon_styles";
-import { AlertMountingStateContext } from "../../Context/AlertMountingStateContext";
 import { CreditContext } from "../../Context/CreditsContext";
 import { CreditsContextType, ICreditsContextValues } from "../../types/Context/credits";
 import { useSearchParams } from "react-router-dom";
-import SideAlert from "./SideAlert";
 import { PurchaseContext } from "../../Context/PurchaseContext";
 import { IPurchaseContextValues } from "../../types/Context/payment";
+import { UserContext } from "../../Context/UserContextProvider";
+import { UserContextType } from "../../types/Context/signin";
 
 const DashboardForm = () => {
   const [chosenColor, setChosenColor] = useState<null | string>(null);
@@ -38,19 +39,11 @@ const DashboardForm = () => {
   const [chosenStyle, setChosenStyle] = useState<IconStyleEnum | null>(null);
   const [isInputOnBlur1, setIsInputOnBlur1] = useState<boolean>(false);
   const [isInputOnBlur2, setIsInputOnBlur2] = useState<boolean>(false);
-  const [sideAlertOn, setSideAlertOn] = useState<boolean>(false)
   const { onOpen, isOpen, onClose } = useDisclosure();
   const {credits} = useContext(CreditContext) as ICreditsContextValues
+  const {user} = useContext(UserContext) as UserContextType
   const [searchParams] = useSearchParams()
   const {isPaymentSuccessful, creditsPurchased, setIsPaymentSuccessful} = useContext(PurchaseContext) as IPurchaseContextValues
-  const {isAlertMounted} = useContext(AlertMountingStateContext) as {
-    isAlertMounted: boolean,
-    setIsAlertMounted: React.Dispatch<React.SetStateAction<boolean>>
-  }
-  
-  isAlertMounted 
-  ? (document.body.style.overflowY = "hidden") 
-  : (document.body.style.overflowY = "scroll")
 
   const chooseColor = (hexColor: string) => setChosenColor(hexColor);
   const onMouseEnter = (colorName: string) => setHoveredColor(colorName);
@@ -59,13 +52,26 @@ const DashboardForm = () => {
     (colorObj) => chosenColor !== null && chosenColor !== colorObj.color
   );
 
+  const toast = useToast()
+
   useEffect(() => {
     if(searchParams.get("payment") && isPaymentSuccessful) {
-      setSideAlertOn(true)
-      setTimeout(() => {
-        setSideAlertOn(false)
-        setIsPaymentSuccessful(false)
-      }, 3000 )
+      toast({
+        title: `Payment successful (${creditsPurchased as number} credits purchased) `,
+        description: `Your total amount of credits is now ${credits as number}`,
+        isClosable: true,
+        duration: 9000,
+        status: "success"
+      })
+      setIsPaymentSuccessful(false)
+    } else if (searchParams.get("account_created")) {
+      toast({
+        title: `Hello ${user.name}`,
+        description: "Your account is successfully created!",
+        status: "success",
+        duration: 9000,
+        isClosable: true
+      })
     }
   }, [])
 
@@ -76,11 +82,11 @@ const DashboardForm = () => {
         alignItems="start"
         paddingX="4rem"
         borderRadius="1rem"
-        gap="1.5rem"
+        gap="3rem"
         width="100%"
         
       >
-        <FormControl maxWidth="min-content">
+        <FormControl maxWidth="25rem">
           <FormLabel
             fontSize="lg"
             width="max-content"
@@ -116,10 +122,9 @@ const DashboardForm = () => {
                 
               />
             </InputGroup>
-            
           </Flex>
         </FormControl>
-        <FormControl width="min-content">
+        <FormControl maxWidth="25rem">
           
               <FormLabel
                 fontSize="lg"
@@ -258,7 +263,6 @@ const DashboardForm = () => {
             />
           </Stack>
       </VStack>
-      {sideAlertOn && <SideAlert description={`Payment successful : You have purchased ${creditsPurchased as number} credits!`} />}
     </VStack>
   );
 };

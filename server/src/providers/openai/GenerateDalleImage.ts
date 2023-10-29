@@ -24,7 +24,7 @@ export class GenerateDalleImage implements IGenerateDalleImage {
             }
         })
         const imgUrl = result.data.data
-        if(!imgUrl) throw new Error("Something went wrong!")
+        if(!imgUrl) throw new Error("Something went wrong!", imgUrl)
         return imgUrl
     }
 }
