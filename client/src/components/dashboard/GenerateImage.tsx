@@ -116,7 +116,8 @@ const GenerateImage = ({
     <Stack 
     display="flex" 
     gap="1.5rem" 
-    alignItems="start" 
+    alignItems="start"
+    paddingBottom="2rem"
     width="full" 
     >
       <Flex alignItems="center" gap="1rem">
@@ -169,7 +170,7 @@ const GenerateImage = ({
       }
       <button
         onClick={mutate}
-        className="bg-gradient-to-r from-blue-900 to-blue-600 py-2 px-5 text-white font-light rounded-lg shadow-xl shadow-blue-900 "
+        className="bg-gradient-to-r from-blue-900 to-blue-600 py-2 px-5 text-white font-light rounded-lg shadow-xl shadow-blue-900"
       >
         {mutation.isLoading ? (
           <div className="flex items-center gap-x-2">

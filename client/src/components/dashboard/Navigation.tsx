@@ -46,7 +46,9 @@ const Navigation = () => {
       py="2rem"
       px="5rem"
     >
-      <Image src={logo} className="w-32" />
+      <Link to="/">
+        <Image src={logo} className="w-32" />
+      </Link>
       <Stack direction="row" gap="2rem" h="2rem">
         {isLoading && <Spinner />}
         {isSuccess && <ul className="font-light text-md">

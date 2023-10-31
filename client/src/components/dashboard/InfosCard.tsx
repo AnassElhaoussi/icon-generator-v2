@@ -5,15 +5,27 @@ const InfosCard = () => {
     return (
         <VStack display="flex" flexDirection="column" gap="3rem" alignItems="flex-start" marginX="4rem">
             <VStack display="flex" flexDirection="column" alignItems="start"> 
-                <Heading textColor="gray.800" fontSize="7xl" fontFamily="Poppins, sans-serif" fontWeight="extrabold" className="dark:text-gray-200">Hi there 👋</Heading>
+                <Heading textColor="gray.800"
+                fontSize="13vmin"
+                whiteSpace="nowrap"
+                fontFamily="Poppins, sans-serif" 
+                fontWeight="extrabold" 
+                className="dark:text-gray-200  "
+                >Hi there 👋</Heading>
                 <Text textColor="gray.500">Start generating your icons now with ease!</Text>
             </VStack>
             <Card display="flex" flexDirection="column" gap="1rem" className="bg-gradient-to-r dark:from-gray-800 dark:to-black from-gray-300 to-gray-100" padding="1rem" borderRadius="lg" width="fit-content" >
-                <Heading fontFamily="Poppins, sans-serif" fontSize="2xl" fontWeight="semibold" textColor="gray.700" className="dark:text-gray-200">
+                <Heading fontFamily="Poppins, sans-serif" 
+                fontSize="2xl" 
+                fontWeight="semibold" 
+                textColor="gray.700" 
+                className="dark:text-gray-200"
+                whiteSpace="nowrap"
+                >
                     <Icon as={InfoIcon} marginRight="1rem" />
                     A few things to consider :
                 </Heading>
-                <List textColor="gray.500" spacing="1">
+                <List textColor="gray.500" spacing="1" className="md:text-base text-sm">
                     <ListItem>
                         <ListIcon as={SettingsIcon} />
                         Use correct vocabulary and describe your icons precisely!

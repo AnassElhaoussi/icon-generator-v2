@@ -72,7 +72,7 @@ const DashboardForm = () => {
     } else if (searchParams.get("account_created")) {
       toast({
         title: `Hello ${user.name}`,
-        description: "Your account is successfully created!",
+        description: "Welcome to your account!",
         status: "success",
         duration: 9000,
         isClosable: true
@@ -177,8 +177,9 @@ const DashboardForm = () => {
                 width="max-content"
                 textColor="gray.600"
                 className="dark:text-gray-300"
+                wordBreak="break-word"
               >
-                3- Choose the main color of your icon wisely{" "}<span className="text-red-600">*</span>
+                3- Choose the main color of your icon{" "}<span className="text-red-600">*</span>
               </FormLabel>
               <Text className="text-gray-500 text-sm font-normal">
                 Choose from our default colors to start generating your icons

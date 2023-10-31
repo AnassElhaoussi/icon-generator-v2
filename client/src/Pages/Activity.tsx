@@ -82,12 +82,19 @@ const Activity = () => {
                 }} />
               </Flex>
               <VStack display="flex" alignItems="center" gap="0.5rem" paddingX="2rem" textAlign="center">
-                <Flex position="relative" alignItems="center" gap="0.5rem">
+                <Flex position="relative" alignItems="center" gap="0.5rem" >
                   <div style={{backgroundColor: generation.color}} className="absolute left-0 p-1 rounded-full w-5 h-5"></div>
-                  <Heading display="flex" alignItems="center" fontFamily="Poppins, sans-serif" marginLeft="2rem" textColor="gray.700" className="dark:text-gray-200" fontWeight="black" fontSize="5xl">
+                  <Heading display="flex" alignItems="center" 
+                  fontFamily="Poppins, sans-serif" 
+                  marginLeft="2rem" 
+                  textColor="gray.700"
+                  className="dark:text-gray-200 line-clamp-1 " 
+                  fontWeight="black"
+                  fontSize="8vmin" noOfLines={1}> 
+                  
                     {generation.iconObject}
-                    <span className="text-2xl font-light ml-2 text-blue-600">{`(${generation.n})`} </span>
                   </Heading>
+                  <span className="text-2xl font-light ml-2 text-blue-600">{`(${generation.n})`} </span>
                 </Flex>
                 <Text fontSize="sm" textColor="gray.500">{generation.iconDescription}</Text>
                 <Text backgroundColor="yellow.500" textColor="yellow.900" fontSize="sm" className="w-fit rounded-md py-1 px-3 mt-3">{generation.style} </Text>

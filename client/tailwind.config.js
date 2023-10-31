@@ -10,7 +10,10 @@ export default {
             fontFamily: {
                 body: ["Inter", "sans-serif"],
                 poppins: ["Poppins", "sans-serif"]
-            }
+            },
+            fontSize: {
+                clamp: "clamp(100px, 5vw, 200px)",
+            },
         },
     },
     plugins: [],
