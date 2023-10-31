@@ -45,19 +45,18 @@ const Navigation = () => {
       width="full"
       py="2rem"
       px="5rem"
-      textColor="whiteAlpha.800"
     >
       <Image src={logo} className="w-32" />
       <Stack direction="row" gap="2rem" h="2rem">
         {isLoading && <Spinner />}
         {isSuccess && <ul className="font-light text-md">
-          <span className="text-white text-lg">{credits}</span> <FontAwesomeIcon className="text-blue-700" icon={faDiamond} />
+          <span className="dark:text-white text-gray-800 text-lg">{credits}</span> <FontAwesomeIcon className="text-blue-700" icon={faDiamond} />
         </ul>}
         <Link to="/pricing" className="text-blue-900 bg-blue-400 h-fit p-1 rounded-md text-sm hover:scale-105 transition-all">Buy credits</Link>
         {isError && <Text textColor="red.500">Something went wrong</Text>}
         <Divider orientation="vertical" borderColor="black" />
         <Menu>
-          <MenuButton display="flex" alignItems="center" position="relative" className="hover:bg-gray-900 p-2 rounded-md">
+          <MenuButton display="flex" alignItems="center" position="relative" className="dark:hover:bg-gray-900 hover:bg-gray-200 p-2 rounded-md">
             <Avatar src={user?.picture} size="sm" mr={1} />
           </MenuButton>
           <MenuList
@@ -65,18 +64,21 @@ const Navigation = () => {
             flexDirection="column"
             gap="1rem"
             padding="2rem"
-            backgroundColor="gray.900"
+            backgroundColor="gray.200"
+            className="dark:bg-gray-900"
             border="none"
           >
             <Stack textAlign="center">
-              <Text fontSize="2xl" fontWeight="bold">
+              <Text fontSize="2xl" fontWeight="bold" className="dark:text-gray-200 text-gray-800">
                 {user?.name}
               </Text>
-              <p className="text-sm font-light text-gray-500">{user?.email}</p>
+              <p className="text-sm font-light dark:text-gray-400 text-gray-600">{user?.email}</p>
             </Stack>
             <Link to="activity">
               <MenuItem
-                backgroundColor="gray.800"
+                textColor="gray.800"
+                backgroundColor="gray.300"
+                className="dark:text-gray-100 dark:bg-gray-800"
                 borderRadius="lg"
                 fontWeight="600"
               >
@@ -86,6 +88,7 @@ const Navigation = () => {
             <Button colorScheme="facebook" onClick={signOut}>
               Sign Out
             </Button>
+            
           </MenuList>
         </Menu>
       </Stack>

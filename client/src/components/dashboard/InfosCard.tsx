@@ -5,11 +5,11 @@ const InfosCard = () => {
     return (
         <VStack display="flex" flexDirection="column" gap="3rem" alignItems="flex-start" marginX="4rem">
             <VStack display="flex" flexDirection="column" alignItems="start"> 
-                <Heading textColor="gray.200" fontSize="7xl" fontFamily="Poppins, sans-serif" fontWeight="extrabold">Hi there 👋</Heading>
+                <Heading textColor="gray.800" fontSize="7xl" fontFamily="Poppins, sans-serif" fontWeight="extrabold" className="dark:text-gray-200">Hi there 👋</Heading>
                 <Text textColor="gray.500">Start generating your icons now with ease!</Text>
             </VStack>
-            <Card display="flex" flexDirection="column" gap="1rem" className="bg-gradient-to-r from-gray-800 to-black" padding="1rem" borderRadius="lg" width="fit-content" >
-                <Heading fontFamily="Poppins, sans-serif" fontSize="2xl" fontWeight="semibold" textColor="white">
+            <Card display="flex" flexDirection="column" gap="1rem" className="bg-gradient-to-r dark:from-gray-800 dark:to-black from-gray-300 to-gray-100" padding="1rem" borderRadius="lg" width="fit-content" >
+                <Heading fontFamily="Poppins, sans-serif" fontSize="2xl" fontWeight="semibold" textColor="gray.700" className="dark:text-gray-200">
                     <Icon as={InfoIcon} marginRight="1rem" />
                     A few things to consider :
                 </Heading>

@@ -5,13 +5,22 @@ import { UserContext } from "../Context/UserContextProvider";
 import { googleLogout } from "@react-oauth/google";
 import { UserContextType } from "../types/Context/signin";
 import { Link } from "react-router-dom";
+import { Icon } from "@chakra-ui/react";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { DarkThemeContext } from "../Context/DarkThemeContext";
+import { IColorModeState } from "../types/Context/darkmode";
 
 const Navigation = () => {
   const [isNavActive, setIsNavActive] = useState(
     window.innerWidth > 1024 ? true : false
   );
   const { user, logoutUser } = useContext(UserContext) as UserContextType;
+  const {isDarkMode, setIsDarkMode} = useContext(DarkThemeContext) as IColorModeState 
 
+  const setColorModeState = () => {
+    setIsDarkMode((prev) => !prev)
+    localStorage.setItem("dark-mode", JSON.stringify(!isDarkMode))
+  }
   return (
     <nav className="relative flex lg:flex-row flex-col justify-between items-center dark:text-gray-200 text-gray-800 px-10 py-5 font-light">
       <div className="flex justify-between items-center lg:w-fit w-full">
@@ -23,7 +32,7 @@ const Navigation = () => {
         />
       </div>
       {isNavActive && (
-        <div className="lg:static absolute z-10 top-20 lg:w-auto w-full flex lg:flex-row flex-col lg:gap-32 gap-5 lg:py-0 py-5 items-center lg:bg-transparent bg-gray-900">
+        <div className="lg:static absolute z-10 top-20 lg:w-auto w-full flex lg:flex-row flex-col lg:gap-32 gap-5 lg:py-0 py-5 items-center lg:bg-transparent dark:lg:bg-transparent dark:bg-gray-900 bg-gray-300">
           <div className="lg:w-auto w-full flex lg:flex-row lg:text-sm text-xl font-light flex-col lg:gap-x-20 items-center">
             <a
               href="#home"
@@ -61,6 +70,10 @@ const Navigation = () => {
             >
               Contact
             </a>
+            <Icon as={isDarkMode ? SunIcon : MoonIcon} 
+            className="hover:bg-gray-300 hover:dark:bg-gray-900 p-2 rounded-md text-3xl cursor-pointer hover:scale-105 transition-all select-none"
+            onClick={setColorModeState}
+            />
           </div>
           {!user && (
             <Link to="/signin">

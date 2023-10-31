@@ -31,9 +31,8 @@ const GenerateImage = ({
     chosenStyle,
   };
   const [numberOfGenerations, setNumberOfGenerations] = useState<number>(0);
-  const incrementCount = () => setNumberOfGenerations(numberOfGenerations + 1);
-  const decrementCount = () =>
-    numberOfGenerations > 0 && setNumberOfGenerations(numberOfGenerations - 1);
+  const incrementCount = () => numberOfGenerations < 5 && setNumberOfGenerations(numberOfGenerations + 1);
+  const decrementCount = () => numberOfGenerations > 0 && setNumberOfGenerations(numberOfGenerations - 1);
   const [error, setError] = useState<null | {errorType: string, message: string}>(null);
   const {credits, creditsId} = useContext(CreditContext) as ICreditsContextValues
   const {user} = useContext(UserContext) as UserContextType
@@ -125,12 +124,13 @@ const GenerateImage = ({
           display="flex"
           alignItems="center"
           justifyContent="center"
-          backgroundColor="gray.900"
+          backgroundColor="gray.200"
           padding="1rem"
           fontSize="3xl"
           borderRadius="2xl"
           height="3.5rem"
-          textColor="white"
+          textColor="black"
+          className="dark:bg-gray-900 dark:text-white"
           fontWeight="light"
           width="3.5rem"
           cursor="pointer"
@@ -139,22 +139,23 @@ const GenerateImage = ({
         >
           -
         </Card>
-        <Text fontSize="3xl" textColor="white" fontWeight="thin">
+        <Text fontSize="3xl" textColor="black" className="dark:text-white" fontWeight="thin">
           {numberOfGenerations}
         </Text>
         <Card
           display="flex"
           alignItems="center"
           justifyContent="center"
-          backgroundColor="gray.900"
-          textColor="white"
+          backgroundColor="gray.200"
           padding="1rem"
           fontSize="3xl"
           borderRadius="2xl"
           height="3.5rem"
+          textColor="black"
+          className="dark:bg-gray-900 dark:text-white"
+          fontWeight="light"
           width="3.5rem"
           cursor="pointer"
-          fontWeight="light"
           userSelect="none"
           onClick={incrementCount}
         >

@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
 import { ChromePicker } from "react-color";
 import {
-  DarkMode,
   Modal,
   ModalContent,
   ModalHeader,
@@ -13,6 +12,8 @@ import {
   Flex,
   VStack,
 } from "@chakra-ui/react";
+import { DarkThemeContext } from "../../Context/DarkThemeContext";
+import { IColorModeState } from "../../types/Context/darkmode";
 
 const DashboardColorPicker = ({
   chosenColor,
@@ -29,6 +30,7 @@ const DashboardColorPicker = ({
 }) => {
   const focusRef = useRef(null);
   const [color, setColor] = useState<string>("")
+  const {isDarkMode} = useContext(DarkThemeContext) as IColorModeState
 
   const saveColor = () => {
     setChosenColor(color)
@@ -45,14 +47,14 @@ const DashboardColorPicker = ({
         alignItems="start"
         borderRadius="xl"
         padding="1rem"
-        backgroundColor="gray.900"
+        backgroundColor={isDarkMode ? "gray.900" : "gray.200"}
         className="font-poppins"
       >
         <VStack alignItems="start">
           <ModalHeader
             fontSize="2rem"
             fontWeight="black"
-            textColor="gray.300"
+            textColor={isDarkMode ? "gray.200" : "gray.800"}
             textAlign="start"
             lineHeight="3"
           >
@@ -69,7 +71,7 @@ const DashboardColorPicker = ({
             onChange={(color) => setColor(color?.hex)}
           />
           <Flex alignItems="center" gap={2}>
-            <Text className="text-gray-200">
+            <Text textColor={isDarkMode ? "gray.200" : "gray.800"}>
               You have chosen this color :{" "}
               <span style={{ color }}>{color}</span>{" "}
             </Text>

@@ -21,7 +21,8 @@ import { iconStyles } from "../../constants/iconstyles";
 import { DarkMode } from "@chakra-ui/react";
 import { Icon } from "@chakra-ui/react";
 import {HamburgerIcon, CheckIcon} from "@chakra-ui/icons"
-
+import { DarkThemeContext } from "../../Context/DarkThemeContext";
+import { IColorModeState } from "../../types/Context/darkmode";
 
 const IconStyles = ({chosenStyle, setChosenStyle}: {
   chosenStyle: IconStyleEnum | null,
@@ -43,6 +44,7 @@ const IconStyles = ({chosenStyle, setChosenStyle}: {
     key_features: string[]
   }>(null)
   const finalRef = useRef(null)
+  const {isDarkMode} = useContext(DarkThemeContext) as IColorModeState
 
   return (  
     <DarkMode>
@@ -50,7 +52,8 @@ const IconStyles = ({chosenStyle, setChosenStyle}: {
         <FormLabel
           fontSize="lg"
           fontWeight="semibold"
-          color="gray.300"
+          color="gray.600"
+          className="dark:text-gray-300"
         >
           4- Choose your icon style <span className="text-red-600">*</span>
         </FormLabel>
@@ -77,10 +80,11 @@ const IconStyles = ({chosenStyle, setChosenStyle}: {
                 })()
                 : chooseStyle(name as IconStyleEnum)
               }
-              backgroundColor="#101010"
               cursor="pointer"
               borderRadius="2xl"
-              className="transition-all select-none"
+              className="transition-all select-none dark:bg-[#101010]"
+              backgroundColor="gray.200"
+              shadow="2xl"
               style={{
 
                 transform:
@@ -99,11 +103,12 @@ const IconStyles = ({chosenStyle, setChosenStyle}: {
                     fontFamily="Poppins, sans-serif"
                     fontWeight="extrabold"
                     fontSize="2.5rem"
-                    textColor="gray.300"
+                    textColor="gray.700"
+                    className="dark:text-gray-200"
                   >
                     {name}
                   </Heading>
-                  <div className="hover:bg-black p-1 rounded-md transition-all">
+                  <div className="dark:hover:bg-black hover:bg-gray-300 dark:text-gray-100 text-gray-500 p-1 rounded-md transition-all">
                     <Icon 
                     as={HamburgerIcon} 
                     onClick={onOpen}
@@ -133,72 +138,73 @@ const IconStyles = ({chosenStyle, setChosenStyle}: {
         </Flex>
       </FormControl>
       <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
-                <ModalContent
-                padding="1rem"
-                backgroundColor="gray.900" 
+        <ModalOverlay />
+        <ModalContent
+        padding="1rem"
+        backgroundColor={isDarkMode ? "gray.900" : "gray.300"}
+        fontFamily="Poppins, sans-serif"
+        >
+          <ModalHeader>
+                <Heading 
                 fontFamily="Poppins, sans-serif"
-                textColor="gray.300"
+                fontSize="6xl"
+                textColor={isDarkMode ? "gray.200" : "gray.800"}
                 >
-                  <ModalHeader>
-                        <Heading 
-                        fontFamily="Poppins, sans-serif"
-                        fontSize="6xl"
-                        >
-                          {styleInfos.current?.name}
-                        </Heading>
-                        <Text
-                         backgroundColor={`${styleInfos.current?.category.color as string}.400`}
-                         paddingY="0.3rem"
-                         paddingX="1rem"
-                         borderRadius="md"
-                         fontSize="sm"
-                         width="fit-content"
-                         textColor={`${styleInfos.current?.category.color as string}.900`}>
-                          {styleInfos.current?.category.name}
-                        </Text>
-                  </ModalHeader>
-                  <ModalCloseButton />
-                  <ModalBody display="flex" flexDirection="column" gap="2rem" marginTop="0.8em">
-                    <Stack gap="1rem">
-                      <Heading 
-                      fontFamily="Poppins, sans-serif"
-                      fontSize="4xl"
-                      fontWeight="normal" textColor="gray.400">
-                        Detailed description
-                      </Heading>
-                      <Text fontSize="sm" textColor="gray.600">
-                        {styleInfos.current?.detailed_description}
-                      </Text>
-                    </Stack>
-                    <Stack gap="1rem">
-                      <Heading 
-                      fontFamily="Poppins, sans-serif" 
-                      fontSize="3xl"
-                      fontWeight="normal" textColor="gray.400">
-                        Key features
-                      </Heading>
-                      <Stack display="flex" flexDirection="column" gap="0.5rem">
-                        {styleInfos.current?.key_features.map(feature => {
-                          return (
-                            <Text 
-                            className="bg-gradient-to-r from-blue-900 to-blue-500" 
-                            display="flex"
-                            gap={2}
-                            px="1rem" 
-                            py="0.3rem" 
-                            borderRadius="lg"
-                            alignItems="center"
-                            >
-                              <Icon as={CheckIcon} className="bg-blue-700 p-1 rounded-md" />
-                              <span>{feature}</span>
-                            </Text>
-                          )
-                        })}
-                      </Stack>
-                    </Stack>
-                  </ModalBody>
-                </ModalContent>
+                  {styleInfos.current?.name}
+                </Heading>
+                <Text
+                  backgroundColor={`${styleInfos.current?.category.color as string}.400`}
+                  paddingY="0.3rem"
+                  paddingX="1rem"
+                  borderRadius="md"
+                  fontSize="sm"
+                  width="fit-content"
+                  textColor={`${styleInfos.current?.category.color as string}.900`}>
+                  {styleInfos.current?.category.name}
+                </Text>
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody display="flex" flexDirection="column" gap="2rem" marginTop="0.8em">
+            <Stack gap="1rem">
+              <Heading 
+              fontFamily="Poppins, sans-serif"
+              fontSize="4xl"
+              fontWeight="normal" textColor={isDarkMode ? "gray.200" : "gray.800"}>
+                Detailed description
+              </Heading>
+              <Text fontSize="sm" textColor={isDarkMode ? "gray.500" : "gray.600"}>
+                {styleInfos.current?.detailed_description}
+              </Text>
+            </Stack>
+            <Stack gap="1rem">
+              <Heading 
+              fontFamily="Poppins, sans-serif" 
+              fontSize="3xl"
+              fontWeight="normal" textColor={isDarkMode ? "gray.200" : "gray.800"}>
+                Key features
+              </Heading>
+              <Stack display="flex" flexDirection="column" gap="0.5rem">
+                {styleInfos.current?.key_features.map(feature => {
+                  return (
+                    <Text 
+                    className="bg-gradient-to-r from-blue-900 to-blue-500" 
+                    display="flex"
+                    gap={2}
+                    px="1rem" 
+                    py="0.3rem" 
+                    borderRadius="lg"
+                    alignItems="center"
+                    textColor="white"
+                    >
+                      <Icon as={CheckIcon} className="bg-blue-700 p-1 rounded-md" />
+                      <span>{feature}</span>
+                    </Text>
+                  )
+                })}
+              </Stack>
+            </Stack>
+          </ModalBody>
+        </ModalContent>
       </Modal>
     </DarkMode>
   );

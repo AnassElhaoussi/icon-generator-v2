@@ -18,7 +18,7 @@ const Dashboard = () => {
         flexDirection="column" 
         gap="3rem" 
         height="full" 
-        className="bg-gradient-to-r from-black to-gray-800 font-poppins ">
+        className="bg-gradient-to-r dark:from-black dark:to-gray-800 from-gray-300 to-gray-100 font-poppins ">
             <Navigation />
             <InfosCard />
             <DashboardForm />

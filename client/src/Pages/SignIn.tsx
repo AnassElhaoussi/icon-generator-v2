@@ -59,22 +59,22 @@ const SignIn = () => {
       }),
   });
   return (
-    <section className="relative overflow-hidden font-poppins text-white bg-black flex flex-col items-center justify-center h-screen ">
+    <section className="relative overflow-hidden font-poppins text-white bg-gray-200 dark:bg-black flex flex-col items-center justify-center h-screen ">
       <img src={logo} alt="" className="relative top-10 w-56 " />
       <div className="px-5 relative flex flex-col gap-8 items-center h-full w-screen justify-center">
         <div className="text-center md:w-3/4 space-y-2">
           <div className="relative">
-            <div className="absolute right-[5rem]  -z-0 w-3/4 h-28 bg-purple-800 rounded-4xl blur-3xl"></div>
-            <span className="relative z-10 font-extrabold lg:text-[6.5rem] md:text-[5rem] text-7xl text-gray-200 text-center lg:leading-[6.5rem] mg:[5rem] leading-[4.5rem] ">
+            <div className="absolute right-[5rem]  -z-0 w-3/4 h-28 dark:bg-purple-800 bg-purple-300 rounded-4xl blur-3xl"></div>
+            <span className="relative z-10 font-extrabold lg:text-[6.5rem] md:text-[5rem] text-7xl dark:text-gray-200 text-gray-800 text-center lg:leading-[6.5rem] mg:[5rem] leading-[4.5rem] ">
               Sign in and get 10 free credits.
             </span>
           </div>
-          <p className="font-light text-gray-400">
+          <p className="font-light dark:text-gray-400 text-gray-600">
             Use 10 credits to generate 10 icons based on your needs!
           </p>
         </div>
         <button
-          className=" flex gap-x-3 bg-white items-center text-blue-600 font-semibold text-xl font-light py-3 px-6 rounded-lg hover:scale-110 transition-all"
+          className=" flex gap-x-3 dark:bg-white bg-blue-600 items-center dark:text-blue-600 text-white font-semibold text-xl font-light py-3 px-6 rounded-lg hover:scale-110 transition-all"
           onClick={() => signIn()}
         >
           {loading && <Spinner size="md" />}

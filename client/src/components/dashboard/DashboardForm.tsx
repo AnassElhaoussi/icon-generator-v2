@@ -13,6 +13,7 @@ import {
   InputGroup,
   InputRightElement,
   useToast,
+  Icon,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { defaultColors } from "../../constants/colors";
@@ -30,6 +31,9 @@ import { PurchaseContext } from "../../Context/PurchaseContext";
 import { IPurchaseContextValues } from "../../types/Context/payment";
 import { UserContext } from "../../Context/UserContextProvider";
 import { UserContextType } from "../../types/Context/signin";
+import { DarkThemeContext } from "../../Context/DarkThemeContext";
+import { IColorModeState } from "../../types/Context/darkmode";
+import { CheckIcon } from "@chakra-ui/icons";
 
 const DashboardForm = () => {
   const [chosenColor, setChosenColor] = useState<null | string>(null);
@@ -44,6 +48,7 @@ const DashboardForm = () => {
   const {user} = useContext(UserContext) as UserContextType
   const [searchParams] = useSearchParams()
   const {isPaymentSuccessful, creditsPurchased, setIsPaymentSuccessful} = useContext(PurchaseContext) as IPurchaseContextValues
+  const {isDarkMode} = useContext(DarkThemeContext) as IColorModeState
 
   const chooseColor = (hexColor: string) => setChosenColor(hexColor);
   const onMouseEnter = (colorName: string) => setHoveredColor(colorName);
@@ -91,28 +96,26 @@ const DashboardForm = () => {
             fontSize="lg"
             width="max-content"
             fontWeight="semibold"
-            textColor="gray.300"
+            className="dark:text-gray-300"
+            textColor="gray.600"
           >
             1- What's your icon object ? <span className="text-red-600">*</span>
           </FormLabel>
           <Flex alignItems="center" gap={3}>
             {isInputOnBlur1 && (iconObject?.trim().length as number) > 0 && (
-              <FontAwesomeIcon
-                icon={faCheck}
-                className="text-green-500 text-xl"
-              />
+              <Icon as={CheckIcon} className="bg-blue-600 p-1 text-xl text-white rounded-md" />
             )}
             <InputGroup>
               <InputRightElement children={<FontAwesomeIcon icon={faIcons} className="text-gray-300" />} />
               <Input
                 variant="outline"
-                backgroundColor="#121212"
+                backgroundColor={isDarkMode ? "#121212" : "gray.200"}
                 border="none"
                 placeholder="Example : Bird"
                 borderRadius="full"
                 shadow="2xl"
                 fontWeight="light"
-                textColor="gray.400"
+                textColor={isDarkMode ? "gray.400" : "gray.600"}
                 paddingX="3rem"
                 className="placeholder:text-gray-600"
                 value={iconObject as string}
@@ -130,7 +133,8 @@ const DashboardForm = () => {
                 fontSize="lg"
                 fontWeight="semibold"
                 width="max-content"
-                textColor="gray.300"
+                textColor="gray.600"
+                className="dark:text-gray-300"
               >
                 3- Describe your icon precisely{" "}<span className="text-red-600">*</span>
               </FormLabel>
@@ -138,22 +142,19 @@ const DashboardForm = () => {
           <Flex alignItems="center" gap={3}>
             {isInputOnBlur2 &&
               (iconDescription?.trim().length as number) > 0 && (
-                <FontAwesomeIcon
-                  icon={faCheck}
-                  className="text-green-500 text-xl"
-                />
+                <Icon as={CheckIcon} className="bg-blue-600 p-1 text-xl text-white rounded-md" />
               )}
             <InputGroup>
               <InputRightElement children={<FontAwesomeIcon icon={faPen} className="text-gray-300" />} />
               <Input
                 variant="outline"
-                backgroundColor="#121212"
+                backgroundColor={isDarkMode ? "#121212" : "gray.200"}
                 border="none"
                 placeholder="Example : Cute and Happy, Angry.."
                 borderRadius="full"
                 shadow="2xl"
                 fontWeight="light"
-                textColor="gray.400"
+                textColor={isDarkMode ? "gray.400" : "gray.600"}
                 paddingX="2rem"
                 className="placeholder:text-gray-600"
                 value={iconDescription as string}
@@ -174,11 +175,14 @@ const DashboardForm = () => {
                 fontSize="lg"
                 fontWeight="semibold"
                 width="max-content"
-                textColor="gray.300"
+                textColor="gray.600"
+                className="dark:text-gray-300"
               >
                 3- Choose the main color of your icon wisely{" "}<span className="text-red-600">*</span>
               </FormLabel>
-              <Text className="text-gray-500 text-sm font-normal">Choose from our default colors to start generating your icons</Text>
+              <Text className="text-gray-500 text-sm font-normal">
+                Choose from our default colors to start generating your icons
+              </Text>
             </Stack>
           <Stack gap="1rem">
             <Flex gap="2rem" alignItems="center" flexWrap="wrap">
@@ -205,13 +209,13 @@ const DashboardForm = () => {
                     onMouseLeave={onMouseLeave}
                     className="w-16 h-16 rounded-full shadow-[inset_0_-10px_16px_rgba(0,0,0,0.6)] transition-all cursor-pointer"
                   ></div>
-                  <h4 className="text-sm  font-light text-gray-300 font-light">{name}</h4>
+                  <h4 className="text-sm  font-light dark:text-gray-300 text-black font-light">{name}</h4>
                 </VStack>
               ))}
             </Flex>
             <Stack gap="0.8rem">
-              <Text textColor="gray.600" fontSize="sm">Use our color customizer for your specific cases</Text>
-              <button className="bg-gradient-to-r from-gray-900 to-gray-800 w-fit text-white py-2 px-4 rounded-md"
+              <Text textColor="gray.600" fontSize="sm" fontWeight="semibold">Use our color customizer for your specific cases</Text>
+              <button className="bg-gradient-to-r dark:from-gray-900 dark:to-gray-800 from-gray-400 to-gray-100 w-fit dark:text-white text-gray-600 py-2 px-4 rounded-md"
               onClick={onOpen}
               >
                 Color Customizer
@@ -221,10 +225,7 @@ const DashboardForm = () => {
           {isCustomColor && (
             <VStack alignItems="start" gap={4}>
               <Flex alignItems="center" gap={3}>
-                <FontAwesomeIcon
-                  icon={faCheck}
-                  className="text-green-500 text-xl"
-                />
+                <Icon as={CheckIcon} className="bg-blue-600 p-1 text-xl text-white rounded-md" />
                 <Heading
                   fontFamily="Poppins, sans-serif"
                   fontSize="lg"
