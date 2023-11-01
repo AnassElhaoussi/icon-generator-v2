@@ -8,5 +8,6 @@ import colors from "./e09abe28-0e60-4041-b6b0-c318cde9c849.png"
 import ai_icon from "./0bb3ece0-715d-431d-82e7-9afe9b0c0937.png"
 import question_mark from "./d32b6300-4dea-45bd-a114-07afe440b036.png"
 import circle from "./111-1110988_image-result-for-hand-drawing-a-circle-hand.png"
+import notFound from "./not-found-4064375-3363936.webp"
 
-export {logo, diamond_icon, aboutus_decoration, rising_icon, idea_bulb, colors, ai_icon, question_mark, circle}
+export {logo, diamond_icon, aboutus_decoration, rising_icon, notFound, idea_bulb, colors, ai_icon, question_mark, circle}

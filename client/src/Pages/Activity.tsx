@@ -1,6 +1,6 @@
 import { UserContext } from "../Context/UserContextProvider"
 import {Stack, Text, Heading, Card, Image, Drawer, DrawerOverlay,DrawerContent, DrawerBody, DrawerFooter, Button, DrawerCloseButton, DrawerHeader, Flex, Divider, VStack, Alert, AlertIcon, AlertDialogHeader, AlertDescription, AlertDialogContent} from "@chakra-ui/react"
-import { useContext, useState } from 'react'
+import { useContext, useState, useRef, useEffect } from 'react'
 import {useQuery} from "@tanstack/react-query"
 import { retrieveGenerations } from "../api"
 import { Link } from "react-router-dom"
@@ -16,24 +16,38 @@ import LoadingSkeleton from "../components/activity/LoadingSkeleton"
 import DrawerFC from "../components/activity/Drawer"
 import { DarkThemeContext } from "../Context/DarkThemeContext"
 import { IColorModeState } from "../types/Context/darkmode"
+import { notFound } from "../images"
+import { IGeneration } from "../api/types"
 
 const Activity = () => {
   const {user} = useContext(UserContext)
   const {onOpen, isOpen, onClose} = useDisclosure()
-  const [URLsData, setURLsData] = useState<string[]>([])
+  const navRef = useRef<null | HTMLElement>(null)
+  const [generation, setGeneration] = useState<IGeneration | null>(null)
   const {data, isLoading, isSuccess, isError} = useQuery({
     queryKey: ["generations"],
     queryFn: () => retrieveGenerations(user?.email as string)
   })
 
+
   const {isDarkMode} = useContext(DarkThemeContext) as IColorModeState
   const totalNumOfGenerations = data?.data.length
-  const generatedImages = data?.data.map(({URLs}) => URLs.length).reduce((a, b) => a+b)
+  const generatedImages = (data?.data.length as number) > 0 && data?.data.map(
+    ({URLs}) => URLs.length
+  ).reduce(
+    (a, b) => a+b
+  )
   const {credits} = useContext(CreditContext) as ICreditsContextValues
 
+  useEffect(
+    () => navRef.current?.scrollIntoView({
+    behavior: "smooth",
+
+    }), []
+  )
   return (
-    <Stack overflow="hidden" display="flex" flexDirection="column" minHeight="100vh" gap="4rem" className="bg-gray-200 dark:bg-[#141414]"  fontFamily="Poppins, sans-serif">
-      <Flex display="flex" justifyContent="space-between" alignItems="center" backgroundColor="gray.100" className="dark:bg-gray-900" paddingY="1rem" paddingX="2rem">
+    <Stack overflow="hidden" display="flex" flexDirection="column" alignItems="center" minHeight="100vh" gap="4rem" className="bg-gray-200 dark:bg-[#141414]"  fontFamily="Poppins, sans-serif">
+      <Flex ref={navRef} display="flex" justifyContent="space-between" alignItems="center" backgroundColor="gray.100" className="dark:bg-gray-900" paddingY="1rem" paddingX="2rem" width="full">
         <Heading fontSize="1.5rem" fontFamily="Poppins, sans-serif" fontWeight="bold" className="dark:text-white text-gray-800">My activity</Heading>
         <Link to="/dashboard">
           <FontAwesomeIcon icon={faArrowLeft} className="dark:text-white text-gray-700 cursor-pointer" />
@@ -63,21 +77,26 @@ const Activity = () => {
         </Card>
       </Flex>
       <Stack padding="2rem" gap="2rem">
-        <VStack>
+        <VStack textAlign="center">
           <Heading fontFamily="Poppins, sans-serif" textColor="gray.800" className="dark:text-gray-200" fontWeight="semibold" fontSize="4xl">Generations</Heading>
           <Text textColor="gray.500" className="dark:text-gray-600">These are your generations, you can now download them</Text>
         </VStack>
-        <Flex gap="2rem" flexWrap="wrap" alignItems="center" justifyContent="center" paddingTop="2rem">
+        {isSuccess && data.data.length === 0 && (
+            <Image src={notFound} alt="generations_not_found" maxWidth="50rem" />
+        )}
+        <Flex gap="2rem" flexWrap="wrap" justifyContent="center" paddingTop="2rem">
           {isLoading && <LoadingSkeleton isDarkMode={isDarkMode} />}
-          {isSuccess && data?.data.map((generation) => (
+          {isSuccess && data.data.length > 0 && data?.data.map((generation) => (
             <Card display="flex" width="25rem" borderRadius="2xl" paddingBottom="2rem" shadow="2xl" backgroundColor={isDarkMode ? "#191919" : "gray.200"} className="hover:-translate-y-10 transition-all">
               <Image src={generation.URLs[0]} height={40} width="full" objectFit="cover" borderTopRadius="2xl" />
               <Flex justifyContent="space-between" padding="1rem">
                 <Text className="text-blue-800 bg-blue-500 px-2 mb-2 rounded-lg" textAlign="end" >
                   512x512
                 </Text>
-                <FontAwesomeIcon icon={faFileDownload} className="cursor-pointer dark:text-white text-gray-700" onClick={() => {
-                  setURLsData(generation.URLs)
+                <FontAwesomeIcon 
+                icon={faFileDownload} 
+                className="cursor-pointer dark:text-white text-gray-700" onClick={() => {
+                  setGeneration(generation)
                   onOpen()
                 }} />
               </Flex>
@@ -103,7 +122,11 @@ const Activity = () => {
           )).reverse()}
         </Flex>
       </Stack>
-      <DrawerFC isOpen={isOpen} onClose={onClose} URLsData={URLsData} />
+      <DrawerFC 
+      isOpen={isOpen} 
+      onClose={onClose} 
+      generation={generation as IGeneration} />
+
     </Stack>
 
   )

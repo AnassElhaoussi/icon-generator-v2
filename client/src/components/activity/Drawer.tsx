@@ -1,16 +1,33 @@
-import {Stack, Icon, Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter, Button, Image as Img, DrawerCloseButton, Select} from "@chakra-ui/react"
+import {
+  Heading, 
+  Text,
+  Stack, 
+  Icon, 
+  Drawer, 
+  DrawerOverlay, 
+  DrawerContent, 
+  DrawerHeader, 
+  DrawerBody, 
+  DrawerFooter, 
+  Button, 
+  Image as Img, 
+  DrawerCloseButton, 
+  Select
+} from "@chakra-ui/react"
 import { Link } from "react-router-dom"
 import { saveAs } from "file-saver"
 import { CheckIcon, HamburgerIcon, DownloadIcon } from "@chakra-ui/icons"
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { IGeneration } from "../../api/types"
+
 
 export const DrawerFC = ({
-  URLsData, 
+  generation, 
   isOpen, 
   onClose
 }: {
-  URLsData: string[], 
+  generation: IGeneration, 
   isOpen: boolean, 
   onClose: () => void
 }) => {
@@ -29,22 +46,33 @@ export const DrawerFC = ({
       link.href = "image.png"
       link.click()
     }
+    console.log(generation)
 
     return (
         <Drawer isOpen={isOpen} onClose={onClose}>
         <DrawerOverlay />
-        <DrawerContent display="flex" 
+        <DrawerContent display="flex"
         flexDirection="column" 
-        alignItems="center" 
+        alignItems="center"
         textColor="white" 
         fontFamily="Poppins, sans-serif" 
         backgroundColor="black">
           <DrawerCloseButton />
           <DrawerHeader>Generation</DrawerHeader>
           <DrawerBody display="flex" 
+          alignItems="center"
           flexDirection="column" 
-          gap="1rem">
-            {URLsData.map((url) => (
+          gap="2rem">
+            <Stack textAlign="center">
+              <Heading textColor="gray.300" fontWeight="extrabold">
+                {generation?.iconObject}
+              </Heading>
+              <Text textColor="gray.600">
+                {generation?.iconDescription}
+              </Text>
+            </Stack>
+            <Stack>
+            {generation?.URLs.map((url) => (
                 <Stack position="relative">
                     <Stack position="absolute">
                       <Icon 
@@ -88,8 +116,8 @@ export const DrawerFC = ({
                     border={`4px solid #7e14ff`} 
                      />
                 </Stack>
-
-            ))}
+                ))}
+            </Stack>
           </DrawerBody>
           <DrawerFooter justifyContent="space-between" width="full">
               <Link to="/dashboard">
