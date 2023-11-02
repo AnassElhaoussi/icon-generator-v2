@@ -7,7 +7,7 @@ const Guide = () => {
             <div className="flex justify-between items-center">
                 <div className="relative z-10 space-y-2">
                     <h5 className="dark:text-blue-600 text-blue-500 font-normal text-lg">Guide</h5>
-                    <h2 className="text-gray-800 dark:text-gray-300 font-extrabold md:text-7xl text-6xl">How to generate icons?</h2>
+                    <h2 className="text-gray-800 dark:text-gray-300 font-semibold md:text-7xl text-6xl">How to generate icons?</h2>
                     <p className="text-gray-500">Straight-forward guide to start using our application safely!</p>
                 </div>
                 <img src={question_mark} className="md:w-20 w-10 rotate-45" alt="" />
