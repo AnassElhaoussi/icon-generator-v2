@@ -25,7 +25,10 @@ import IconStyles from "./IconStyles";
 import GenerateImage from "./GenerateImage";
 import { IconStyleEnum } from "../../types/icon_styles";
 import { CreditContext } from "../../Context/CreditsContext";
-import { CreditsContextType, ICreditsContextValues } from "../../types/Context/credits";
+import {
+  CreditsContextType,
+  ICreditsContextValues,
+} from "../../types/Context/credits";
 import { useSearchParams } from "react-router-dom";
 import { PurchaseContext } from "../../Context/PurchaseContext";
 import { IPurchaseContextValues } from "../../types/Context/payment";
@@ -44,11 +47,12 @@ const DashboardForm = () => {
   const [isInputOnBlur1, setIsInputOnBlur1] = useState<boolean>(false);
   const [isInputOnBlur2, setIsInputOnBlur2] = useState<boolean>(false);
   const { onOpen, isOpen, onClose } = useDisclosure();
-  const {credits} = useContext(CreditContext) as ICreditsContextValues
-  const {user} = useContext(UserContext) as UserContextType
-  const [searchParams] = useSearchParams()
-  const {isPaymentSuccessful, creditsPurchased, setIsPaymentSuccessful} = useContext(PurchaseContext) as IPurchaseContextValues
-  const {isDarkMode} = useContext(DarkThemeContext) as IColorModeState
+  const { credits } = useContext(CreditContext) as ICreditsContextValues;
+  const { user } = useContext(UserContext) as UserContextType;
+  const [searchParams] = useSearchParams();
+  const { isPaymentSuccessful, creditsPurchased, setIsPaymentSuccessful } =
+    useContext(PurchaseContext) as IPurchaseContextValues;
+  const { isDarkMode } = useContext(DarkThemeContext) as IColorModeState;
 
   const chooseColor = (hexColor: string) => setChosenColor(hexColor);
   const onMouseEnter = (colorName: string) => setHoveredColor(colorName);
@@ -57,31 +61,49 @@ const DashboardForm = () => {
     (colorObj) => chosenColor !== null && chosenColor !== colorObj.color
   );
 
-  const toast = useToast()
+  const toast = useToast();
 
   useEffect(() => {
-    if(searchParams.get("payment") && isPaymentSuccessful) {
-      toast({
-        title: `Payment successful (${creditsPurchased as number} credits purchased) `,
-        description: `Your total amount of credits is now ${credits as number}`,
-        isClosable: true,
-        duration: 9000,
-        status: "success"
-      })
-      setIsPaymentSuccessful(false)
+    localStorage.setItem("current_credits", credits?.toString() as string);
+  }, [credits])
+
+  useEffect(() => {
+    if (
+      searchParams.get("payment") &&
+      isPaymentSuccessful &&
+      credits ==
+        (JSON.parse(
+          localStorage.getItem("current_credits") as string
+        ) as number) +
+          (creditsPurchased as number)
+    ) {
+      setTimeout(() => {
+        toast({
+          title: `Payment successful (${
+            creditsPurchased as number
+          } credits purchased) `,
+          description: `Your total amount of credits is now ${
+            credits
+          }`,
+          isClosable: true,
+          duration: 9000,
+          status: "success",
+        });
+        setIsPaymentSuccessful(false);
+      }, 3000);
     } else if (searchParams.get("account_created")) {
       toast({
         title: `Hello ${user.name}`,
         description: "Welcome to your account!",
         status: "success",
         duration: 9000,
-        isClosable: true
-      })
+        isClosable: true,
+      });
     }
-  }, [])
+  }, [credits]);
 
   return (
-    <VStack width="full" alignItems="start" >
+    <VStack width="full" alignItems="start">
       <VStack
         display="flex"
         alignItems="start"
@@ -89,7 +111,6 @@ const DashboardForm = () => {
         borderRadius="1rem"
         gap="3rem"
         width="100%"
-        
       >
         <FormControl maxWidth="25rem">
           <FormLabel
@@ -103,10 +124,17 @@ const DashboardForm = () => {
           </FormLabel>
           <Flex alignItems="center" gap={3}>
             {isInputOnBlur1 && (iconObject?.trim().length as number) > 0 && (
-              <Icon as={CheckIcon} className="bg-blue-600 p-1 text-xl text-white rounded-md" />
+              <Icon
+                as={CheckIcon}
+                className="bg-blue-600 p-1 text-xl text-white rounded-md"
+              />
             )}
             <InputGroup>
-              <InputRightElement children={<FontAwesomeIcon icon={faIcons} className="text-gray-300" />} />
+              <InputRightElement
+                children={
+                  <FontAwesomeIcon icon={faIcons} className="text-gray-300" />
+                }
+              />
               <Input
                 variant="outline"
                 backgroundColor={isDarkMode ? "#121212" : "gray.200"}
@@ -122,30 +150,36 @@ const DashboardForm = () => {
                 onChange={(e) => setIconObject(e.target.value)}
                 onFocus={() => setIsInputOnBlur1(false)}
                 onBlur={() => setIsInputOnBlur1(true)}
-                
               />
             </InputGroup>
           </Flex>
         </FormControl>
         <FormControl maxWidth="25rem">
-          
-              <FormLabel
-                fontSize="lg"
-                fontWeight="semibold"
-                width="max-content"
-                textColor="gray.600"
-                className="dark:text-gray-300"
-              >
-                3- Describe your icon precisely{" "}<span className="text-red-600">*</span>
-              </FormLabel>
-            
+          <FormLabel
+            fontSize="lg"
+            fontWeight="semibold"
+            width="max-content"
+            textColor="gray.600"
+            className="dark:text-gray-300"
+          >
+            3- Describe your icon precisely{" "}
+            <span className="text-red-600">*</span>
+          </FormLabel>
+
           <Flex alignItems="center" gap={3}>
             {isInputOnBlur2 &&
               (iconDescription?.trim().length as number) > 0 && (
-                <Icon as={CheckIcon} className="bg-blue-600 p-1 text-xl text-white rounded-md" />
+                <Icon
+                  as={CheckIcon}
+                  className="bg-blue-600 p-1 text-xl text-white rounded-md"
+                />
               )}
             <InputGroup>
-              <InputRightElement children={<FontAwesomeIcon icon={faPen} className="text-gray-300" />} />
+              <InputRightElement
+                children={
+                  <FontAwesomeIcon icon={faPen} className="text-gray-300" />
+                }
+              />
               <Input
                 variant="outline"
                 backgroundColor={isDarkMode ? "#121212" : "gray.200"}
@@ -170,29 +204,33 @@ const DashboardForm = () => {
           </FormHelperText>
         </FormControl>
         <FormControl display="flex" flexDirection="column" gap="2rem">
-            <Stack spacing="-0.5">
-              <FormLabel
-                fontSize="lg"
-                fontWeight="semibold"
-                width="max-content"
-                textColor="gray.600"
-                className="dark:text-gray-300"
-                wordBreak="break-word"
-              >
-                3- Choose the main color of your icon{" "}<span className="text-red-600">*</span>
-              </FormLabel>
-              <Text className="text-gray-500 text-sm font-normal">
-                Choose from our default colors to start generating your icons
-              </Text>
-            </Stack>
+          <Stack spacing="-0.5">
+            <FormLabel
+              fontSize="lg"
+              fontWeight="semibold"
+              width="max-content"
+              textColor="gray.600"
+              className="dark:text-gray-300"
+              wordBreak="break-word"
+            >
+              3- Choose the main color of your icon{" "}
+              <span className="text-red-600">*</span>
+            </FormLabel>
+            <Text className="text-gray-500 text-sm font-normal">
+              Choose from our default colors to start generating your icons
+            </Text>
+          </Stack>
           <Stack gap="1rem">
             <Flex gap="2rem" alignItems="center" flexWrap="wrap">
               {defaultColors.map(({ name, color }, id) => (
-                <VStack key={id} onClick={
-                  () => chosenColor === color 
-                  ? setChosenColor(null) 
-                  : chooseColor(color)
-                }>
+                <VStack
+                  key={id}
+                  onClick={() =>
+                    chosenColor === color
+                      ? setChosenColor(null)
+                      : chooseColor(color)
+                  }
+                >
                   <div
                     style={{
                       backgroundColor: color,
@@ -210,14 +248,19 @@ const DashboardForm = () => {
                     onMouseLeave={onMouseLeave}
                     className="w-16 h-16 rounded-full shadow-[inset_0_-10px_16px_rgba(0,0,0,0.6)] transition-all cursor-pointer"
                   ></div>
-                  <h4 className="text-sm  font-light dark:text-gray-300 text-black font-light">{name}</h4>
+                  <h4 className="text-sm  font-light dark:text-gray-300 text-black font-light">
+                    {name}
+                  </h4>
                 </VStack>
               ))}
             </Flex>
             <Stack gap="0.8rem">
-              <Text textColor="gray.600" fontSize="sm" fontWeight="semibold">Use our color customizer for your specific cases</Text>
-              <button className="bg-gradient-to-r dark:from-gray-900 dark:to-gray-800 from-gray-400 to-gray-100 w-fit dark:text-white text-gray-600 py-2 px-4 rounded-md"
-              onClick={onOpen}
+              <Text textColor="gray.600" fontSize="sm" fontWeight="semibold">
+                Use our color customizer for your specific cases
+              </Text>
+              <button
+                className="bg-gradient-to-r dark:from-gray-900 dark:to-gray-800 from-gray-400 to-gray-100 w-fit dark:text-white text-gray-600 py-2 px-4 rounded-md"
+                onClick={onOpen}
               >
                 Color Customizer
               </button>
@@ -226,7 +269,10 @@ const DashboardForm = () => {
           {isCustomColor && (
             <VStack alignItems="start" gap={4}>
               <Flex alignItems="center" gap={3}>
-                <Icon as={CheckIcon} className="bg-blue-600 p-1 text-xl text-white rounded-md" />
+                <Icon
+                  as={CheckIcon}
+                  className="bg-blue-600 p-1 text-xl text-white rounded-md"
+                />
                 <Heading
                   fontFamily="Poppins, sans-serif"
                   fontSize="lg"
@@ -253,17 +299,18 @@ const DashboardForm = () => {
             onClose={onClose}
           />
         </FormControl>
-          <Stack position="relative" gap="2rem">
-            <IconStyles 
-            chosenStyle={chosenStyle} 
-            setChosenStyle={setChosenStyle} />
-            <GenerateImage
-              chosenColor={chosenColor}
-              iconObject={iconObject}
-              iconDescription={iconDescription}
-              chosenStyle={chosenStyle}
-            />
-          </Stack>
+        <Stack position="relative" gap="2rem">
+          <IconStyles
+            chosenStyle={chosenStyle}
+            setChosenStyle={setChosenStyle}
+          />
+          <GenerateImage
+            chosenColor={chosenColor}
+            iconObject={iconObject}
+            iconDescription={iconDescription}
+            chosenStyle={chosenStyle}
+          />
+        </Stack>
       </VStack>
     </VStack>
   );

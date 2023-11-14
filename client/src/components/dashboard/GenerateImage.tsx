@@ -1,5 +1,21 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Stack, Flex, Card, Text, Image, Spinner, Drawer, useDisclosure, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, DrawerFooter, Button } from "@chakra-ui/react";
+import {
+  Stack,
+  Flex,
+  Card,
+  Text,
+  Image,
+  Spinner,
+  Drawer,
+  useDisclosure,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  DrawerHeader,
+  DrawerBody,
+  DrawerFooter,
+  Button,
+} from "@chakra-ui/react";
 import { openai } from "../../helpers/openai_sdk";
 import { getPrompt } from "../../hooks/getPrompt";
 import { IconStyleEnum } from "../../types/icon_styles";
@@ -23,7 +39,7 @@ const GenerateImage = ({
   iconDescription: null | string;
   chosenStyle: IconStyleEnum | null;
 }) => {
-  const toast = useToast()
+  const toast = useToast();
   const formObj = {
     chosenColor,
     iconObject,
@@ -31,12 +47,19 @@ const GenerateImage = ({
     chosenStyle,
   };
   const [numberOfGenerations, setNumberOfGenerations] = useState<number>(0);
-  const incrementCount = () => numberOfGenerations < 5 && setNumberOfGenerations(numberOfGenerations + 1);
-  const decrementCount = () => numberOfGenerations > 0 && setNumberOfGenerations(numberOfGenerations - 1);
-  const [error, setError] = useState<null | {errorType: string, message: string}>(null);
-  const {credits, creditsId} = useContext(CreditContext) as ICreditsContextValues
-  const {user} = useContext(UserContext) as UserContextType
-  const {isOpen, onClose, onOpen} = useDisclosure()
+  const incrementCount = () =>
+    numberOfGenerations < 5 && setNumberOfGenerations(numberOfGenerations + 1);
+  const decrementCount = () =>
+    numberOfGenerations > 0 && setNumberOfGenerations(numberOfGenerations - 1);
+  const [error, setError] = useState<null | {
+    errorType: string;
+    message: string;
+  }>(null);
+  const { credits, creditsId } = useContext(
+    CreditContext
+  ) as ICreditsContextValues;
+  const { user } = useContext(UserContext) as UserContextType;
+  const { isOpen, onClose, onOpen } = useDisclosure();
 
   const prompt = Object.values(formObj).every((property) =>
     typeof property === "string"
@@ -54,24 +77,24 @@ const GenerateImage = ({
     onError: (errorMessage: string) => {
       setError({
         errorType: "API Error",
-        message: errorMessage
+        message: errorMessage,
       });
-    }
+    },
   });
   useEffect(() => {
-    if(mutation.isSuccess) {
+    if (mutation.isSuccess) {
       toast({
         title: "Successfully Generated!",
         description: "More details on the activity page",
         status: "success",
         duration: 9000,
-        isClosable: true
-      })
-      onOpen()
+        isClosable: true,
+      });
+      onOpen();
     }
-  }, [mutation.isSuccess])
+  }, [mutation.isSuccess]);
 
-  const mutationData = mutation.data?.data.URLs as string[]
+  const mutationData = mutation.data?.data.URLs as string[];
 
   const mutate = () => {
     if (
@@ -79,11 +102,11 @@ const GenerateImage = ({
         typeof property === "string"
           ? property?.trim()?.length !== 0
           : property !== null
-      ) 
-      && numberOfGenerations > 0
+      ) &&
+      numberOfGenerations > 0
     ) {
-      if(numberOfGenerations <= (credits as number)) {
-        mutation.mutate({ 
+      if (numberOfGenerations <= (credits as number)) {
+        mutation.mutate({
           prompt: prompt as string,
           iconObject: iconObject as string,
           iconDescription: iconDescription as string,
@@ -92,7 +115,7 @@ const GenerateImage = ({
           n: numberOfGenerations,
           email: user?.email as string,
           creditsId,
-          prevCreditsAmt: credits as number
+          prevCreditsAmt: credits as number,
         });
         setError(null);
       } else {
@@ -101,24 +124,24 @@ const GenerateImage = ({
           description: "Visit our pricing page to buy more credits",
           status: "error",
           duration: 9000,
-          isClosable: true
-        })
+          isClosable: true,
+        });
       }
     } else {
       setError({
         errorType: "Missing fields",
-        message: "Some field are missing, try again!"
+        message: "Some field are missing, try again!",
       });
     }
   };
 
   return (
-    <Stack 
-    display="flex" 
-    gap="1.5rem" 
-    alignItems="start"
-    paddingBottom="2rem"
-    width="full" 
+    <Stack
+      display="flex"
+      gap="1.5rem"
+      alignItems="start"
+      paddingBottom="2rem"
+      width="full"
     >
       <Flex alignItems="center" gap="1rem">
         <Card
@@ -140,7 +163,12 @@ const GenerateImage = ({
         >
           -
         </Card>
-        <Text fontSize="3xl" textColor="black" className="dark:text-white" fontWeight="thin">
+        <Text
+          fontSize="3xl"
+          textColor="black"
+          className="dark:text-white"
+          fontWeight="thin"
+        >
           {numberOfGenerations}
         </Text>
         <Card
@@ -163,11 +191,11 @@ const GenerateImage = ({
           +
         </Card>
       </Flex>
-      {(error && error.errorType !== "Out of credits") && 
+      {error && error.errorType !== "Out of credits" && (
         <Text textColor="red.700" onClick={onOpen}>
           {error.message}
         </Text>
-      }
+      )}
       <button
         onClick={mutate}
         className="bg-gradient-to-r from-blue-900 to-blue-600 py-2 px-5 text-white font-light rounded-lg shadow-xl shadow-blue-900"
@@ -179,38 +207,42 @@ const GenerateImage = ({
           </div>
         ) : (
           "Generate"
-          )}
+        )}
       </button>
       <Drawer isOpen={isOpen} onClose={onClose}>
-          <DrawerOverlay />
-          <DrawerContent display="flex" flexDirection="column" alignItems="center" textColor="white" fontFamily="Poppins, sans-serif" backgroundColor="black">
-            <DrawerCloseButton />
-            <DrawerHeader>Generation</DrawerHeader>
-            <DrawerBody display="flex" flexDirection="column" gap="1rem">
-              {mutationData?.map((url) => (
-                  <Image 
-                  src={url} 
-                  width={40} 
-                  height={40}
-                  borderRadius="lg" 
-                  border={`4px solid #7e14ff
-                  `} />
-              ))}
-            </DrawerBody>
-            <DrawerFooter justifyContent="space-between" width="full">
-                <Link to="activity">
-                  <Button
-                  colorScheme="blue">
-                      More details
-                  </Button>
-                </Link>
-                <Button colorScheme="gray" 
-                onClick={onClose}>
-                  Cancel
-                </Button>
-            </DrawerFooter>
-          </DrawerContent>
-        </Drawer>
+        <DrawerOverlay />
+        <DrawerContent
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          textColor="white"
+          fontFamily="Poppins, sans-serif"
+          backgroundColor="black"
+        >
+          <DrawerCloseButton />
+          <DrawerHeader>Generation</DrawerHeader>
+          <DrawerBody display="flex" flexDirection="column" gap="1rem">
+            {mutationData?.map((url) => (
+              <Image
+                src={url}
+                width={40}
+                height={40}
+                borderRadius="lg"
+                border={`4px solid #7e14ff
+                  `}
+              />
+            ))}
+          </DrawerBody>
+          <DrawerFooter justifyContent="space-between" width="full">
+            <Link to="activity">
+              <Button colorScheme="blue">More details</Button>
+            </Link>
+            <Button colorScheme="gray" onClick={onClose}>
+              Cancel
+            </Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
     </Stack>
   );
 };

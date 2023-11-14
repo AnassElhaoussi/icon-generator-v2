@@ -47,7 +47,7 @@ const Navigation = () => {
       px="5rem"
     >
       <Link to="/">
-        <Image src={logo} className="w-32" />
+        <Image src={logo} className="w-44" />
       </Link>
       <Stack direction="row" gap="2rem" h="2rem">
         {isLoading && <Spinner />}

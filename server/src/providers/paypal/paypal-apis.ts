@@ -2,7 +2,10 @@ import express from "express";
 import fetch from "node-fetch";
 import { prisma } from "../../util/prisma";
 
-const base = "https://api-m.sandbox.paypal.com";
+const base =
+  process.env.NODE_ENV === "production"
+    ? "https://api-m.paypal.com"
+    : "https://api-m.sandbox.paypal.com";
 
 /**
  * Generate an OAuth 2.0 access token for authenticating with PayPal REST APIs.
@@ -14,7 +17,7 @@ const generateAccessToken = async () => {
       throw new Error("MISSING_API_CREDENTIALS");
     }
     const auth = Buffer.from(
-      process.env.PAYPAL_CLIENT_ID + ":" + process.env.PAYPAL_CLIENT_SECRET,
+      process.env.PAYPAL_CLIENT_ID + ":" + process.env.PAYPAL_CLIENT_SECRET
     ).toString("base64");
     const response = await fetch(`${base}/v1/oauth2/token`, {
       method: "POST",
@@ -35,8 +38,7 @@ const generateAccessToken = async () => {
  * Create an order to start the transaction.
  * @see https://developer.paypal.com/docs/api/orders/v2/#orders_create
  */
-export const createOrder = async (data: {product: {cost: string}}) => {
-
+export const createOrder = async (data: { product: { cost: string } }) => {
   const accessToken = await generateAccessToken();
   const url = `${base}/v2/checkout/orders`;
   const payload = {
@@ -73,9 +75,9 @@ export const createOrder = async (data: {product: {cost: string}}) => {
  * @see https://developer.paypal.com/docs/api/orders/v2/#orders_capture
  */
 export const captureOrder = async (
-  orderID: string, 
-  userId: string, 
-  creditsAmount: number, 
+  orderID: string,
+  userId: string,
+  creditsAmount: number,
   prevCreditsAmt: number
 ) => {
   const accessToken = await generateAccessToken();
@@ -94,10 +96,10 @@ export const captureOrder = async (
     },
   });
 
-  const updatedCredits = await prisma.credits.update({
-    where: {userId},
-    data: {amount: prevCreditsAmt + creditsAmount}
-  })
+  await prisma.credits.update({
+    where: { userId },
+    data: { amount: prevCreditsAmt + creditsAmount },
+  });
 
   return handleResponse(response);
 };

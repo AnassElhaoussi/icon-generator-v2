@@ -9,24 +9,24 @@ const Features = () => {
             </div>
 
             <div className="flex items-center justify-center gap-5 flex-wrap">
-                <div className="relative flex w-[25rem] flex-col items-center gap-y-4 bg-gray-300 dark:bg-gradient-to-t dark:from-black dark:to-gray-900 px-10 pb-10 pt-20 rounded-2xl text-center">
+                <div className="relative flex w-[25rem] flex-col items-center gap-y-4 bg-gray-100 dark:bg-gradient-to-t dark:from-black dark:to-gray-900 px-10 pb-10 pt-20 rounded-2xl text-center">
                     <img src={idea_bulb} className="w-32 absolute -top-16" alt="" />
-                    <h5 className="bg-gradient-to-r from-orange-600 via-pink-600 to-purple-600 text-transparent bg-clip-text xl:text-5xl text-3xl font-light">Icon Variety</h5>
-                    <h6 className="text-blue-700 font-normal xl:text-xl text-lg">Diverse & Unique icon styles</h6>
+                    <h5 className="bg-gradient-to-r from-orange-600 via-pink-600 to-purple-600 text-transparent bg-clip-text xl:text-4xl text-3xl font-semibold">Icon Variety</h5>
+                    <h6 className="text-blue-700 font-normal xl:text-lg text-md">Diverse & Unique icon styles</h6>
                     <p className="dark:text-gray-400 text-gray-500 xl:text-md text-sm font-light">Choose from a wide range of icon styles, including 3D, Pixar-inspired, Pixelated, Logos, Emojis, and Metallic designs.
                     Unleash your creativity with diverse visual styles that suit your project needs.</p>
                 </div>
-                <div className="relative flex w-[25rem] flex-col items-center gap-y-4 bg-gray-300 dark:bg-gradient-to-t dark:from-black dark:to-gray-900 px-10 pb-10 pt-20 rounded-2xl text-center">
+                <div className="relative flex w-[25rem] flex-col items-center gap-y-4 bg-gray-100 dark:bg-gradient-to-t dark:from-black dark:to-gray-900 px-10 pb-10 pt-20 rounded-2xl text-center">
                     <img src={colors} alt="" className="w-32 absolute -top-14" />
-                    <h5 className="bg-gradient-to-r from-orange-600 via-pink-600 to-purple-600 text-transparent bg-clip-text xl:text-5xl text-3xl font-light">Color Customization</h5>
-                    <h6 className="text-blue-700 font-normal xl:text-xl text-lg">Freedom of choice</h6>
+                    <h5 className="bg-gradient-to-r from-orange-600 via-pink-600 to-purple-600 text-transparent bg-clip-text xl:text-4xl text-3xl font-semibold">Color Customization</h5>
+                    <h6 className="text-blue-700 font-normal xl:text-lg text-md">Freedom of choice</h6>
                     <p className="dark:text-gray-400 text-gray-500 xl:text-md text-sm font-light">Customize your icons effortlessly using our intuitive color picker or predefined color options.
                     Create eye-catching icons with a color that matches your brand or project requirements.</p>
                 </div>
-                <div className="relative flex w-[25rem] flex-col items-center gap-y-4 bg-gray-300 dark:bg-gradient-to-t dark:from-black dark:to-gray-900 px-10 pb-10 pt-20 rounded-2xl text-center">
+                <div className="relative flex w-[25rem] flex-col items-center gap-y-4 bg-gray-100 dark:bg-gradient-to-t dark:from-black dark:to-gray-900 px-10 pb-10 pt-20 rounded-2xl text-center">
                     <img src={ai_icon} alt="" className="w-32 absolute -top-14" />
-                    <h5 className="bg-gradient-to-r from-orange-600 via-pink-600 to-purple-600 text-transparent bg-clip-text xl:text-5xl text-3xl font-light">AI Powered</h5>
-                    <h6 className="text-blue-700 font-normal xl:text-xl text-lg">Effortless icon creation</h6>
+                    <h5 className="bg-gradient-to-r from-orange-600 via-pink-600 to-purple-600 text-transparent bg-clip-text xl:text-4xl text-3xl font-semibold">AI Powered</h5>
+                    <h6 className="text-blue-700 font-normal xl:text-lg text-md">Effortless icon creation</h6>
                     <p className="dark:text-gray-400 text-gray-500 xl:text-md text-sm font-light">Experience seamless icon generation using advanced AI technology powered by DALL-E API.
                     Get high-quality icons quickly and easily based on your preferences, enhancing your design process.</p>
                 </div>

@@ -15,15 +15,23 @@ import { CreditContext } from "./Context/CreditsContext";
 import { TermsAndConditions } from "./Pages/TermsAndConditions";
 import { AppWrapper } from "./components/Wrapper";
 import { IColorModeState } from "./types/Context/darkmode";
+import { extendTheme } from "@chakra-ui/react";
 
 const AppRoutes = () => {
   const {user} = useContext(UserContext)
   const {credits} = useContext(CreditContext) as ICreditsContextValues
   const {isDarkMode} = useContext(DarkThemeContext) as IColorModeState
+  const theme = extendTheme({
+    config: {
+      toast: {
+        position: "top-right"
+      }
+    }
+  })
 
   return (
     <AppWrapper theme={isDarkMode ? "dark" : ""}>
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
           <BrowserRouter>
               <Routes>
                 <Route path="/" element={<App />} />

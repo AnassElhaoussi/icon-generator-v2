@@ -6,11 +6,14 @@ import { GetGenerationsCtl } from "./src/controllers/GetGenerations/GetGeneratio
 import GetCredits from "./src/controllers/GetCredits/get-credits"
 import { prisma } from "./src/util/prisma"
 import {createOrder, captureOrder} from "./src/providers/paypal/paypal-apis"
+import dotenv from "dotenv"
 
 const app = express()
 const PORT = 8000
 const generateImagesController = new GenerateImagesCtl()
 const getGenerationsController = new GetGenerationsCtl()
+
+dotenv.config({path: `.env.${process.env.NODE_ENV}`})
 
 app.use(cors())
 app.use(express.json())

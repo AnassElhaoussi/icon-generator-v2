@@ -26,7 +26,7 @@ const PaypalPayment = ({
     const {credits} = useContext(CreditContext) as ICreditsContextValues
     const {setIsPaymentSuccessful, setCreditsPurchased} = useContext(PurchaseContext) as IPurchaseContextValues
     const navigate = useNavigate()
-
+    console.log(checkoutInfos)
     const createOrder = () => {
         return fetch("http://localhost:8000/api/my-server/create-paypal-order", {
             method: "POST",
