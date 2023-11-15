@@ -20,6 +20,7 @@ import { CheckIcon, HamburgerIcon, DownloadIcon } from "@chakra-ui/icons"
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { IGeneration } from "../../api/types"
+import { DownloadImage } from "./DownloadImage"
 
 
 export const DrawerFC = ({
@@ -39,14 +40,6 @@ export const DrawerFC = ({
       isActive: false,
       img: null
     })  
-    const handleDownload = (imgURL: string) => {
-      const link = document.createElement("a")
-
-      link.download = imgURL
-      link.href = "image.png"
-      link.click()
-    }
-    console.log(generation)
 
     return (
         <Drawer isOpen={isOpen} onClose={onClose}>
@@ -96,9 +89,7 @@ export const DrawerFC = ({
                         backgroundColor="gray.900" 
                         padding="1rem" 
                         borderRadius="md">
-                          <option value="" className="cursor-pointer">
-                            Download
-                          </option>
+                          <DownloadImage name={generation.iconObject} publicURL={url} />
                           <a 
                           className="cursor-pointer" 
                           href={url} 

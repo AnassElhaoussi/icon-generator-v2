@@ -25,6 +25,7 @@
     "file-saver": "^2.0.5",
     "framer-motion": "^10.13.0",
     "hex-color-to-color-name": "^1.0.2",
+    "js-file-download": "^0.4.12",
     "react": "^18.2.0",
     "react-color": "^2.19.3",
     "react-color-palette": "^7.0.4",
