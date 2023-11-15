@@ -23,8 +23,8 @@ export class GenerateDalleImage implements IGenerateDalleImage {
                 return status < 500
             }
         })
-        const imgUrl = result.data.data
-        if(!imgUrl) throw new Error("Something went wrong!", imgUrl)
-        return imgUrl
+        const images = result.data.data
+        if(!images) throw new Error("Something went wrong!", images)
+        return images
     }
 }

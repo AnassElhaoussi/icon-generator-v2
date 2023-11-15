@@ -1,3 +1,3 @@
 export interface IGenerateDalleImage {
-    generateImages(prompt: string, n: number): Promise<object>
+    generateImages(prompt: string, n: number): Promise<Error | object[]>
 } 
