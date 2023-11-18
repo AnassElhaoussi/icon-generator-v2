@@ -13,7 +13,18 @@ import {
   Icon,
   VStack,
   Text,
+  Flex,
+  Image,
+  Badge,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverHeader,
+  PopoverBody,
 } from "@chakra-ui/react";
+import { g_img8 } from "../../images";
 
 const InfosCard = () => {
   return (

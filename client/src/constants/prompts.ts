@@ -1,16 +1,16 @@
 
 export function getIconPrompts(icon: string, color: string) {
     return {
-        "Metallic Style": `an icon of a ${icon} in ${color} metallic iridescent material, 3D render isometric perspective on dark background`,
-        "3D": `Very tiny ${color} ${icon} that looks like the iOS emoji and has the same colors, 3D clay render, 4k UHD, white background, isometric top down left view, diffuse lighting, zoomed out very far`,
-        "Pixar": `Cute ${icon}, pixar, mascot icon, ${color} split-lighting, digital art, cally3d`,
-        "Polygon": `A ${color} coloured, detailed icon of a ${icon}, 3D low poly render, isometric perspective on white background, ultra HD`,
-        "2D Mascot": `cute ${icon} searching computer, digital art, mascot, icon, split-lighting, of ${color} color`,
-        "Pop Art": `A ${icon} riding a banana, pop art`,
+        "Metallic Style": `a modern icon, ${icon} in ${color} metallic iridescent material, 3D render isometric perspective on dark background, high quality`,
+        "3D": `Very tiny ${icon}, ${color} coloured, colorful, 3D clay render, 4k UHD, white background, isometric top down left view, diffuse lighting, zoomed out very far, high quality`,
+        "Pixar": `${icon}, pixar, mascot icon, ${color} split-lighting, digital art, blender style, disney, 4k quality, trending on art station, 3d rendered`,
+        "Polygon": `detailed icon,${icon}, 3d low polygon rendered, ${color} coloured, isometric perspective on white background, ultra HD, high quality`,
+        "2D Mascot": `${icon}, digital art, mascot, icon, of ${color} color, high quality, trending on art station, unreal engine quality`,
+        "Pop Art": `${icon}, pop art, 4k high quality, trending on art station, unreal engine quality`,
         "Oil Painting": `A impressionist ${color} oil painting of a ${icon} as an exploding nebula`,
-        "Vector Style": `${icon} in vector style,${color} split-lighting`,
-        "Pixel Art": `pixel art of a ${icon}, ${color} color`,
-        "Emoji":`Minimalistic emoji kawaii icon of a ${icon}, ${color} , matte 3D render on white background`,
-        "Logo Style": `a ${icon}, modern, angular, aggressive, stylized, classic, ${color}, black, pictorial mark, iconic logo symbol`
+        "Vector Style": `${icon} in vector style,${color} split-lighting, high quality, trending on art station, unreal engine quality`,
+        "Pixel Art": `pixel art of ${icon}, 2d game, 2d game asset, isometric perspective, ${color} color, trending on art station, 16 bits depiction`,
+        "Emoji":`Minimalistic emoji kawaii icon of a ${icon}, ${color} , matte 3D render on white background, high quality, trending on art station, unreal engine quality`,
+        "Logo Style": `${icon}, ${color} coloured, modern, angular, aggressive, stylized, classic, black, pictorial mark, iconic logo symbol, red background, trending on art station `
     }
 }

@@ -14,6 +14,8 @@ import {
   InputRightElement,
   useToast,
   Icon,
+  Image,
+  Badge,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { defaultColors } from "../../constants/colors";
@@ -64,8 +66,13 @@ const DashboardForm = () => {
   const toast = useToast();
 
   useEffect(() => {
-    localStorage.setItem("current_credits", credits?.toString() as string);
-  }, [credits])
+    if (searchParams.get("payment")) {
+      localStorage.setItem(
+        "credits_onmount_success",
+        credits?.toString() as string
+      );
+    }
+  }, []);
 
   useEffect(() => {
     if (
@@ -73,24 +80,20 @@ const DashboardForm = () => {
       isPaymentSuccessful &&
       credits ==
         (JSON.parse(
-          localStorage.getItem("current_credits") as string
+          localStorage.getItem("credits_onmount_success") as string
         ) as number) +
           (creditsPurchased as number)
     ) {
-      setTimeout(() => {
-        toast({
-          title: `Payment successful (${
-            creditsPurchased as number
-          } credits purchased) `,
-          description: `Your total amount of credits is now ${
-            credits
-          }`,
-          isClosable: true,
-          duration: 9000,
-          status: "success",
-        });
-        setIsPaymentSuccessful(false);
-      }, 3000);
+      toast({
+        title: `Payment successful (${
+          creditsPurchased as number
+        } credits purchased) `,
+        description: `Your total amount of credits is now ${credits}`,
+        isClosable: true,
+        duration: 9000,
+        status: "success",
+      });
+      setIsPaymentSuccessful(false);
     } else if (searchParams.get("account_created")) {
       toast({
         title: `Hello ${user.name}`,
@@ -304,6 +307,38 @@ const DashboardForm = () => {
             chosenStyle={chosenStyle}
             setChosenStyle={setChosenStyle}
           />
+          <Flex
+            flexDirection="column"
+            gap="0.5rem"
+            alignItems="start"
+            rounded="xl"
+            px="3"
+            userSelect="none"
+          >
+            <Badge
+              display="flex"
+              alignItems="center"
+              px="3"
+              rounded="md"
+              gap="5px"
+              color="yellow.600"
+              bg="yellow.300"
+              fontSize="xs"
+              cursor="pointer"
+            >
+              <Image
+                width="5"
+                height="5"
+                src="https://img.icons8.com/3d-fluency/94/star.png"
+                alt="star"
+                marginBottom="1"
+              />
+              Premium images
+            </Badge>
+            <Text textColor="gray.700" fontSize="sm">
+              Generate 10x better images by opting for premium images
+            </Text>
+          </Flex>
           <GenerateImage
             chosenColor={chosenColor}
             iconObject={iconObject}

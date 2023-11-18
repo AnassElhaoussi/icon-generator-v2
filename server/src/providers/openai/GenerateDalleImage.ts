@@ -1,29 +1,25 @@
-import { Configuration, OpenAIApi } from "openai"
+import {OpenAI} from "openai"
 import { IGenerateDalleImage } from "./IGenerateDalleImage"
 
 export class GenerateDalleImage implements IGenerateDalleImage {
-    private client: OpenAIApi
+    private client: OpenAI
     constructor() {
-        const configuration = new Configuration({
+        this.client = new OpenAI({
             apiKey: process.env.OPENAI_API_KEY
         })
-        this.client = new OpenAIApi(configuration)
     }
 
     async generateImages(prompt: string, n: number) {
         // Calling OpenAI Images API and generating images
-        const result = await this.client.createImage({
+        const result = await this.client.images.generate({
+            model: "dall-e-3",
             prompt,
             n,
-            size: "512x512",
-            response_format: "url"
-        }, {
-            // Ignores error messages of status below 500
-            validateStatus: function(status) {
-                return status < 500
-            }
+            size: "1024x1024",
+            response_format: "url",
         })
-        const images = result.data.data
+
+        const images = result.data
         if(!images) throw new Error("Something went wrong!", images)
         return images
     }

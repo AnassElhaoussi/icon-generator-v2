@@ -9,7 +9,7 @@ export const getPrompt = (
     chosenColor: string | null,
     iconStyle: IconStyleEnum | null
 ) => {
-    const iconObjectDescription = `${iconObject as string} that is ${state as string}`
+    const iconObjectDescription = `${iconObject as string}, ${state as string}`
     const colorName = GetColorName(chosenColor as string) as string
     const iconPrompts = getIconPrompts(iconObjectDescription, colorName)
     if (

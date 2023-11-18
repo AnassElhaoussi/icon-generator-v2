@@ -25,13 +25,16 @@ export const UserContextProvider = ({
   const addUser = async (user: object) => {
     const loginResponse = await CreateUser(user.access_token);
     if (loginResponse.status === 200) {
-      dispatch({ type: UserActionType.ADD_USER, payload: loginResponse.data.createdUser as object });
+      dispatch({
+        type: UserActionType.ADD_USER,
+        payload: loginResponse.data.createdUser as object,
+      });
     }
     return loginResponse;
   };
   const logoutUser = () => {
     dispatch({ type: UserActionType.LOGOUT_USER, payload: null });
-  } 
+  };
 
   const isLoading = () =>
     dispatch({ type: UserActionType.LOADING_TRUE, payload: null });

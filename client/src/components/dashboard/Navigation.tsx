@@ -15,7 +15,7 @@ import {
   Stack,
   Divider,
   Spinner,
-  Heading,
+  Badge,
   Image
 } from "@chakra-ui/react";
 import { logo } from "../../images";

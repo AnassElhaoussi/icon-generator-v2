@@ -16,7 +16,6 @@ import {
   DrawerFooter,
   Button,
 } from "@chakra-ui/react";
-import { openai } from "../../helpers/openai_sdk";
 import { getPrompt } from "../../hooks/getPrompt";
 import { IconStyleEnum } from "../../types/icon_styles";
 import { useMutation } from "@tanstack/react-query";

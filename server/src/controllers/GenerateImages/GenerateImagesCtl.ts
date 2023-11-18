@@ -25,7 +25,7 @@ export class GenerateImagesCtl {
     const newURLs = await uploadImages.handle(
       generatedImages.map((image) => image.url) as string[]
     );
-
+    
     const generation = await prisma.$transaction(async (prisma) => {
       // Adding a prisma child record that includes author data
       const generation = await prisma.generations.create({
