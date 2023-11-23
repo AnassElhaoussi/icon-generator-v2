@@ -9,6 +9,8 @@ import { Icon } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { DarkThemeContext } from "../Context/DarkThemeContext";
 import { IColorModeState } from "../types/Context/darkmode";
+import { logo } from "../images";
+import { Image } from "@chakra-ui/react";
 
 const Navigation = () => {
   const [isNavActive, setIsNavActive] = useState(
@@ -23,8 +25,8 @@ const Navigation = () => {
   }
   return (
     <nav className="relative flex lg:flex-row flex-col justify-between items-center dark:text-gray-200 text-gray-800 px-10 py-5 font-light">
-      <div className="flex justify-between items-center lg:w-fit w-full">
-        <span className="font-black text-2xl pr-10">IconAI</span>
+      <div className="flex justify-between items-center lg:w-fit w-full ">
+        <Image src={logo} alt="logo" className="w-44" />
         <FontAwesomeIcon
           icon={faBars}
           className="lg:hidden select-none cursor-pointer"
@@ -70,18 +72,18 @@ const Navigation = () => {
             >
               Contact
             </a>
-            <Icon as={isDarkMode ? SunIcon : MoonIcon} 
-            className="hover:bg-gray-300 hover:dark:bg-gray-900 p-2 rounded-md text-3xl cursor-pointer hover:scale-105 transition-all select-none"
-            onClick={setColorModeState}
-            />
           </div>
           {!user && (
             <Link to="/signin">
-              <button className="px-5 py-2 bg-blue-700 rounded-lg hover:scale-110 transition-all">
+              <button className="px-5 py-2 bg-blue-700 rounded-lg hover:scale-110 transition-all text-white">
                 Sign in
               </button>
             </Link>
           )}
+          <Icon as={isDarkMode ? SunIcon : MoonIcon} 
+          className="hover:bg-gray-300 hover:dark:bg-gray-900 p-2 rounded-md text-3xl cursor-pointer hover:scale-105 transition-all select-none"
+          onClick={setColorModeState}
+          />
         </div>
       )}
     </nav>

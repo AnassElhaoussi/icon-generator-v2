@@ -22,10 +22,10 @@ const Home = () => {
               className="md:w-44 md:-top-28 -top-20 w-32" 
               zIndex="0" />
               <div className="absolute -z-1 -top-20 w-32 h-32 rounded-2xl blur-3xl bg-pink-500"></div>
-            <h1 className="md:text-[7rem] relative z-1 text-7xl font-extrabold dark:text-gray-200 text-gray-800">
+            <h1 className="md:text-[6.5rem] relative z-1 text-7xl font-extrabold dark:text-gray-200 text-gray-800">
                 Generate your icons with <span className="relative z-5 text-transparent bg-clip-text dark:bg-gradient-to-r dark:from-blue-700 dark:to-purple-700 bg-gradient-to-r from-blue-800 to-blue-600">
-                  IconAI
-                  <Image src={circle} alt="homepage_circle" className="absolute md:w-72 w-44 -z-1 top-2 w-62 right-10 dark:w-0" />
+                  IconizeAI
+                  <Image src={circle} alt="homepage_circle" className="absolute md:w-72 w-44 -z-1 top-2 w right-28 dark:w-0" />
                 </span>
             </h1>
             <p className="dark:text-gray-400 text-gray-600 w-2/3 md:text-normal text-sm">

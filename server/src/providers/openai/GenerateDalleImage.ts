@@ -1,26 +1,26 @@
-import {OpenAI} from "openai"
-import { IGenerateDalleImage } from "./IGenerateDalleImage"
+import { OpenAI } from "openai";
+import { IGenerateDalleImage } from "./IGenerateDalleImage";
 
 export class GenerateDalleImage implements IGenerateDalleImage {
-    private client: OpenAI
-    constructor() {
-        this.client = new OpenAI({
-            apiKey: process.env.OPENAI_API_KEY
-        })
-    }
+  private client: OpenAI;
+  constructor() {
+    this.client = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+  }
 
-    async generateImages(prompt: string, n: number) {
-        // Calling OpenAI Images API and generating images
-        const result = await this.client.images.generate({
-            model: "dall-e-3",
-            prompt,
-            n,
-            size: "1024x1024",
-            response_format: "url",
-        })
+  async generateImages(prompt: string, n: number, isPremium: boolean) {
+    // Calling OpenAI Images API and generating images
+    const result = await this.client.images.generate({
+      model: isPremium ? "dall-e-3" : "dall-e-2",
+      prompt,
+      n,
+      size: isPremium ? "1024x1024" : "512x512",
+      response_format: "url",
+    });
 
-        const images = result.data
-        if(!images) throw new Error("Something went wrong!", images)
-        return images
-    }
+    const images = result.data;
+    if (!images) throw new Error("Something went wrong!", images);
+    return images;
+  }
 }

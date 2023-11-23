@@ -52,7 +52,7 @@ const Navigation = () => {
       <Stack direction="row" gap="2rem" h="2rem">
         {isLoading && <Spinner />}
         {isSuccess && <ul className="font-light text-md">
-          <span className="dark:text-white text-gray-800 text-lg">{credits}</span> <FontAwesomeIcon className="text-blue-700" icon={faDiamond} />
+          <span className="dark:text-white text-gray-800 text-lg">{credits ? credits : 0}</span> <FontAwesomeIcon className="text-blue-700" icon={faDiamond} />
         </ul>}
         <Link to="/pricing" className="text-blue-900 bg-blue-400 h-fit p-1 rounded-md text-sm hover:scale-105 transition-all">Buy credits</Link>
         {isError && <Text textColor="red.500">Something went wrong</Text>}

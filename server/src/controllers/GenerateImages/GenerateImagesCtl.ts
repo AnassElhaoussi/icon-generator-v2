@@ -17,10 +17,11 @@ export class GenerateImagesCtl {
       iconDescription,
       color,
       style,
+      isPremium
     } = req.body;
     // Calling the class and the method that generates dalle images
     const generateDalleImage = new GenerateDalleImage();
-    const generatedImages = await generateDalleImage.generateImages(prompt, n);
+    const generatedImages = await generateDalleImage.generateImages(prompt, n, isPremium);
     const uploadImages = new UploadImages();
     const newURLs = await uploadImages.handle(
       generatedImages.map((image) => image.url) as string[]
@@ -38,6 +39,7 @@ export class GenerateImagesCtl {
           style,
           URLs: newURLs,
           authorEmail: email,
+          isPremium
         },
         include: {
           author: true,

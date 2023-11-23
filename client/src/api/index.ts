@@ -14,7 +14,8 @@ export async function generateDalleIcons({ prompt,
     iconObject,
     iconDescription,
     color,
-    style
+    style,
+    isPremium
 }: { 
     prompt: string, 
     n: number, 
@@ -24,7 +25,8 @@ export async function generateDalleIcons({ prompt,
     iconObject: string,
     iconDescription: string,
     color: string,
-    style: string
+    style: string,
+    isPremium: boolean
 }): Promise<AxiosResponse<{
     prompt: string,
     n: number,
@@ -45,7 +47,8 @@ export async function generateDalleIcons({ prompt,
             iconDescription,
             iconObject,
             color,
-            style
+            style,
+            isPremium
         })
 }
 

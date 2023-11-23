@@ -5,7 +5,6 @@ import Guide from "./components/Guide"
 import Footer from "./components/Footer"
 import { About } from "./components/About"
 import { Reviews } from "./components/Reviews"
-import Feedback from "./components/Feedback"
 import Stats from "./components/Stats"
 
 function App() {
@@ -19,7 +18,6 @@ function App() {
         <About />
         <Reviews />
         <Guide />
-        <Feedback />
         <Footer />
       </main>
   )

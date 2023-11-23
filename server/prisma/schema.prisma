@@ -7,8 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("process.env.DATABASE_URL")
-  shadowDatabaseUrl = 
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -38,6 +37,7 @@ model Generations {
   color           String
   style           String
   n               Int
+  isPremium       Boolean
   authorEmail     String
   author          User     @relation(fields: [authorEmail], references: [email])
 }

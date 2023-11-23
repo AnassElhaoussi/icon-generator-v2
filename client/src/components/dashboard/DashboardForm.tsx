@@ -40,6 +40,12 @@ import { DarkThemeContext } from "../../Context/DarkThemeContext";
 import { IColorModeState } from "../../types/Context/darkmode";
 import { CheckIcon } from "@chakra-ui/icons";
 
+const storedIsPremValue: string | null = localStorage.getItem("is-premium");
+const initialIsPremValue =
+  storedIsPremValue === null
+    ? false
+    : (JSON.parse(storedIsPremValue) as boolean);
+
 const DashboardForm = () => {
   const [chosenColor, setChosenColor] = useState<null | string>(null);
   const [hoveredColor, setHoveredColor] = useState<null | string>(null);
@@ -48,6 +54,7 @@ const DashboardForm = () => {
   const [chosenStyle, setChosenStyle] = useState<IconStyleEnum | null>(null);
   const [isInputOnBlur1, setIsInputOnBlur1] = useState<boolean>(false);
   const [isInputOnBlur2, setIsInputOnBlur2] = useState<boolean>(false);
+  const [isPremium, setIsPremium] = useState<boolean>(initialIsPremValue);
   const { onOpen, isOpen, onClose } = useDisclosure();
   const { credits } = useContext(CreditContext) as ICreditsContextValues;
   const { user } = useContext(UserContext) as UserContextType;
@@ -96,7 +103,7 @@ const DashboardForm = () => {
       setIsPaymentSuccessful(false);
     } else if (searchParams.get("account_created")) {
       toast({
-        title: `Hello ${user.name}`,
+        title: `Hello ${user?.name}`,
         description: "Welcome to your account!",
         status: "success",
         duration: 9000,
@@ -104,6 +111,11 @@ const DashboardForm = () => {
       });
     }
   }, [credits]);
+  const handleVersion = () => {
+    setIsPremium((prevValue) => !prevValue);
+    localStorage.setItem("is-premium", JSON.stringify(!isPremium));
+    console.log("hello");
+  };
 
   return (
     <VStack width="full" alignItems="start">
@@ -315,28 +327,45 @@ const DashboardForm = () => {
             px="3"
             userSelect="none"
           >
-            <Badge
-              display="flex"
-              alignItems="center"
-              px="3"
-              rounded="md"
-              gap="5px"
-              color="yellow.600"
-              bg="yellow.300"
-              fontSize="xs"
-              cursor="pointer"
+            <Flex alignItems="center" gap="1rem">
+              {isPremium && (
+                <Icon
+                  as={CheckIcon}
+                  className="bg-blue-600 p-1 text-xl text-white rounded-md"
+                />
+              )}
+              <Badge
+                display="flex"
+                alignItems="center"
+                px="3"
+                rounded="md"
+                gap="5px"
+                color="yellow.600"
+                bg="yellow.300"
+                fontSize="xs"
+                cursor="pointer"
+                onClick={handleVersion}
+                style={{
+                  border: isPremium ? "2px solid white" : "2px solid transparent",
+                }}
+              >
+                <Image
+                  width="5"
+                  height="5"
+                  src="https://img.icons8.com/3d-fluency/94/star.png"
+                  alt="star"
+                  marginBottom="1"
+                />
+                Premium images
+              </Badge>
+            </Flex>
+            <Text
+              textColor="gray.700"
+              className="dark:text-gray-300"
+              fontSize="sm"
             >
-              <Image
-                width="5"
-                height="5"
-                src="https://img.icons8.com/3d-fluency/94/star.png"
-                alt="star"
-                marginBottom="1"
-              />
-              Premium images
-            </Badge>
-            <Text textColor="gray.700" fontSize="sm">
-              Generate 10x better images by opting for premium images
+              Generate 10x better images by opting for premium images (2 credits
+              per image)
             </Text>
           </Flex>
           <GenerateImage
@@ -344,6 +373,8 @@ const DashboardForm = () => {
             iconObject={iconObject}
             iconDescription={iconDescription}
             chosenStyle={chosenStyle}
+            isPremium={isPremium}
+            setIsPremium={setIsPremium}
           />
         </Stack>
       </VStack>
