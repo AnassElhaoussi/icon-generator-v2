@@ -6,7 +6,7 @@
     "type": "module",
     "scripts": {
         "start:development": "nodemon - exec 'ts-node' src/index.ts",
-        "start:production": "set NODE_ENV=production"
+        "build": "tsc"
     },
     "keywords": [],
     "author": "",
