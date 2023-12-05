@@ -1,4 +1,4 @@
-import cloudinary from "./config";
+import cloudinary from "./config.js";
 export class UploadImages {
     publicURLs;
     uploader;

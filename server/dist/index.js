@@ -1,11 +1,11 @@
 import express from "express";
 import cors from "cors";
-import CreateUser from "./src/controllers/CreateUser/createUser";
-import { GenerateImagesCtl } from "./src/controllers/GenerateImages/GenerateImagesCtl";
-import { GetGenerationsCtl } from "./src/controllers/GetGenerations/GetGenerationsCtl";
-import GetCredits from "./src/controllers/GetCredits/get-credits";
-import { prisma } from "./src/util/prisma";
-import { createOrder, captureOrder } from "./src/providers/paypal/paypal-apis";
+import CreateUser from "./src/controllers/CreateUser/createUser.js";
+import { GenerateImagesCtl } from "./src/controllers/GenerateImages/GenerateImagesCtl.js";
+import { GetGenerationsCtl } from "./src/controllers/GetGenerations/GetGenerationsCtl.js";
+import GetCredits from "./src/controllers/GetCredits/get-credits.js";
+import { prisma } from "./src/util/prisma.js";
+import { createOrder, captureOrder } from "./src/providers/paypal/paypal-api.js";
 import dotenv from "dotenv";
 const app = express();
 const PORT = 8000;

@@ -1,4 +1,4 @@
-import { prisma } from "../../util/prisma";
+import { prisma } from "../../util/prisma.js";
 export default async function GetCredits(req, res) {
     const { id } = req.query;
     try {

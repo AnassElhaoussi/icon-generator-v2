@@ -1,6 +1,6 @@
-import { GenerateDalleImage } from "../../providers/openai/GenerateDalleImage";
-import { prisma } from "../../util/prisma";
-import { UploadImages } from "../../providers/cloudinary/UploadImages";
+import { GenerateDalleImage } from "../../providers/openai/GenerateDalleImage.js";
+import { prisma } from "../../util/prisma.js";
+import { UploadImages } from "../../providers/cloudinary/UploadImages.js";
 export class GenerateImagesCtl {
     constructor() { }
     async handle(req, res) {

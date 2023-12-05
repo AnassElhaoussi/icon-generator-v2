@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import { prisma } from "../../util/prisma";
+import { prisma } from "../../util/prisma.js";
 const base = process.env.PAYPAL_URL;
 /**
  * Generate an OAuth 2.0 access token for authenticating with PayPal REST APIs.

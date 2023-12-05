@@ -1,4 +1,4 @@
-import { prisma } from "../../util/prisma";
+import { prisma } from "../../util/prisma.js";
 export class GetGenerationsCtl {
     constructor() { }
     async get(req, res) {

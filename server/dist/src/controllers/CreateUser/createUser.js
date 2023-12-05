@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import { prisma } from "../../util/prisma";
+import { prisma } from "../../util/prisma.js";
 import * as fs from "fs";
 export default async function (req, res) {
     const { access_token } = req.body;
