@@ -2,10 +2,7 @@ import express from "express";
 import fetch from "node-fetch";
 import { prisma } from "../../util/prisma";
 
-const base =
-  process.env.NODE_ENV === "production"
-    ? "https://api-m.paypal.com"
-    : "https://api-m.sandbox.paypal.com";
+const base = process.env.PAYPAL_URL
 
 /**
  * Generate an OAuth 2.0 access token for authenticating with PayPal REST APIs.
@@ -83,6 +80,7 @@ export const captureOrder = async (
   const accessToken = await generateAccessToken();
   const url = `${base}/v2/checkout/orders/${orderID}/capture`;
 
+  
   const response = await fetch(url, {
     method: "POST",
     headers: {

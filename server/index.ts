@@ -13,7 +13,7 @@ const PORT = 8000;
 const generateImagesController = new GenerateImagesCtl();
 const getGenerationsController = new GetGenerationsCtl();
 
-dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
+dotenv.config();
 
 app.use(cors());
 app.use(express.json());

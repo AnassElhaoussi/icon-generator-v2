@@ -17,16 +17,20 @@ export class GenerateImagesCtl {
       iconDescription,
       color,
       style,
-      isPremium
+      isPremium,
     } = req.body;
     // Calling the class and the method that generates dalle images
     const generateDalleImage = new GenerateDalleImage();
-    const generatedImages = await generateDalleImage.generateImages(prompt, n, isPremium);
+    const generatedImages = await generateDalleImage.generateImages(
+      prompt,
+      n,
+      isPremium
+    );
     const uploadImages = new UploadImages();
     const newURLs = await uploadImages.handle(
       generatedImages.map((image) => image.url) as string[]
     );
-    
+
     const generation = await prisma.$transaction(async (prisma) => {
       // Adding a prisma child record that includes author data
       const generation = await prisma.generations.create({
@@ -39,7 +43,7 @@ export class GenerateImagesCtl {
           style,
           URLs: newURLs,
           authorEmail: email,
-          isPremium
+          isPremium,
         },
         include: {
           author: true,
@@ -54,7 +58,7 @@ export class GenerateImagesCtl {
 
       return generation;
     });
-    
+
     // Sending a 200 status message to the client
     res.status(201).send(generation);
   }

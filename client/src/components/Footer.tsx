@@ -1,18 +1,23 @@
 import { Link } from "react-router-dom";
+import { logo } from "../images";
+import { Image } from "@chakra-ui/react";
 const Footer = () => {
   return (
     <footer
       id="footer"
       className="flex justify-between text-white font-light px-20 bg-gradient-to-r from-black to-gray-900 flex-wrap gap-y-10 gap-x-10 p-8 items-center "
     >
-      <div className="space-y-1">
-        <h4 className="text-xl">
-          © 2023 <span className="text-blue-700 font-semibold">ELHAOUSSI</span>{" "}
-          Software Solutions.
-        </h4>
-        <p className="text-gray-500 text-sm">
-          Empowering Success Through Innovation.
-        </p>
+      <div className="space-y-5">
+        <Image src={logo} className="w-32" />
+        <div className="space-y-1">
+          <h4 className="text-xl">
+            © 2023 <span className="text-blue-700 font-semibold">ELHAOUSSI</span>{" "}
+            Software Solutions.
+          </h4>
+          <p className="text-gray-500 text-sm">
+            Empowering Success Through Innovation.
+          </p>
+        </div>
       </div>
       <ul className="flex flex-col gap-4">
         <li className="cursor-pointer hover:text-blue-700 transition-colors">

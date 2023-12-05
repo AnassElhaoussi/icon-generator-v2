@@ -7,4 +7,5 @@ export interface IGeneration {
     URLs: string[],
     n: number,
     authorEmail: string
+    isPremium: boolean
 }

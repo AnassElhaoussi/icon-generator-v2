@@ -33,14 +33,14 @@ const GenerateImage = ({
   iconDescription,
   chosenStyle,
   isPremium,
-  setIsPremium
+  setIsPremium,
 }: {
   chosenColor: string | null;
   iconObject: null | string;
   iconDescription: null | string;
   chosenStyle: IconStyleEnum | null;
-  isPremium: boolean,
-  setIsPremium: React.Dispatch<React.SetStateAction<boolean>>
+  isPremium: boolean;
+  setIsPremium: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const toast = useToast();
   const formObj = {
@@ -51,7 +51,8 @@ const GenerateImage = ({
   };
   const [numberOfGenerations, setNumberOfGenerations] = useState<number>(0);
   const incrementCount = () =>
-    numberOfGenerations < (isPremium ? 1 : 5) && setNumberOfGenerations(numberOfGenerations + 1);
+    numberOfGenerations < (isPremium ? 1 : 5) &&
+    setNumberOfGenerations(numberOfGenerations + 1);
   const decrementCount = () =>
     numberOfGenerations > 0 && setNumberOfGenerations(numberOfGenerations - 1);
   const [error, setError] = useState<null | {
@@ -108,44 +109,43 @@ const GenerateImage = ({
       ) &&
       numberOfGenerations > 0
     ) {
-      if(isPremium && numberOfGenerations < 1) {
-          if (numberOfGenerations <= (credits as number)) {
-            mutation.mutate({
-              prompt: prompt as string,
-              iconObject: iconObject as string,
-              iconDescription: iconDescription as string,
-              color: chosenColor as string,
-              style: chosenStyle as string,
-              n: numberOfGenerations,
-              email: user?.email as string,
-              creditsId,
-              prevCreditsAmt: credits as number,
-              isPremium
-            });
-            setError(null);
-          } else {
-            toast({
-              title: "Out of credits",
-              description: "Visit our pricing page to buy more credits",
-              status: "error",
-              duration: 9000,
-              isClosable: true,
-            });
-          }
-        } else {
-          setError({
-            errorType: "Missing fields",
-            message: "Some field are missing, try again!",
-          });
-        }
+      if (isPremium && numberOfGenerations > 1) {
+        toast({
+          title: "Cannot generate your image!",
+          description: "Decrease the number of images to 1",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      } else if (numberOfGenerations <= (credits as number)) {
+        mutation.mutate({
+          prompt: prompt as string,
+          iconObject: iconObject as string,
+          iconDescription: iconDescription as string,
+          color: chosenColor as string,
+          style: chosenStyle as string,
+          n: numberOfGenerations,
+          email: user?.email as string,
+          creditsId,
+          prevCreditsAmt: credits as number,
+          isPremium,
+        });
+        setError(null);
+      } else {
+        toast({
+          title: "Out of credits",
+          description: "Visit our pricing page to buy more credits",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
       }
-      toast({
-        title: "Cannot generate your image!",
-        description: "Decrease the number of images to 1",
-        status: "error",
-        duration: 9000,
-        isClosable: true
-      })
+    } else {
+      setError({
+        errorType: "Missing fields",
+        message: "Some field are missing, try again!",
+      });
+    }
   };
 
   return (

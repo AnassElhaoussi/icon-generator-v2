@@ -5,8 +5,8 @@
     "main": "dist/index.js",
     "type": "module",
     "scripts": {
-        "start": "tsc && node dist/index.js",
-        "dev": "dotenv -e .env.development -- nodemon - exec 'ts-node' src/index.ts"
+        "start:development": "nodemon - exec 'ts-node' src/index.ts",
+        "start:production": "set NODE_ENV=production"
     },
     "keywords": [],
     "author": "",
@@ -38,6 +38,6 @@
         "prisma": "^5.0.0",
         "ts-node": "^10.9.1",
         "ts-node-dev": "^2.0.0",
-        "typescript": "^5.2.2"
+        "typescript": "^5.3.2"
     }
 }

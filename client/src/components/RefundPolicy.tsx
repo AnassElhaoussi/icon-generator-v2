@@ -32,7 +32,7 @@ export const RefundPolicy = () => {
         to report any unauthorized transactions promptly. 4. How to Request a
         Refund: Users seeking a refund under the eligible criteria must submit a
         refund request to{" "}
-        <span className="text-blue-600">anass.business12@gmail.com</span>
+        <span className="text-blue-600">anassbusiness12@gmail.com</span>
         5. Refund Processing: a. Refund
         Decisions: Refund requests will be reviewed on a case-by-case basis.
         IconizeAI reserves the right to determine the eligibility of a refund
@@ -44,7 +44,7 @@ export const RefundPolicy = () => {
         right to modify or update this Refund Policy at any time. Users will be
         notified of any changes through the IconizeAI website. Contact
         Information: If you have any questions or concerns about this Refund
-        Policy, please contact us at anass.business12@gmail.com. Thank you for
+        Policy, please contact us at anassbusiness12@gmail.com. Thank you for
         using IconizeAI!
       </p>
     </section>

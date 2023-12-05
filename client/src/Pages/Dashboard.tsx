@@ -7,12 +7,19 @@ import DashboardForm from "../components/dashboard/DashboardForm";
 import { Stack } from "@chakra-ui/react";
 import Navigation from "../components/dashboard/Navigation";
 import InfosCard from "../components/dashboard/InfosCard";
+import { Helmet } from "react-helmet";
 
 const Dashboard = () => {
   const { isDarkMode } = useContext(DarkThemeContext) as IColorModeState;
 
   return (
     <main>
+      <Helmet>
+        <html lang="en" />
+        <title>Dashboard</title>
+        <meta name="description" content="Dashboard : Start generating icons using IconizeAI" />
+        <meta name="keywords" content="icons, AI, AI icons, 3d illustrations, 3d vectors, pixel art, 3d style, design tool, iconize ai pricing, pricing plan, 3d icons, ai logo" />
+      </Helmet>
       <Stack
         display="flex"
         flexDirection="column"
