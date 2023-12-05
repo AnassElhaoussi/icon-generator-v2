@@ -103,7 +103,7 @@ const DashboardForm = () => {
       setIsPaymentSuccessful(false);
     } else if (searchParams.get("account_created")) {
       toast({
-        title: `Hello ${user?.name}`,
+        title: `Hello ${user!.name}`,
         description: "Welcome to your account!",
         status: "success",
         duration: 9000,

@@ -12,17 +12,7 @@ import {
   ListIcon,
   Icon,
   VStack,
-  Text,
-  Flex,
-  Image,
-  Badge,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  PopoverArrow,
-  PopoverCloseButton,
-  PopoverHeader,
-  PopoverBody,
+  Text
 } from "@chakra-ui/react";
 import { g_img8 } from "../../images";
 

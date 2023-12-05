@@ -68,7 +68,7 @@ const DashboardColorPicker = ({
         <ModalBody display="flex" flexDirection="column" gap={2}>
           <ChromePicker
             color={color}
-            onChange={(color) => setColor(color?.hex)}
+            onChange={(color: {hex: string}) => setColor(color.hex)}
           />
           <Flex alignItems="center" gap={2}>
             <Text textColor={isDarkMode ? "gray.200" : "gray.800"}>

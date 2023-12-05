@@ -7,19 +7,28 @@ export enum UserActionType {
     LOADING_FALSE = "LOADING_FALSE"
 }
 
+export interface IUser {
+    email: string
+    given_name: string,
+    id: string,
+    name: string,
+    picture: string,
+    verified_email: boolean
+}
+
 export interface UserContextState {
-    user: null | object,
+    user: IUser | null,
     loading: boolean,
 }
 
 export interface UserContextAction {
     type: UserActionType
-    payload: object | null
+    payload: IUser | null
 }
 
 export interface UserContextType {
-    user: object | null,
-    addUser: (user: object) => Promise<AxiosResponse>,
+    user: IUser | null,
+    addUser: (user: {access_token: string}) => Promise<AxiosResponse<{createdUser: IUser}>>,
     logoutUser: () => void,
     isLoading: () =>  void,
     isNotLoading: () => void,

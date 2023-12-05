@@ -12,7 +12,7 @@ export const CreditsContextProvider = ({children}: {children: React.ReactNode}) 
     const intervalMs = 1000
     const {data, isLoading, isError, isSuccess} = useQuery({
         queryKey: ["credits"],
-        queryFn: () => getUserCredits(user?.id),
+        queryFn: () => getUserCredits(user?.id as string),
         refetchInterval: intervalMs
     })
     

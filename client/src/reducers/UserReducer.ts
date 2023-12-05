@@ -1,4 +1,4 @@
-import { UserContextAction, UserContextState } from "../types/Context/signin";
+import { IUser, UserContextAction, UserContextState } from "../types/Context/signin";
 export const UserReducer = (
   state: UserContextState,
   action: UserContextAction
@@ -8,7 +8,7 @@ export const UserReducer = (
       localStorage.setItem("user", JSON.stringify(action.payload));
       return {
         ...state,
-        user: JSON.parse(localStorage.getItem("user") as string) as object,
+        user: JSON.parse(localStorage.getItem("user") as string) as IUser,
       };
     }
     case "LOGOUT_USER":

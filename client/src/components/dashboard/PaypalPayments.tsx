@@ -53,7 +53,7 @@ const PaypalPayment = ({
             },
             body: JSON.stringify({
                 orderId: data.orderID,
-                userId: user.id,
+                userId: user?.id,
                 creditsAmount: checkoutInfos.amount,
                 prevCreditsAmt: credits
             })

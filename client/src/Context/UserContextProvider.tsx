@@ -1,6 +1,7 @@
 import React, { createContext, useReducer, useContext } from "react";
 import { UserReducer } from "../reducers/UserReducer";
 import {
+  IUser,
   UserActionType,
   UserContextState,
   UserContextType,
@@ -8,7 +9,7 @@ import {
 import { CreateUser } from "../api";
 
 const initialState: UserContextState = {
-  user: JSON.parse(localStorage.getItem("user") as string) as object,
+  user: JSON.parse(localStorage.getItem("user") as string) as IUser,
   loading: false,
 };
 
@@ -22,12 +23,12 @@ export const UserContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [state, dispatch] = useReducer(UserReducer, initialState);
-  const addUser = async (user: object) => {
+  const addUser = async (user: {access_token: string}) => {
     const loginResponse = await CreateUser(user.access_token);
     if (loginResponse.status === 200) {
       dispatch({
         type: UserActionType.ADD_USER,
-        payload: loginResponse.data.createdUser as object,
+        payload: loginResponse.data.createdUser,
       });
     }
     console.log(loginResponse.data)
