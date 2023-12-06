@@ -90,8 +90,14 @@ const Activity = () => {
       <Helmet>
         <html lang="en" />
         <title>Activity</title>
-        <meta name="description" content="Activity : Gain more control over your icons!" />
-        <meta name="keywords" content="Download Icons, AI, AI icons, 3d illustrations, 3d vectors, pixel art, 3d style, design tool"></meta>
+        <meta
+          name="description"
+          content="Activity : Gain more control over your icons!"
+        />
+        <meta
+          name="keywords"
+          content="Download Icons, AI, AI icons, 3d illustrations, 3d vectors, pixel art, 3d style, design tool"
+        ></meta>
       </Helmet>
       <Stack
         overflow="hidden"
@@ -292,16 +298,18 @@ const Activity = () => {
                               onOpen();
                             }}
                           />
-                          <Badge
-                            backgroundColor="yellow.500"
-                            textColor="yellow.800"
-                          >
-                            <FontAwesomeIcon
-                              icon={faDiamond}
-                              className="text-yellow-800"
-                            />
-                            Premium
-                          </Badge>
+                          {generation.isPremium && (
+                            <Badge
+                              backgroundColor="yellow.500"
+                              textColor="yellow.800"
+                            >
+                              <FontAwesomeIcon
+                                icon={faDiamond}
+                                className="text-yellow-800"
+                              />
+                              Premium
+                            </Badge>
+                          )}
                         </Flex>
                         <VStack
                           display="flex"
