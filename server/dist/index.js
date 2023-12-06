@@ -14,10 +14,6 @@ const getGenerationsController = new GetGenerationsCtl();
 dotenv.config();
 app.use(cors());
 app.use(express.json());
-
-app.get("/api/", (req, res) => {
-    res.send("Welcome to IconizeAI API")
-})
 // For creating users
 app.post("/api/createuser", CreateUser);
 // For generating images and saving them on the db
