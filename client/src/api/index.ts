@@ -4,8 +4,8 @@ import { IUser } from "../types/Context/signin";
 
 export async function CreateUser(
   access_token: string
-): Promise<AxiosResponse<{createdUser: IUser}>> {
-  return await axios.post("http://localhost:8000/api/createuser", {
+): Promise<AxiosResponse<{ createdUser: IUser }>> {
+  return await axios.post(process.env.API_URL + "/api/createuser", {
     access_token,
   });
 }
@@ -44,7 +44,7 @@ export async function generateDalleIcons({
     style: string;
   }>
 > {
-  return await axios.post("http://localhost:8000/api/generate", {
+  return await axios.post(process.env.API_URL + "/api/generate", {
     prompt,
     n,
     prevCreditsAmt,
@@ -62,7 +62,7 @@ export async function retrieveGenerations(
   email: string
 ): Promise<AxiosResponse<IGeneration[]>> {
   return await axios.get(
-    `http://localhost:8000/api/get-generations?email=${email}`
+    `${process.env.API_URL}/api/get-generations?email=${email}`
   );
 }
 
@@ -74,5 +74,5 @@ export async function getUserCredits(id: string): Promise<
     };
   }>
 > {
-  return await axios.get(`http://localhost:8000/api/get-credits?id=${id}`);
+  return await axios.get(`${process.env.API_URL}/api/get-credits?id=${id}`);
 }

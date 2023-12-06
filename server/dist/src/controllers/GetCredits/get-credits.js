@@ -13,6 +13,7 @@ export default async function GetCredits(req, res) {
             credits: uniqueCredits,
         });
     }
+    
     catch (e) {
         throw new Error(e.message);
     }

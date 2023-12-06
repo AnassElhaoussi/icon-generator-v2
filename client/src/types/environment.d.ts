@@ -5,6 +5,7 @@ declare global {
         interface ProcessEnv {
             GOOGLE_CLIENT_ID: string
             PAYPAL_CLIENT_ID: string
+            API_URL: string
         }
     }
 }

@@ -28,7 +28,7 @@ const PaypalPayment = ({
     const navigate = useNavigate()
     console.log(checkoutInfos)
     const createOrder = () => {
-        return fetch("http://localhost:8000/api/my-server/create-paypal-order", {
+        return fetch(process.env.API_URL + "/api/my-server/create-paypal-order", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -46,7 +46,7 @@ const PaypalPayment = ({
     }
 
     const onApprove = (data: {orderID: string}) => {
-        return fetch("http://localhost:8000/api/my-server/capture-paypal-order", {
+        return fetch(process.env.API_URL + "/api/my-server/capture-paypal-order", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

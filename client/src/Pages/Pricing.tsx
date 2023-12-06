@@ -38,7 +38,7 @@ const Pricing = () => {
     }
   }, []);
 
-  const handlePlanClick = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePlanClick = (e: React.SyntheticEvent) => {
     setCheckoutInfos(
       pricingPlans[parseInt(e.currentTarget.id)] as ICheckoutInfos
     );

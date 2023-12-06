@@ -5,7 +5,7 @@ import { GenerateImagesCtl } from "./src/controllers/GenerateImages/GenerateImag
 import { GetGenerationsCtl } from "./src/controllers/GetGenerations/GetGenerationsCtl.js";
 import GetCredits from "./src/controllers/GetCredits/get-credits.js";
 import { prisma } from "./src/util/prisma.js";
-import { createOrder, captureOrder } from "./src/providers/paypal/paypal-api.js";
+import { createOrder, captureOrder } from "./src/providers/paypal/paypal-apis.js";
 import dotenv from "dotenv";
 const app = express();
 const PORT = 8000;
@@ -14,6 +14,10 @@ const getGenerationsController = new GetGenerationsCtl();
 dotenv.config();
 app.use(cors());
 app.use(express.json());
+
+app.get("/api/", (req, res) => {
+    res.send("Welcome to IconizeAI API")
+})
 // For creating users
 app.post("/api/createuser", CreateUser);
 // For generating images and saving them on the db
@@ -23,7 +27,6 @@ app.get("/api/get-generations", getGenerationsController.get);
 app.get("/api/get-credits", GetCredits);
 app.patch("/api/update-credits", async (req, res) => {
     const { id } = req.query;
-    console.log("hello");
     const { amount: prev_amount } = (await prisma.credits.findUnique({
         where: { userId: id },
     }));

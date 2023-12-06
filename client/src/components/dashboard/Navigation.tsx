@@ -42,6 +42,8 @@ const Navigation = () => {
     <Flex
       alignItems="center"
       justifyContent="space-between"
+      flexWrap="wrap"
+      gap="1rem"
       width="full"
       py="2rem"
       px="5rem"
