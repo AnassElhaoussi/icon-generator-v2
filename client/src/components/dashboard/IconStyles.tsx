@@ -64,7 +64,7 @@ const IconStyles = ({chosenStyle, setChosenStyle}: {
         columnGap="2.5rem" 
         alignItems="center"
         >
-          {iconStyles.map(({ name, description, imgUrl, category, detailed_description, key_features }) => (
+          {iconStyles.map(({ name, description, category, detailed_description, key_features }) => (
             <Card
               onClick={
                 () => (name === chosenStyle || detailsButtonHovered) 

@@ -33,7 +33,6 @@ const GenerateImage = ({
   iconDescription,
   chosenStyle,
   isPremium,
-  setIsPremium,
 }: {
   chosenColor: string | null;
   iconObject: null | string;

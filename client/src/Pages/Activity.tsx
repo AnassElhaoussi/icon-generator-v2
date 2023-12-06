@@ -38,7 +38,7 @@ const Activity = () => {
   const [filteredGenerations, setFilteredGenerations] = useState<
     [] | IGeneration[]
   >([]);
-  const { data, isLoading, isSuccess, isError } = useQuery({
+  const { data, isLoading, isSuccess } = useQuery({
     queryKey: ["generations"],
     queryFn: () => retrieveGenerations(user?.email as string),
   });

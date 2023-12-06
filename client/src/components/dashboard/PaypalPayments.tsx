@@ -1,5 +1,5 @@
 import {useContext} from "react"
-import {Modal, ModalBody, ModalHeader, ModalFooter, ModalContent, ModalOverlay, Button, OrderedList} from "@chakra-ui/react"
+import {Modal, ModalBody, ModalHeader, ModalFooter, ModalContent, ModalOverlay, Button} from "@chakra-ui/react"
 import { PayPalButtons } from "@paypal/react-paypal-js"
 import { UserContext } from "../../Context/UserContextProvider"
 import { UserContextType } from "../../types/Context/signin"
