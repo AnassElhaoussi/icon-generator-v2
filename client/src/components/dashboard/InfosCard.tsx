@@ -1,6 +1,4 @@
 import {
-  CheckCircleIcon,
-  CheckIcon,
   InfoIcon,
   SettingsIcon,
 } from "@chakra-ui/icons";
@@ -14,7 +12,6 @@ import {
   VStack,
   Text
 } from "@chakra-ui/react";
-import { g_img8 } from "../../images";
 
 const InfosCard = () => {
   return (

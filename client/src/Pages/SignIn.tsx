@@ -1,9 +1,9 @@
-import React, { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { logo } from "../images";
 import { useGoogleLogin } from "@react-oauth/google";
 import { UserContext } from "../Context/UserContextProvider";
 import { UserContextType } from "../types/Context/signin";
-import { Divider, Spinner, useToast } from "@chakra-ui/react";
+import { Spinner, useToast } from "@chakra-ui/react";
 import { useSearchParams } from "react-router-dom";
 import { PricingAccessContext } from "../Context/PricingAccessContext";
 import { IPricingAccessContextValues } from "../types/Context/pricing_access";
@@ -17,9 +17,9 @@ const SignIn = () => {
     isError: false,
     errorMessage: "",
   });
-  const { user, addUser, logoutUser, isLoading, isNotLoading, loading } =
+  const { addUser, isLoading, isNotLoading, loading } =
     useContext(UserContext) as UserContextType;
-  const { isAccessDenied, setIsAccessDenied } = useContext(
+  const { isAccessDenied } = useContext(
     PricingAccessContext
   ) as IPricingAccessContextValues;
   const toast = useToast();
@@ -38,22 +38,24 @@ const SignIn = () => {
   }, []);
 
   const signIn = useGoogleLogin({
-    onSuccess: async function (response: object) {
-      isLoading();
-      try {
-        const res = await addUser(response);
-        if (res.status === 200) {
-          searchParams.get("pricing_access") === "denied"
-            ? (window.location.href = "/pricing?pricing_access=true")
-            : (window.location.href = "/dashboard?account_created=true");
+    onSuccess: () => {
+      async (response: {access_token: string}) => {
+        isLoading();
+        try {
+          const res = await addUser(response);
+          if (res.status === 200) {
+            searchParams.get("pricing_access") === "denied"
+              ? (window.location.href = "/pricing?pricing_access=true")
+              : (window.location.href = "/dashboard?account_created=true");
+          }
+        } catch (e) {
+          setError({
+            isError: true,
+            errorMessage: "Something went wrong!",
+          });
         }
-      } catch (e) {
-        setError({
-          isError: true,
-          errorMessage: "Something went wrong!",
-        });
+        isNotLoading();
       }
-      isNotLoading();
     },
     onError: (error) =>
       setError({

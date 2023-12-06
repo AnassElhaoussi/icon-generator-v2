@@ -1,8 +1,7 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import App from "./App";
 import SignIn from "./Pages/SignIn";
-import { UserContextProvider } from "./Context/UserContextProvider";
 import ProtectedRoute from "./helpers/ProtectedRoute";
 import { UserContext } from "./Context/UserContextProvider";
 import Pricing from "./Pages/Pricing";

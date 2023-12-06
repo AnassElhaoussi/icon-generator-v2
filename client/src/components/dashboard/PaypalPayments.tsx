@@ -1,4 +1,4 @@
-import React, {useContext} from "react"
+import {useContext} from "react"
 import {Modal, ModalBody, ModalHeader, ModalFooter, ModalContent, ModalOverlay, Button, OrderedList} from "@chakra-ui/react"
 import { PayPalButtons } from "@paypal/react-paypal-js"
 import { UserContext } from "../../Context/UserContextProvider"
@@ -74,8 +74,8 @@ const PaypalPayment = ({
             </ModalHeader>
             <ModalBody>
                 <PayPalButtons 
-                createOrder={(data, actions) => createOrder()} 
-                onApprove={(data, actions) => onApprove(data)} />
+                createOrder={() => createOrder()} 
+                onApprove={(data) => onApprove(data)} />
             </ModalBody>
             <ModalFooter>
               <Button onClick={onClose} colorScheme="gray">Cancel</Button>

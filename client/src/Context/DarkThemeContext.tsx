@@ -1,4 +1,4 @@
-import React, { useState, createContext, useEffect, useRef } from "react";
+import React, { useState, createContext} from "react";
 import { IColorModeState } from "../types/Context/darkmode";
 
 export const DarkThemeContext = createContext<undefined | IColorModeState>(

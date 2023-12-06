@@ -1,11 +1,10 @@
-import React, { useContext } from "react";
-import { circle, diamond_icon, g_img1, g_img2, g_img3 } from "../images";
-import { Badge, Image } from "@chakra-ui/react";
+import { useContext } from "react";
+import { circle, diamond_icon} from "../images";
+import { Image } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { UserContext } from "../Context/UserContextProvider";
 import { UserContextType } from "../types/Context/signin";
 import { useNavigate } from "react-router-dom";
-import { iconStyles } from "../constants/iconstyles";
 
 const Home = () => {
   const { user } = useContext(UserContext) as UserContextType;

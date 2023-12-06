@@ -12,13 +12,10 @@ import {
   Button, 
   Image as Img, 
   DrawerCloseButton, 
-  Select
 } from "@chakra-ui/react"
 import { Link } from "react-router-dom"
-import { saveAs } from "file-saver"
-import { CheckIcon, HamburgerIcon, DownloadIcon } from "@chakra-ui/icons"
-import axios from "axios"
-import { useEffect, useState } from "react"
+import { HamburgerIcon } from "@chakra-ui/icons"
+import { useState } from "react"
 import { IGeneration } from "../../api/types"
 import { DownloadImage } from "./DownloadImage"
 

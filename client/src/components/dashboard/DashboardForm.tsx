@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import {
   VStack,
   FormControl,
@@ -22,13 +22,12 @@ import { defaultColors } from "../../constants/colors";
 import { hexToRgb } from "../../helpers/hexToRgb";
 import DashboardColorPicker from "./ColorPicker";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faIcons, faPen } from "@fortawesome/free-solid-svg-icons";
+import { faIcons, faPen } from "@fortawesome/free-solid-svg-icons";
 import IconStyles from "./IconStyles";
 import GenerateImage from "./GenerateImage";
 import { IconStyleEnum } from "../../types/icon_styles";
 import { CreditContext } from "../../Context/CreditsContext";
 import {
-  CreditsContextType,
   ICreditsContextValues,
 } from "../../types/Context/credits";
 import { useSearchParams } from "react-router-dom";

@@ -5,24 +5,8 @@ import {
   Heading,
   Card,
   Image,
-  Drawer,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerBody,
-  DrawerFooter,
-  Button,
-  DrawerCloseButton,
-  DrawerHeader,
   Flex,
-  Divider,
   VStack,
-  Alert,
-  AlertIcon,
-  AlertDialogHeader,
-  AlertDescription,
-  AlertDialogContent,
-  Input,
-  Icon,
   Badge,
 } from "@chakra-ui/react";
 import { useContext, useState, useRef, useEffect } from "react";
@@ -48,7 +32,7 @@ import { Helmet } from "react-helmet";
 const Activity = () => {
   const { user } = useContext(UserContext);
   const { onOpen, isOpen, onClose } = useDisclosure();
-  const navRef = useRef<null | HTMLElement>(null);
+  const navRef = useRef<HTMLInputElement>(null);
   const [generation, setGeneration] = useState<IGeneration | null>(null);
   const [searchValue, setSearchValue] = useState<string | null>(null);
   const [filteredGenerations, setFilteredGenerations] = useState<

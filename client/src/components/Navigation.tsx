@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { UserContext } from "../Context/UserContextProvider";
-import { googleLogout } from "@react-oauth/google";
 import { UserContextType } from "../types/Context/signin";
 import { Link } from "react-router-dom";
 import { Icon } from "@chakra-ui/react";
@@ -16,7 +15,7 @@ const Navigation = () => {
   const [isNavActive, setIsNavActive] = useState(
     window.innerWidth > 1024 ? true : false
   );
-  const { user, logoutUser } = useContext(UserContext) as UserContextType;
+  const { user } = useContext(UserContext) as UserContextType;
   const {isDarkMode, setIsDarkMode} = useContext(DarkThemeContext) as IColorModeState 
 
   const setColorModeState = () => {

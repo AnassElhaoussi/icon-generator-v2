@@ -1,9 +1,8 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
+import { useContext, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon } from "@fortawesome/free-solid-svg-icons";
 import { DarkThemeContext } from "../../Context/DarkThemeContext";
 import { IColorModeState } from "../../types/Context/darkmode";
-import { faSun } from "@fortawesome/free-solid-svg-icons";
 
 const ColorModeButton = () => {
   const { isDarkMode, setIsDarkMode } = useContext(

@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { UserContext } from "../../Context/UserContextProvider";
 import { UserContextType } from "../../types/Context/signin";
-import { CreditContext, CreditsContextProvider } from "../../Context/CreditsContext";
+import { CreditContext} from "../../Context/CreditsContext";
 import { Link } from "react-router-dom";
 import {
   Avatar,
@@ -15,7 +15,6 @@ import {
   Stack,
   Divider,
   Spinner,
-  Badge,
   Image
 } from "@chakra-ui/react";
 import { logo } from "../../images";

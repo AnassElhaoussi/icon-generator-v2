@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useContext } from "react";
+import { useRef, useState, useContext } from "react";
 import { ChromePicker } from "react-color";
 import {
   Modal,
@@ -16,9 +16,7 @@ import { DarkThemeContext } from "../../Context/DarkThemeContext";
 import { IColorModeState } from "../../types/Context/darkmode";
 
 const DashboardColorPicker = ({
-  chosenColor,
   setChosenColor,
-  onOpen,
   isOpen,
   onClose,
 }: {
