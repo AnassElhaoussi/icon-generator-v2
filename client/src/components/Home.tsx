@@ -25,10 +25,7 @@ const Home = () => {
           zIndex="0"
         />
         <div className="absolute -z-1 -top-20 w-32 h-32 rounded-2xl blur-3xl bg-pink-500"></div>
-        <h1 className="md:text-[6.5rem] relative z-1 text-7xl font-extrabold dark:text-gray-200 text-gray-800">
-        <span className="absolute z-[2] lg:inline hidden -top-4 -rotate-[20deg] text-sm font-light bg-yellow-400 text-yellow-800 py-1 px-4 rounded-lg">
-          Join us now!
-        </span>
+        <h1 className=" md:text-[6.5rem] relative z-1 text-6xl font-extrabold dark:text-gray-200 text-gray-800">
           Generate your icons with{" "}
           <span className="relative z-5 text-transparent bg-clip-text dark:bg-gradient-to-r dark:from-blue-700 dark:to-purple-700 bg-gradient-to-r from-blue-800 to-blue-600">
             IconizeAI

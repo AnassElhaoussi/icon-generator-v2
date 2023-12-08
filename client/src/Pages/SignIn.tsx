@@ -72,17 +72,17 @@ const SignIn = () => {
         <meta name="keywords" content="icons, AI, AI icons, 3d illustrations, 3d vectors, pixel art, 3d style, design tool, iconize ai pricing, pricing plan, 3d icons, ai logo" />
       </Helmet>
 
-      <section className="relative overflow-hidden font-poppins text-white bg-gray-200 dark:bg-black flex flex-col items-center justify-center h-screen ">
+      <section className="px-20 relative overflow-hidden font-poppins text-white bg-gray-200 dark:bg-black flex flex-col items-center justify-center h-screen ">
         <img src={logo} alt="" className="relative top-10 w-56 " />
         <div className="px-5 relative flex flex-col gap-8 items-center h-full w-screen justify-center">
           <div className="text-center md:w-3/4 space-y-2">
             <div className="relative">
               <div className="absolute right-[5rem]  -z-0 w-3/4 h-28 dark:bg-blue-900 bg-blue-200 rounded-4xl blur-3xl"></div>
-              <span className="relative z-10 font-extrabold lg:text-[6.5rem] md:text-[5rem] text-7xl dark:text-gray-200 text-gray-800 text-center lg:leading-[6.5rem] mg:[5rem] leading-[4.5rem] ">
+              <span className="relative z-10 font-extrabold lg:text-[6.5rem] md:text-[5rem] text-[3.8rem] dark:text-gray-200 text-gray-800 text-center lg:leading-[6.5rem] mg:[5rem] leading-[4.5rem] ">
                 Sign in and get 3 free credits.
               </span>
             </div>
-            <p className="font-light dark:text-gray-400 text-gray-600">
+            <p className="font-light dark:text-gray-400 text-gray-600 text-sm">
               If your signing in for the first time, you'll get to generate 3
               icons with 3 free given credits!
             </p>

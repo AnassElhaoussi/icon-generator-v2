@@ -31,7 +31,6 @@ export const UserContextProvider = ({
         payload: loginResponse.data.createdUser,
       });
     }
-    console.log(loginResponse.data)
     return loginResponse;
   };
   const logoutUser = () => {

@@ -23,7 +23,7 @@ const Navigation = () => {
     localStorage.setItem("dark-mode", JSON.stringify(!isDarkMode))
   }
   return (
-    <nav className="relative flex lg:flex-row flex-col justify-between items-center dark:text-gray-200 text-gray-800 px-10 py-5 font-light">
+    <nav className="relative flex xl:flex-row flex-col justify-between items-center dark:text-gray-200 text-gray-800 px-10 py-5 font-light">
       <div className="flex justify-between items-center lg:w-fit w-full ">
         <Image src={logo} alt="logo" className="w-44" />
         <FontAwesomeIcon
@@ -74,7 +74,7 @@ const Navigation = () => {
           </div>
           {!user && (
             <Link to="/signin">
-              <button className="px-5 py-2 bg-blue-700 rounded-lg hover:scale-110 transition-all text-white">
+              <button className="whitespace-nowrap px-5 py-2 bg-blue-700 rounded-lg hover:scale-110 transition-all text-white">
                 Sign in
               </button>
             </Link>

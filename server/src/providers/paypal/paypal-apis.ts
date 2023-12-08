@@ -79,27 +79,40 @@ export const captureOrder = async (
 ) => {
   const accessToken = await generateAccessToken();
   const url = `${base}/v2/checkout/orders/${orderID}/capture`;
+  try {
+    await prisma.$transaction(async (prisma) => {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+          // Uncomment one of these to force an error for negative testing (in sandbox mode only). Documentation:
+          // https://developer.paypal.com/tools/sandbox/negative-testing/request-headers/
+          // "PayPal-Mock-Response": '{"mock_application_codes": "INSTRUMENT_DECLINED"}'
+          // "PayPal-Mock-Response": '{"mock_application_codes": "TRANSACTION_REFUSED"}'
+          // "PayPal-Mock-Response": '{"mock_application_codes": "INTERNAL_SERVER_ERROR"}'
+        },
+      });
+    
+      // Assuming you have userId, creditsAmount, and prevCreditsAmt defined somewhere
+      await prisma.credits.update({
+        where: { userId },
+        data: { amount: prevCreditsAmt + creditsAmount },
+      });
+    
+      // Additional logic based on the result of the PayPal capture
+      if (res.ok) {
+        // Continue with additional logic or return a success response
+        return handleResponse(res);
+      } else {
+        // You might want to throw an error, log, or handle it according to your application's needs
+        throw new Error('Failed to capture order.');
+      }
+    });
+  } catch(error) {
+    throw new Error(error.message)
+  }
 
-  
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-      // Uncomment one of these to force an error for negative testing (in sandbox mode only). Documentation:
-      // https://developer.paypal.com/tools/sandbox/negative-testing/request-headers/
-      // "PayPal-Mock-Response": '{"mock_application_codes": "INSTRUMENT_DECLINED"}'
-      // "PayPal-Mock-Response": '{"mock_application_codes": "TRANSACTION_REFUSED"}'
-      // "PayPal-Mock-Response": '{"mock_application_codes": "INTERNAL_SERVER_ERROR"}'
-    },
-  });
-
-  await prisma.credits.update({
-    where: { userId },
-    data: { amount: prevCreditsAmt + creditsAmount },
-  });
-
-  return handleResponse(response);
 };
 
 async function handleResponse(response: any) {

@@ -13,28 +13,28 @@ const Guide = () => {
                 <img src={question_mark} className="md:w-20 w-10 rotate-45" alt="" />
             </div>
             <ul className="flex flex-col gap-10 px-10 lg:w-3/4 w-full">
-                <li className="flex gap-5 items-center"> 
+                <li className="flex flex-col gap-5 items-start"> 
                     <span className="bg-blue-600 py-3 px-5 rounded-xl text-white">1</span>
                     <div className="space-y-2">
                         <h5 className="text-transparent bg-gradient-to-r from-gray-600 to-gray-200 bg-clip-text text-3xl font-extrabold">Describe your desired icon</h5>
                         <p className="text-gray-400 font-light text-md">Use a clear noun and adjective to describe the essence and style you envision for your icon. For example, "Vibrant Tree" or "Minimalist Globe."</p>
                     </div>
                 </li>
-                <li className="flex gap-5 items-center">
+                <li className="flex flex-col gap-5 items-start">
                     <span className="bg-blue-600 py-3 px-5 rounded-xl text-white">2</span>
                     <div className="space-y-2">
                         <h5 className="text-transparent bg-gradient-to-r from-gray-600 to-gray-200 bg-clip-text text-3xl font-extrabold">Customizing colors</h5>
                         <p className="text-gray-400 font-light text-md">Use the color picker to select specific colors that match your branding or design requirements. Alternatively, choose from a range of predefined colors provided to speed up the customization process.</p>
                     </div>
                 </li>
-                <li className="flex gap-5 items-center">
+                <li className="flex flex-col gap-5 items-start">
                     <span className="bg-blue-600 py-3 px-5 rounded-xl text-white">3</span>
                     <div className="space-y-2">
                         <h5 className="text-transparent bg-gradient-to-r from-gray-600 to-gray-200 bg-clip-text text-3xl font-extrabold">Selecting an icon style</h5>
                         <p className="text-gray-400 font-light text-md">Explore and choose an icon style that complements your desired aesthetic (e.g., 3D, Pixar, Pixelated, Logos, Emojis, Metallic). Consider the theme and context of your project.</p>
                     </div>
                 </li>
-                <li className="flex gap-5 items-center">
+                <li className="flex flex-col gap-5 items-start">
                     <span className="bg-blue-600 py-3 px-5 rounded-xl text-white">4</span>
                     <div className="space-y-2">
                         <h5 className="text-transparent bg-gradient-to-r from-gray-600 to-gray-200 bg-clip-text text-3xl font-extrabold">Generating the icon</h5>

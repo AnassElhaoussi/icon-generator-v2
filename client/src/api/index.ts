@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { IGeneration } from "./types";
 import { IUser } from "../types/Context/signin";
+import { getDecryptedId } from "../hooks/getDecryptedId";
 
 export async function CreateUser(
   access_token: string
@@ -74,5 +75,6 @@ export async function getUserCredits(id: string): Promise<
     };
   }>
 > {
-  return await axios.get(`${process.env.API_URL}/api/get-credits?id=${id}`);
+  const decryptedId = getDecryptedId(id)
+  return await axios.get(`${process.env.API_URL}/api/get-credits?id=${decryptedId}`);
 }
